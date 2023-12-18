@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c694d2c3f754a74bbefa58322855917, type: 3}
+  m_Name: Goblin_RaceStats
+  m_EditorClassIdentifier: 
+  raceID: 0
+  subRaceID: 2
+  subRaceStats: {fileID: 0}
+  possibleSubRaces:
+  - {fileID: 11400000, guid: d2177cdabfcc2604da8eb516d26b056c, type: 2}
+  - {fileID: 11400000, guid: 749db2b12cfa12c4aade538908b2e4c4, type: 2}
+  raceFirstNames:
+  - Dim
+  - Kim
+  - Lim
+  - Stone
+  - Rock
+  - Twig
+  - Berry
+  - Food
+  - Cave
+  - Mess
+  - Guts
+  raceLastNames:
+  - Wood
+  - Bone
+  - Stick
+  - Clubber
+  - Loner
+  - Grim
+  - Jiam
+  - Sagg
+  - Lasty
+  - Stank
+  - Nasty
+  portraits:
+  - {fileID: 21300000, guid: 0cb5fe059e1077544ba3266303b1e8c7, type: 3}
+  - {fileID: 21300000, guid: 0cb5fe059e1077544ba3266303b1e8c7, type: 3}
+  - {fileID: 21300000, guid: 0cb5fe059e1077544ba3266303b1e8c7, type: 3}
+  startingDamageType: 0000000005000000
+  startingAutoAttackSkill:
+  - {fileID: 11400000, guid: 82303fccb370fbb4c88e99280df0f448, type: 2}
+  maxStartingHealth: 10
+  minStartingHealth: 5
+  maxStartingAge: 1
+  minStartingAge: 10
+  maxStartingMana: -1
+  minStartingMana: -5
+  maxStartingDamage: 5
+  minStartingDamage: 1
+  maxStartingDefence: 5
+  minStartingDefence: 1
+  maxStartingSpeed: 1
+  minStartingSpeed: 0.1
