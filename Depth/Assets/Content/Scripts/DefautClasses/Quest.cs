@@ -9,6 +9,7 @@ public class Quest : ScriptableObject
     public string questName;
     public string description;
     public int experienceReward;
+    public QuestGoal currentGoal;
     public List<QuestGoal> questGoals = new();
     public bool isCompleted;
 
@@ -42,6 +43,7 @@ public class Quest : ScriptableObject
 [System.Serializable]
 public class QuestGoal
 {
+    public QuestGoalType type;
     public bool isQuestGoalCompleted;
     public int requiredAmount;
     public int currentAmount;
@@ -101,3 +103,9 @@ public class KillQuestGoal: QuestGoal
     }
 } 
 
+public enum QuestGoalType
+{
+    Kill,
+    Find,
+    Visit
+}
