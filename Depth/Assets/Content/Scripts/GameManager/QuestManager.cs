@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public List<Quest> quests = new();
+    public List<Quest> currentQuests = new();
     public Quest startingQuest;
     // Add methods for starting quests, completing quests, updating objectives, etc.
 
     public void Start()
     {
-        quests.Clear();
-        quests.Add(startingQuest);
+        currentQuests.Clear();
+        currentQuests.Add(startingQuest);
         startingQuest.currentGoal = startingQuest.questGoals[0];
         UpdateQuestLogUI();
     }
 
     public void StartQuest(string questName)
     {
-        Quest quest = quests.Find(q => q.questName == questName);
+        Quest quest = currentQuests.Find(q => q.questName == questName);
         if (quest != null && !quest.isCompleted)
         {
             Debug.Log("Quest started: " + questName);
@@ -29,7 +29,7 @@ public class QuestManager : MonoBehaviour
 
     public void CompleteQuest(string questName)
     {
-        Quest quest = quests.Find(q => q.questName == questName);
+        Quest quest = currentQuests.Find(q => q.questName == questName);
         if (quest != null && !quest.isCompleted)
         {
             quest.isCompleted = true;
