@@ -31,6 +31,10 @@ public class GridGenerater : MonoBehaviour
                 worldPosition = grid.GetCellCenterWorld(new Vector3Int(x,y));
                 spawnTile = Instantiate(tilePrefab, worldPosition, Quaternion.identity,gameObject.transform); //added gameObject.transform so that the gridcells take this game object as a partent
                 spawnTile.name = $"Tile{x}{y}";
+                if (x >= 7)
+                {
+                    spawnTile.GetComponent<BoxCollider2D>().enabled = false ;
+                }
             }
         }
         _cam.transform.position = new Vector3 ((float) width/2, (float) height/2,-10);
