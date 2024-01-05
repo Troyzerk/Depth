@@ -44,7 +44,6 @@ public class BaseGameScript : MonoBehaviour
         PersistentManager.instance.AIGroups.SetActive(false);
         PersistentManager.instance.towns.SetActive(false);
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
-        //ValidateNPCParty(enemyMinionList);
         playerMinionList = PersistentManager.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
     }
