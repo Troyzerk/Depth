@@ -44,7 +44,6 @@ public class BaseGameScript : MonoBehaviour
         PersistentManager.instance.AIGroups.SetActive(false);
         PersistentManager.instance.towns.SetActive(false);
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
-        ValidateNPCParty(enemyMinionList);
         playerMinionList = PersistentManager.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
     }
@@ -70,8 +69,7 @@ public class BaseGameScript : MonoBehaviour
         }
         
         if (Input.GetMouseButtonUp(0) && _selectedObject != null)
-        {   
-            
+        {
             _selectedObject.transform.position = tileHover.transform.position;
             _selectedObject = null;
         }
@@ -83,6 +81,8 @@ public class BaseGameScript : MonoBehaviour
 
         menu.SetActive(false);
         iSee = true;
+
+        ValidateNPCParty(enemyMinionList);
 
         for (int x = 0; x<width;x++)
         {
