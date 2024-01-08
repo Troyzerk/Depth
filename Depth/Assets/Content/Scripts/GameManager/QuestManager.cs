@@ -6,6 +6,8 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     public List<Quest> currentQuests = new();
+
+    // This starting quest gets set all the time. We will need to somehow make this dynamic
     public Quest startingQuest;
     // Add methods for starting quests, completing quests, updating objectives, etc.
 

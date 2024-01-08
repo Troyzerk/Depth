@@ -22,8 +22,19 @@ public class Quest : ScriptableObject
 
     public void CheckGoals()
     {
-        isCompleted = questGoals.All(g => g.isQuestGoalCompleted);
-        if (isCompleted) GiveReward();
+        if (currentGoal.currentAmount >= currentGoal.requiredAmount)
+        {
+
+        }
+
+        if (currentGoal.isQuestGoalCompleted)
+        {
+            if (currentGoal.questStep>= questGoals.Count)
+            {
+                isCompleted = true;
+                GiveReward();
+            }
+        }
     }
 
     void GiveReward()
@@ -47,6 +58,7 @@ public class QuestGoal
     public bool isQuestGoalCompleted;
     public int requiredAmount;
     public int currentAmount;
+    public int questStep;
     public string description;
     
     public virtual void Init()
