@@ -15,6 +15,7 @@ public class PersistentManager : MonoBehaviour
     public List<string> globalCharacterNames = new();
     public List<GameObject> storedTowns;
     public List<GameObject> storedNPCPartys;
+    public List<Character> activeCharacters;
     public GameObject AIGroups;
     public GameObject towns;
     public bool firstLoad;
@@ -26,6 +27,7 @@ public class PersistentManager : MonoBehaviour
 
     public static List<RaceStats> activeRaces = new();
     public static Faction[] factions;
+    
 
     
 

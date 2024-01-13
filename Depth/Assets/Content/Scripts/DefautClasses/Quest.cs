@@ -55,6 +55,7 @@ public class Quest : ScriptableObject
 public class QuestGoal
 {
     public QuestGoalType type;
+    public string goalName;
     public bool isQuestGoalCompleted;
     public int requiredAmount;
     public int currentAmount;
@@ -114,6 +115,22 @@ public class KillQuestGoal: QuestGoal
         }
     }
 } 
+
+public class FindQuestGoal: QuestGoal
+{
+    public Character character;
+
+    public void FindRandomCharacter()
+    {
+        character = PersistentManager.instance.activeCharacters[Random.Range(0,PersistentManager.instance.activeCharacters.Count)];
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        FindRandomCharacter();
+    }
+}
 
 public enum QuestGoalType
 {
