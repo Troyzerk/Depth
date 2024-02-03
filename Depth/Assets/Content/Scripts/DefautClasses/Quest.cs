@@ -13,12 +13,7 @@ public class Quest : ScriptableObject
     public List<QuestGoal> questGoals = new();
     public bool isCompleted;
 
-    public Quest(string name, string desc)
-    {
-        questName = name;
-        description = desc;
-        isCompleted = false;
-    }
+
 
     public void CheckGoals()
     {

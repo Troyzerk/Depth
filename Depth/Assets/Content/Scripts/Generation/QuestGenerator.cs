@@ -7,8 +7,7 @@ public static class QuestGenerator
    
     public static Quest GenerateQuest(string name,string description ,QuestGoalType questGoalType, int steps)
     {
-        Quest quest;
-        quest = new Quest(name,description);
+        Quest quest = ScriptableObject.CreateInstance<Quest>();
         quest.description = description;
         quest.name = name;
         quest.questName = name;

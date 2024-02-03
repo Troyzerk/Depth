@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
+
 public class QuestManager : MonoBehaviour
 {
     public List<Quest> currentQuests = new();
@@ -22,10 +24,11 @@ public class QuestManager : MonoBehaviour
         ReinitializeQuestEntrys();
     }
 
-    public void GenerateRandomQuest()
-    {
-
-    }
+    /*
+     * Functions from here down are to manage the
+     * quest display on the UI.
+     * 
+     */
 
     public void ReinitializeQuestEntrys()
     {
@@ -49,8 +52,20 @@ public class QuestManager : MonoBehaviour
             obj.name = "QuestEntry-" + quest.questName;
             GameObject.Find("HUD/QuestLog/" + obj.name + "/Title/QuestTitle").GetComponent<TMP_Text>().text = quest.questName;
             GameObject.Find("HUD/QuestLog/" + obj.name + "/Title/QuestGoalStep").GetComponent<TMP_Text>().text = "1/"+ quest.questGoals.Count;
-            GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalDescription").GetComponent<TMP_Text>().text = quest.currentGoal.description;
-            GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalProgress").GetComponent<TMP_Text>().text = quest.currentGoal.currentAmount.ToString() + "/" + startingQuest.currentGoal.requiredAmount.ToString();
+
+            //Current goal is not set.
+            if(quest.currentGoal == null)
+            {
+                Debug.LogWarning("Current goal reference in Quest list in Quest manager is missing");
+                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalDescription").GetComponent<TMP_Text>().text = quest.description;
+                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalProgress").GetComponent<TMP_Text>().text = "Missing Text";
+            }
+            else
+            {
+                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalDescription").GetComponent<TMP_Text>().text = quest.currentGoal.description;
+                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalProgress").GetComponent<TMP_Text>().text = quest.currentGoal.currentAmount.ToString() + "/" + startingQuest.currentGoal.requiredAmount.ToString();
+            }
+            
         }
     }
     
