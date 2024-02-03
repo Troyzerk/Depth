@@ -12,6 +12,7 @@ using UnityEngine;
 
 public class Party : ScriptableObject
 {
+    public Character partyLeader;
     public string partyName;
     public Faction faction;
     public List<Character> characters = new();

@@ -7,6 +7,7 @@ using UnityEngine;
 public class PersistentManager : MonoBehaviour
 {
     public static PersistentManager instance { get; private set; }
+    public Character playerCharacter;
 
     public PlayerParty playerParty;
     public Vector3 storedPlayerTransform;
@@ -15,6 +16,7 @@ public class PersistentManager : MonoBehaviour
     public List<string> globalCharacterNames = new();
     public List<GameObject> storedTowns;
     public List<GameObject> storedNPCPartys;
+    public List<Character> activeCharacters;
     public GameObject AIGroups;
     public GameObject towns;
     public bool firstLoad;
@@ -26,11 +28,22 @@ public class PersistentManager : MonoBehaviour
 
     public static List<RaceStats> activeRaces = new();
     public static Faction[] factions;
+    
 
     
 
     private void Awake()
     {
+        if (AIGroups == null)
+        {
+            AIGroups = GameObject.Find("AIGroups");
+        }
+        if (towns == null)
+        {
+            towns = GameObject.Find("Towns");
+        }
+
+
         if (instance == null)
         {
             instance = this;

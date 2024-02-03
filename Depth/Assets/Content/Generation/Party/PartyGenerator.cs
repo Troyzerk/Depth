@@ -30,6 +30,7 @@ public static class PartyGenerator
         }
 
         aiGroup.partySpeed = Random.Range(0.1f, 0.2f);
+        //aiGroup.partyLeader = aiGroup.characters[1];
         return aiGroup;
     }
 
@@ -59,6 +60,7 @@ public static class PartyGenerator
         }
 
         PersistentManager.instance.playerParty = party;
+        party.partyLeader = PersistentManager.instance.playerCharacter;
         return party;
     }
 

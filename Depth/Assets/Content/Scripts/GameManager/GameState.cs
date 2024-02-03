@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,14 +19,11 @@ public class GameState : MonoBehaviour
     // Move this to a global world manager
     public float startingGameSpeed = 1f;
     public List<Faction> globalFactions;
+    public Sprite heroImage;
     private void Awake()
     {
         GroupNames.InitGroupNames();
-        if (PersistentManager.instance.AIGroups != null && PersistentManager.instance.towns != null)
-        {
-            PersistentManager.instance.AIGroups.SetActive(true);
-            PersistentManager.instance.towns.SetActive(true);
-        }
+        
 
 
         //AIGroupTracker.UpdateAIGroupTracker();
@@ -35,6 +33,17 @@ public class GameState : MonoBehaviour
     void Start()
     {
         GlobalGameSettings.SetGameSpeed(startingGameSpeed);
+
+        //assigning hero image.
+        heroImage = GameObject.Find("HUD/HeroContainer/HeroImage").GetComponent<Sprite>();
+        if(heroImage == null)
+        {
+            Debug.Log("HeroImage object not found.");
+        }
+        else
+        {
+            heroImage = PersistentManager.instance.playerCharacter.portrait;
+        }
     }
 
     
