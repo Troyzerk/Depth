@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 5007339}
   - component: {fileID: 5007338}
   - component: {fileID: 5007337}
+  - component: {fileID: 5007341}
   m_Layer: 0
   m_Name: skillMenu
   m_TagString: Untagged
@@ -229,6 +230,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &5007341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3e94dcf96678a42a2b78f1f3699c56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSkill: {fileID: 490479795}
+  projectSkill: {fileID: 1423628784}
+  healSkill: {fileID: 1455814662}
 --- !u!1 &36984089
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +278,9 @@ MonoBehaviour:
   enemyMinionList: []
   _selectedObject: {fileID: 0}
   tileHover: {fileID: 0}
+  fireSkill: {fileID: 285847399767789199, guid: 53077e0faedab3146b57130265cb4a35,
+    type: 3}
+  fireSkillClone: {fileID: 0}
   grid: {fileID: 1766384877}
   menu: {fileID: 726530078}
   skillMenu: {fileID: 5007336}
@@ -430,7 +449,7 @@ GameObject:
   - component: {fileID: 490479796}
   - component: {fileID: 490479795}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: Fire Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1187,7 +1206,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Skill Two
+  m_text: 'Projectile Skill
 
 '
   m_isRightToLeft: 0
@@ -1522,7 +1541,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Skill Three
+  m_text: Healing Skill
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1912,7 +1931,7 @@ GameObject:
   - component: {fileID: 1423628785}
   - component: {fileID: 1423628784}
   m_Layer: 0
-  m_Name: Button (2)
+  m_Name: 'Project Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2185,7 +2204,7 @@ GameObject:
   - component: {fileID: 1455814663}
   - component: {fileID: 1455814662}
   m_Layer: 0
-  m_Name: Button (3)
+  m_Name: 'Heal Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2671,7 +2690,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Skill One
+  m_text: 'Fire Skill
+
 
 '
   m_isRightToLeft: 0

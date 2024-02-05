@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 public class MinionBrain : MonoBehaviour
 {
+    public GameObject damageCounter;
+
     public Character minionRef;
+
     public BaseGameScript _baseGameScript;
+    public HealthBarBattleUI _healthBarScript;
+    public weaponAnim _weaponAnimScript;
+
     [SerializeField] GameObject target;
     public List<Character> playerParty = new();
     public List<Character> NPCParty = new();
@@ -18,8 +25,13 @@ public class MinionBrain : MonoBehaviour
     void Start()
     {
         _baseGameScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<BaseGameScript>();
+        //_healthBarScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<HealthBarBattleUI>();
         playerParty = PersistentManager.instance.playerParty.characters;
         NPCParty = PersistentManager.instance.enemyParty.characters;
+
+        int health = this.gameObject.GetComponent<MinionBrain>().minionRef.health;
+
+        _healthBarScript.SetMaxHealth(health);
 
     }
 
@@ -27,6 +39,9 @@ public class MinionBrain : MonoBehaviour
     {
         if (_baseGameScript.iSee)
         {
+            int health = this.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
+
+            _healthBarScript.SetHealth(health);
             if (this.gameObject.CompareTag("Minion"))
             {
                 DoCheck(NPCParty);
@@ -51,10 +66,11 @@ public class MinionBrain : MonoBehaviour
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
+                isAttack = false;
 
                 if (distanceEnemy > minionRef.autoAttackSkill.range)
                 {
-                    isAttack = false;
+                    
                     transform.position = Vector2.MoveTowards(transform.position, target.transform.position, minionRef.speed * Time.deltaTime);
                 }
                 if (distanceEnemy <= minionRef.autoAttackSkill.range)
@@ -63,8 +79,14 @@ public class MinionBrain : MonoBehaviour
                     if (isAttack)
                     {
                         timer += Time.deltaTime;
+                        if (timer <=0.1)
+                        {
+                            _weaponAnimScript.Attack();
+                            print("Wack");
+                        }
                         if (timer > minionRef.autoAttackSkill.cooldown)
                         {
+                            
                             IsAttack(target, this.gameObject);
                             
                             timer -= minionRef.autoAttackSkill.cooldown;
@@ -82,10 +104,21 @@ public class MinionBrain : MonoBehaviour
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
 
+        _healthBarScript.SetHealth(health);
+
+        GameObject DamageInstance = Instantiate(damageCounter, attacker.transform);
+
+        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(attackStrenght.ToString());
+
+        if (attacker.transform.localScale.x <=0)
+        {
+            DamageInstance.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+        }
+        // print("Hit");
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
 
-        if (health >= 0)
+        if (health <= 0)
         {
             defender.gameObject.GetComponent<MinionBrain>().minionRef.status = CharacterStatus.Dead;
             Object.Destroy(defender);

@@ -46,8 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerParty: {fileID: 0}
+  storedPlayerTransform: {x: 0, y: 0, z: 0}
   enemyParty: {fileID: 0}
+  npcGroup: {fileID: 0}
   globalCharacterNames: []
+  storedTowns: []
+  storedNPCPartys: []
+  AIGroups: {fileID: 0}
+  towns: {fileID: 0}
+  firstLoad: 0
   startingPlayerPartySize: 0
   startingEnemyPartySize: 0
   globalFactions: []

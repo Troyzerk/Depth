@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,10 +19,12 @@ public class BaseGameScript : MonoBehaviour
     private GameObject clone; 
     
     public GameObject _selectedObject;
-    private Vector3 _offSet;
+    public Vector3 _offSet;
     private Collider2D targetObject;
 
     public GameObject tileHover;
+    public GameObject fireSkill;
+    public GameObject fireSkillClone;
 
     private Vector3 worldPosition;
 
@@ -38,6 +41,7 @@ public class BaseGameScript : MonoBehaviour
     private int width, height;
 
     public bool iSee;
+    bool skillPress;
 
     void Start()
     {
@@ -68,10 +72,27 @@ public class BaseGameScript : MonoBehaviour
             _selectedObject.transform.position = mousePosition + _offSet;
         }
         
-        if (Input.GetMouseButtonUp(0) && _selectedObject != null)
+        if (Input.GetMouseButtonUp(0) && _selectedObject != null )
         {
             _selectedObject.transform.position = tileHover.transform.position;
             _selectedObject = null;
+        }
+        if (skillPress)
+        {
+            _selectedObject = fireSkillClone.transform.gameObject;
+            _offSet = _selectedObject.transform.position - mousePosition;
+
+            if (_selectedObject != null)
+            {
+                _selectedObject.transform.position = mousePosition + _offSet;
+            }
+            if (Input.GetMouseButtonUp(1) && _selectedObject !=null)
+            {
+                print("upMouse");
+                fireSkillClone.transform.position = mousePosition+ _offSet;
+                skillPress = false;
+                _selectedObject = null;
+            }
         }
     }
     public void RunNet()
@@ -102,6 +123,10 @@ public class BaseGameScript : MonoBehaviour
     public void SkillFire()
     {
         print("Fire Skill Set");
+        skillPress = true;
+        Vector3 pos = new Vector3(0, 0, 0);
+        fireSkillClone = Instantiate(fireSkill);
+        fireSkillClone.transform.position = pos;
 
     }
     public void SurrenderScene()
@@ -115,6 +140,7 @@ public class BaseGameScript : MonoBehaviour
         PromoteBattleParties();
         SceneManagerScript.LoadBattleResolution();
     }
+
 
     void ValidateNPCParty(List<Character> party)
     {

@@ -24,6 +24,8 @@ public class EnemyMovement : MonoBehaviour
     public int health;
     public int attackStrenght;
     private bool isAttacking;
+
+    public GameObject hitCounter;
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +97,7 @@ public class EnemyMovement : MonoBehaviour
 
         health -= attackStrenght;
         founder.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
+
 
         if (health >= 0)
         {
