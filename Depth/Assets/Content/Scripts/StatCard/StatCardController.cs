@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class StatCardController : MonoBehaviour
 {
-    public CharacterMenu characterMenu;
-    void Start()
-    {
-        characterMenu = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CharacterMenu>();
-        //SetCharacterCardStats(characterMenu.selectedCharacter);
-    }
+
 
     public void SetCharacterCardStats(Character character)
     {
@@ -51,8 +46,10 @@ public class StatCardController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void EnableWindow()
+    public void EnableWindow(Character character)
     {
+        SetCharacterCardStats(character);
         gameObject.SetActive(true);
+
     }
 }

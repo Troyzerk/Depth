@@ -5,14 +5,13 @@ using UnityEngine;
 public class HeroContainerManager : MonoBehaviour
 {
     //vars
-    public GameObject heroStatCard;
+    GameObject heroStatCard;
     
     private void Awake()
     {
         if(heroStatCard == null)
         {
-            heroStatCard = GameObject.Find("HUD/HeroContainer/HeroStatCard");
-            print("HeroStatCard found.");
+            heroStatCard = GameObject.Find("HUD/HeroContainer/StatCard");
         }
         // sets hero card as inactive on awake
         heroStatCard.SetActive(false);
@@ -21,11 +20,11 @@ public class HeroContainerManager : MonoBehaviour
     {
        if (heroStatCard.activeInHierarchy == true)
         {
-            heroStatCard.SetActive(false);
+            heroStatCard.GetComponent<StatCardController>().DisableWindow();
         }
        else 
-        { 
-            heroStatCard.SetActive(true);
+        {
+            heroStatCard.GetComponent<StatCardController>().EnableWindow(PersistentManager.instance.playerCharacter);
         }
     }
 }

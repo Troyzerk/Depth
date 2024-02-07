@@ -34,6 +34,8 @@ public class PersistentManager : MonoBehaviour
 
     private void Awake()
     {
+        
+
         if (AIGroups == null)
         {
             AIGroups = GameObject.Find("AIGroups");
@@ -75,6 +77,15 @@ public class PersistentManager : MonoBehaviour
             NPCPartySpawner.SpawnNPCGroups(10);
             NPCPartySpawner.SpawnTowns(5);
         }        
+    }
+
+    private void Start()
+    {
+        //Assigns random hero character to start
+        if (playerCharacter == null)
+        {
+            playerCharacter = playerParty.partyLeader;
+        }
     }
 
     private void InitGlobalFactions()
