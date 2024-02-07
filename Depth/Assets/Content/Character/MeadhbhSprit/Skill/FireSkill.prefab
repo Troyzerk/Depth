@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6592030209815513919}
   - component: {fileID: 8375760518350159711}
   - component: {fileID: 7547553677268349694}
-  - component: {fileID: -7136340762782466843}
+  - component: {fileID: 1448294431090117064}
   m_Layer: 0
   m_Name: FireSkill
-  m_TagString: Untagged
+  m_TagString: FireSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
---- !u!114 &-7136340762782466843
+--- !u!114 &1448294431090117064
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac18137e91a9734c975c01f0e9c44ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spellScript: {fileID: 2261394416112052602, guid: cb0a685cc6d5750498e2bc386f9117da,
+    type: 3}

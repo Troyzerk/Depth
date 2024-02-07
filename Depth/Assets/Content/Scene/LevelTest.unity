@@ -13149,7 +13149,7 @@ PrefabInstance:
     - target: {fileID: 6015660178674552646, guid: c685dacd073f5f146ba03755488622b5,
         type: 3}
       propertyPath: startingPlayerPartySize
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

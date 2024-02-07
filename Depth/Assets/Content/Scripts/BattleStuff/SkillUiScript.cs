@@ -9,7 +9,6 @@ public class SkillUiScript : MonoBehaviour
     [SerializeField] private Button projectSkill;
     [SerializeField] private Button healSkill;
 
-    bool buttonLocked = false;
     private float lockTime = 2f;
     private Coroutine buttonDisabled = null;
 

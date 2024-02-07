@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class BaseGameScript : MonoBehaviour
 {
+    
 
     public List<Character> playerMinionList;
     public List <Character> enemyMinionList;
@@ -20,10 +21,16 @@ public class BaseGameScript : MonoBehaviour
     
     public GameObject _selectedObject;
     public Vector3 _offSet;
+    public Vector3 skillOffSet;
     private Collider2D targetObject;
+
+    public GameObject enemyTarget;
+    public GameObject friendlyTarget;
+    private GameObject _skillSelect;
 
     public GameObject tileHover;
     public GameObject fireSkill;
+    public GameObject healSkill;
     public GameObject fireSkillClone;
 
     private Vector3 worldPosition;
@@ -43,33 +50,40 @@ public class BaseGameScript : MonoBehaviour
     public bool iSee;
     bool skillPress;
 
+    public SpellScript _spellScript;
+
     void Start()
     {
+        //_spellScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<SpellScript>();
         PersistentManager.instance.AIGroups.SetActive(false);
         PersistentManager.instance.towns.SetActive(false);
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
         playerMinionList = PersistentManager.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
+
+        GlobalGameSettings.SetGameSpeed(1);
     }
     void Update()
     {   
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (tileHover != null)
+        {
+            tileHover.GetComponent<SpriteRenderer>().color = Color.yellow;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Collider2D targetObject= Physics2D.OverlapPoint(mousePosition);
             if (targetObject != null && targetObject.gameObject.CompareTag("Minion"))
             {
                 _selectedObject = targetObject.transform.gameObject;
-                
                 _offSet = _selectedObject.transform.position - mousePosition;
             }
-            
-
         }
         if (_selectedObject != null)
         {   
             
-            _selectedObject.transform.position = mousePosition + _offSet;
+            _selectedObject.transform.position = mousePosition + skillOffSet;
         }
         
         if (Input.GetMouseButtonUp(0) && _selectedObject != null )
@@ -79,20 +93,19 @@ public class BaseGameScript : MonoBehaviour
         }
         if (skillPress)
         {
-            _selectedObject = fireSkillClone.transform.gameObject;
-            _offSet = _selectedObject.transform.position - mousePosition;
-
-            if (_selectedObject != null)
+            Vector3 skillOffSet = new Vector3(0, 0, 5);
+            if (_skillSelect != null)
             {
-                _selectedObject.transform.position = mousePosition + _offSet;
+                _skillSelect.transform.position = mousePosition + skillOffSet;
             }
-            if (Input.GetMouseButtonUp(1) && _selectedObject !=null)
+            if (Input.GetMouseButtonUp(1) && _skillSelect != null)
             {
-                print("upMouse");
-                fireSkillClone.transform.position = mousePosition+ _offSet;
+                _skillSelect.transform.position = mousePosition +skillOffSet;
+                _skillSelect.GetComponent<BoxCollider2D>().enabled = true;
+                StartCoroutine(DestroySkill(1));
                 skillPress = false;
-                _selectedObject = null;
-            }
+                
+            }  
         }
     }
     public void RunNet()
@@ -123,10 +136,20 @@ public class BaseGameScript : MonoBehaviour
     public void SkillFire()
     {
         print("Fire Skill Set");
+        GameObject skillPreb = Instantiate(fireSkill);
+        _skillSelect = skillPreb.transform.gameObject;
+        _skillSelect.GetComponent<BoxCollider2D>().enabled = false;
         skillPress = true;
-        Vector3 pos = new Vector3(0, 0, 0);
-        fireSkillClone = Instantiate(fireSkill);
-        fireSkillClone.transform.position = pos;
+
+    }
+
+    public void SkillHeal()
+    {
+        print("Fire Skill Set");
+        GameObject skillPreb = Instantiate(healSkill);
+        _skillSelect = skillPreb.transform.gameObject;
+        _skillSelect.GetComponent<BoxCollider2D>().enabled = false;
+        skillPress = true;
 
     }
     public void SurrenderScene()
@@ -177,5 +200,9 @@ public class BaseGameScript : MonoBehaviour
         PersistentManager.instance.playerParty.characters = playerMinionList;
         PersistentManager.instance.enemyParty.characters = enemyMinionList;
     }
-
+    private IEnumerator DestroySkill(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Destroy(_skillSelect);
+    }
 }
