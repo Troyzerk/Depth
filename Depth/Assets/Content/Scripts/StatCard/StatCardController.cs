@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class StatCardController : MonoBehaviour
 {
-    public CharacterMenu characterMenu;
-    void Start()
-    {
-        characterMenu = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CharacterMenu>();
-        SetCharacterCardStats(characterMenu.selectedCharacter);
-    }
+
 
     public void SetCharacterCardStats(Character character)
     {
@@ -43,6 +38,18 @@ public class StatCardController : MonoBehaviour
 
         var speedInput = transform.Find("CardBase/Stats/Speed/SpeedInput").GetComponent<TMP_Text>();
         speedInput.text = character.speed.ToString();
+
+    }
+
+    public void DisableWindow()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void EnableWindow(Character character)
+    {
+        SetCharacterCardStats(character);
+        gameObject.SetActive(true);
 
     }
 }

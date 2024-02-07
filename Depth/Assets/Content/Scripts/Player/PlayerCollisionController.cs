@@ -29,6 +29,8 @@ public class PlayerCollisionController : MonoBehaviour
             }
 
             GlobalPlayerData.selectedTown = other.gameObject.GetComponent<TownInfo>().town;
+
+            // If there is a reference error here make sure TownMenu is spawned and set to active. 
             TownWindow.instance.OpenTownWindow();
             if (other.gameObject.GetComponent<TownInfo>().town.seen == false)
             {

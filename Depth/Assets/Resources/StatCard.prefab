@@ -1313,7 +1313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5a535926b62914aba2f5bf8e0222bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterMenu: {fileID: 0}
 --- !u!1 &4924906162621175018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,10 +2860,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1307076900520437304, guid: 54e961bef16d62c468de27b11f7bcd5e,
-          type: 3}
-        m_TargetAssemblyTypeName: CharacterMenu, Assembly-CSharp
-        m_MethodName: RemoveCharacterStatCard
+      - m_Target: {fileID: 5491874193701473399}
+        m_TargetAssemblyTypeName: StatCardController, Assembly-CSharp
+        m_MethodName: DisableWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
