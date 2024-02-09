@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -30,6 +31,7 @@ public static class PartyGenerator
         }
 
         aiGroup.partySpeed = Random.Range(0.1f, 0.2f);
+        //aiGroup.partyLeader = aiGroup.characters[1];
         return aiGroup;
     }
 
@@ -52,13 +54,23 @@ public static class PartyGenerator
         //generate and add characters to party
         for (int i = 0; i < size; i++)
         {
+            
             Character newChar = CharacterGenerator.CreateNewCharacter(RaceID.Goblin,SubRaceID.Goblinoid,party.characters);
-            party.characters.Add(newChar);
+            
+            if (party.partyLeader == null)
+            {
+                party.partyLeader = newChar;
+            }
+            else
+            {
+                party.characters.Add(newChar);
+            }
             //party.totalDamage += newChar.damage;
             //party.totalDefence += newChar.defence;
         }
 
         PersistentManager.instance.playerParty = party;
+        PersistentManager.instance.playerCharacter = party.partyLeader;
         return party;
     }
 

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -2469248042012288350}
   - component: {fileID: 1307076900520437304}
   - component: {fileID: 5406103813610492248}
-  - component: {fileID: 3640327168603874805}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -47,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a09d3b53e10df4fafdf546ad72c1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalCharacterNames: []
   startingGameSpeed: 1
   globalFactions:
   - {fileID: 11400000, guid: 53b28e7cdc2bb3f4eacb78266547d50b, type: 2}
@@ -80,16 +78,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiGroupPrefab: {fileID: 0}
---- !u!114 &3640327168603874805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8169357922715161476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65153f55b021713449f0dc35ea848d3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quests: []

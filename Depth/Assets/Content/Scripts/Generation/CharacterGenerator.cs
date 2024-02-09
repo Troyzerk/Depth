@@ -81,6 +81,7 @@ public static class CharacterGenerator
         //Adds the new character to the party and manages the party size.
         newCharacter.name = newCharacter.characterFullName;
         PersistentManager.instance.globalCharacterNames.Add(newCharacter.characterFullName);
+        PersistentManager.instance.activeCharacters.Add(newCharacter);
         UpdateCharacterStatsAfterEvolution(newCharacter);
         //print("Created : " + newCharacter.race + " - " + newCharacter.subRace);
         return newCharacter;
