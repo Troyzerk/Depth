@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 /*
  * This Class should be used only for gamewide functions. 
@@ -19,7 +20,7 @@ public class GameState : MonoBehaviour
     // Move this to a global world manager
     public float startingGameSpeed = 1f;
     public List<Faction> globalFactions;
-    public Sprite heroImage;
+    public Image heroImage;
     private void Awake()
     {
         GroupNames.InitGroupNames();
@@ -35,10 +36,10 @@ public class GameState : MonoBehaviour
         GlobalGameSettings.SetGameSpeed(startingGameSpeed);
 
         //assigning hero image.
-        heroImage = GameObject.Find("HUD/HeroContainer/HeroImage").GetComponent<Sprite>();
+        heroImage = HeroContainerManager.instance.heroImage.GetComponent<Image>();
         if(heroImage == null)
         {
-            Debug.Log("HeroImage object not found.");
+            Debug.LogWarning("HeroImage object not found.");
         }
         else
         {

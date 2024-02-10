@@ -5,26 +5,36 @@ using UnityEngine;
 public class HeroContainerManager : MonoBehaviour
 {
     //vars
-    GameObject heroStatCard;
-    
+    public static HeroContainerManager instance { get; private set; }
+
+    public GameObject statCard, heroImage, heroStatButton;
+
     private void Awake()
     {
-        if(heroStatCard == null)
-        {
-            heroStatCard = GameObject.Find("HUD/HeroContainer/StatCard");
-        }
         // sets hero card as inactive on awake
-        heroStatCard.SetActive(false);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        statCard.SetActive(false);
     }
     public void StatButtonPress()
     {
-       if (heroStatCard.activeInHierarchy == true)
+       if (statCard.activeInHierarchy == true)
         {
-            heroStatCard.GetComponent<StatCardController>().DisableWindow();
+            statCard.GetComponent<StatCardController>().DisableWindow();
         }
        else 
         {
-            heroStatCard.GetComponent<StatCardController>().EnableWindow(PersistentManager.instance.playerCharacter);
+            statCard.GetComponent<StatCardController>().EnableWindow(PersistentManager.instance.playerCharacter);
         }
     }
+
+
+
 }

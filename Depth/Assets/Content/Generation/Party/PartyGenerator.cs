@@ -60,6 +60,7 @@ public static class PartyGenerator
             if (party.partyLeader == null)
             {
                 party.partyLeader = newChar;
+                Debug.Log("PartyLeader Set!");
             }
             else
             {

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    public PlayerPartyManager playerPartyManager;
     public Town town;
 
 
@@ -29,20 +28,20 @@ public class HUDManager : MonoBehaviour
     }
     public void Init()
     {
-        playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
-        goldCounter = GameObject.Find("GoldCounterText").GetComponent<TMP_Text>();
-        repCounter = GameObject.Find("RepCounterText").GetComponent<TMP_Text>();
-        partySpeedCounter = GameObject.Find("PartySpeedCounterText").GetComponent<TMP_Text>();
-        partyDefenceCounter = GameObject.Find("PartyDefence").GetComponent<TMP_Text>();
-        partyDamageCounter = GameObject.Find("PartyDamage").GetComponent<TMP_Text>();
+        goldCounter = HUDGlobalStats.instance.GoldCounterText.GetComponent<TMP_Text>();
+        repCounter = HUDGlobalStats.instance.RepCounterText.GetComponent<TMP_Text>();
+        partySpeedCounter = HUDGlobalStats.instance.PartySpeedCounterText.GetComponent<TMP_Text>();
+        partyDefenceCounter = HUDGlobalStats.instance.PartyDefenceCounterText.GetComponent<TMP_Text>();
+        partyDamageCounter = HUDGlobalStats.instance.PartyDamageCounterText.GetComponent<TMP_Text>();
+
+        HeroContainerManager.instance.StatButtonPress();
 
     }
 
     public void UpdateHUD()
     {
         //Init();
-        playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
-        playerPartyManager.CalculateStatsTotal();
+        PlayerPartyManager.instance.CalculateStatsTotal();
         goldCounter.text = PersistentManager.instance.playerParty.gold.ToString();
         repCounter.text = PersistentManager.instance.playerParty.reputation.ToString();
         float simpleSpeed = Mathf.Round(PersistentManager.instance.playerParty.partySpeed +100)/100;
@@ -84,7 +83,7 @@ public class HUDManager : MonoBehaviour
                     var charPortrait = obj.transform.Find("Frame").Find("Portrait").GetComponent<Image>();
 
                     partyBarButton.character = character;
-                    charPortrait.sprite = character.portrait;
+                    charPortrait.sprite = character.portrait.sprite;
                     charName.text = character.characterFullName;
 
                 }

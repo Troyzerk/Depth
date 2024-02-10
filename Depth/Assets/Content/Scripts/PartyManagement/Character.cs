@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Content/Create new Character")]
 public class Character : ScriptableObject
@@ -15,7 +16,7 @@ public class Character : ScriptableObject
     public SubRaceID subRace;
     public SubRaceStats subRaceStats;
 
-    public Sprite portrait;
+    public Image portrait; 
 
     public int level;
     public int currentExperience;
