@@ -85,6 +85,7 @@ public class PersistentManager : MonoBehaviour
         if (playerCharacter == null)
         {
             playerCharacter = playerParty.partyLeader;
+            Debug.LogError("PlayerCharacter Ref not set in Persistant Manager");
         }
     }
 
