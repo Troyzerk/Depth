@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 210581118}
   - component: {fileID: 210581117}
   - component: {fileID: 210581116}
+  - component: {fileID: 210581119}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -154,8 +155,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1167577916}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &210581116
 MonoBehaviour:
@@ -345,6 +346,23 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &210581119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210581114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0010ae643b0d64db43dd5f8a60fa45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PanSpeedX: 7.1
+  PanSpeedY: 4
+  ZoomSpeed: 1
+  MinOrthoSize: 1
+  MaxOrthoSize: 4
 --- !u!1001 &355049734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -702,6 +720,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013331898634692786, guid: 6f367ee9c44b5d74a9077918ef66caa1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 191.5
       objectReference: {fileID: 0}
     - target: {fileID: 2107321523470460458, guid: 6f367ee9c44b5d74a9077918ef66caa1,
         type: 3}
@@ -2206,7 +2229,7 @@ Transform:
   m_Children:
   - {fileID: 1337145424}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &836677157 stripped
 GameObject:
@@ -2258,7 +2281,7 @@ PrefabInstance:
     - target: {fileID: 3131583745804894355, guid: 99631fb5d06523b48b4fb99f54845194,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3131583745804894355, guid: 99631fb5d06523b48b4fb99f54845194,
         type: 3}
@@ -2328,19 +2351,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3131583745804894355, guid: 99631fb5d06523b48b4fb99f54845194,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 210581115}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99631fb5d06523b48b4fb99f54845194, type: 3}
---- !u!4 &1167577916 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3131583745804894355, guid: 99631fb5d06523b48b4fb99f54845194,
-    type: 3}
-  m_PrefabInstance: {fileID: 1037396856}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337145423
 GameObject:
   m_ObjectHideFlags: 0
@@ -13964,7 +13977,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 50, y: 140, z: 0}
 --- !u!1 &1637815024 stripped
 GameObject:
@@ -14001,7 +14014,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775953667
 GameObject:
@@ -14069,7 +14082,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805565262 stripped
 GameObject:
@@ -14203,7 +14216,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2891599348160883972
 PrefabInstance:
@@ -14216,7 +14229,7 @@ PrefabInstance:
     - target: {fileID: 384362677703802739, guid: 00fcb8442058de443b5581a0a12fe425,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 384362677703802739, guid: 00fcb8442058de443b5581a0a12fe425,
         type: 3}
