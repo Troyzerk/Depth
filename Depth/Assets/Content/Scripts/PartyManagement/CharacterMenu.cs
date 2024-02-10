@@ -16,10 +16,8 @@ using UnityEngine.UI;
 
 public class CharacterMenu : MonoBehaviour
 {
-    GameObject statCardRef;
-    Transform charStatCardContent;
+
     GameObject statCard;
-    bool statCardOpen = false;
 
     public Character selectedCharacter;
     public CharacterPriceList priceList;
@@ -28,38 +26,20 @@ public class CharacterMenu : MonoBehaviour
 
     private void Start()
     {
-        charStatCardContent = GameObject.FindGameObjectWithTag("CharSheetContent").transform;
-        statCardRef = Resources.Load("StatCard") as GameObject;        
+        statCard = GameObject.Find("HUD/CharacterStatCard/Content/StatCard");
+        if (statCard == null)
+        {
+            Debug.LogWarning("Character Stat card not found");
+        }
+        statCard.SetActive(false);
     }
 
 
     public void OpenCharacterCard(Character character)
     {
         selectedCharacter = character;
-        if (statCardOpen == true)
-        {
-            Destroy(statCard);
-            AddCharacterStatCard();
-        }
-        else
-        {
-            AddCharacterStatCard();
-        }
+        statCard.GetComponent<StatCardController>().EnableWindow(character);
     }
 
-    
-    
-    //Adds stat card to UI
-    public void AddCharacterStatCard()
-    {
-        statCard = Instantiate(statCardRef, charStatCardContent);
-        statCardOpen = true;
-    }
-    public void RemoveCharacterStatCard()
-    {
-        var obj = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CharacterMenu>().statCard;
-        Destroy(obj);
-        statCardOpen = false;
-    }
 
 }

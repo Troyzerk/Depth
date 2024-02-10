@@ -9,20 +9,27 @@ public class Quest : ScriptableObject
     public string questName;
     public string description;
     public int experienceReward;
+    public QuestGoal currentGoal;
     public List<QuestGoal> questGoals = new();
     public bool isCompleted;
 
-    public Quest(string name, string desc)
-    {
-        questName = name;
-        description = desc;
-        isCompleted = false;
-    }
+
 
     public void CheckGoals()
     {
-        isCompleted = questGoals.All(g => g.isQuestGoalCompleted);
-        if (isCompleted) GiveReward();
+        if (currentGoal.currentAmount >= currentGoal.requiredAmount)
+        {
+
+        }
+
+        if (currentGoal.isQuestGoalCompleted)
+        {
+            if (currentGoal.questStep>= questGoals.Count)
+            {
+                isCompleted = true;
+                GiveReward();
+            }
+        }
     }
 
     void GiveReward()
@@ -42,9 +49,12 @@ public class Quest : ScriptableObject
 [System.Serializable]
 public class QuestGoal
 {
+    public QuestGoalType type;
+    public string goalName;
     public bool isQuestGoalCompleted;
     public int requiredAmount;
     public int currentAmount;
+    public int questStep;
     public string description;
     
     public virtual void Init()
@@ -101,3 +111,25 @@ public class KillQuestGoal: QuestGoal
     }
 } 
 
+public class FindQuestGoal: QuestGoal
+{
+    public Character character;
+
+    public void FindRandomCharacter()
+    {
+        character = PersistentManager.instance.activeCharacters[Random.Range(0,PersistentManager.instance.activeCharacters.Count)];
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        FindRandomCharacter();
+    }
+}
+
+public enum QuestGoalType
+{
+    Kill,
+    Find,
+    Visit
+}
