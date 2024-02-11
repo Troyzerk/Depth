@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4192264811331190411}
   m_Layer: 0
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Sprite: {fileID: 21300000, guid: 27574c9073f58e449afce1ff3cb4f8f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b1aa03e14e4111345896ba8d1e9dfec5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,3 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8977f794ea50f47b48e3698b0633f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverOverOutline: {fileID: 1820238618079335568, guid: d0cbe138b8ab17143afa0e4a11886007,
+    type: 3}
+  hoverOutOutlinePrefab: {fileID: 0}

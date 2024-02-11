@@ -5,21 +5,17 @@ using static UnityEngine.GraphicsBuffer;
 
 public class SkillColliderTrig : MonoBehaviour
 {
-    public SpellScript _spellScript;
-
-    private void Start()
+    [SerializeField] private float coolDown, repeatTrigger;
+    private void Awake()
     {
-        _spellScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<SpellScript>();
+        StartCoroutine(DestroySkill(coolDown));
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Minion") )
-        {
-            _spellScript.friendlyTarget = col.gameObject;
-        }
         if (col.gameObject.CompareTag("Enemy" ))
         {
             GameObject enemyTarget= col.gameObject;
+            StartCoroutine(BurnBitch(repeatTrigger, enemyTarget));
             DealDamage(enemyTarget);
         }
     }
@@ -32,16 +28,19 @@ public class SkillColliderTrig : MonoBehaviour
             int health = target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
             health -= damage;
             target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
+            target.gameObject.GetComponent<MinionBrain>().DeathCounter(target,damage,new Color32(250,34,0,98));
         }
     }
-    public void DealHeal(GameObject target)
+
+    private IEnumerator DestroySkill(float seconds)
     {
-        if (target != null)            
-        {
-            int heal = 1;
-            int health = target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
-            health += heal;
-            target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
-        }
+        yield return new WaitForSeconds(seconds);
+        Destroy(this.gameObject);
+    }
+
+    private IEnumerator BurnBitch(float seconds, GameObject target)
+    {
+        yield return new WaitForSeconds(seconds); 
+        DealDamage(target);
     }
 }

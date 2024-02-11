@@ -12,8 +12,11 @@ public class ClickDragCollide : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col)
-    {   
-        _baseGameScript.tileHover = col.gameObject;
+    {
+        if (col.gameObject.CompareTag("Tile"))
+        {
+            _baseGameScript.tileHover = col.gameObject;
+        }
     }
 
 }

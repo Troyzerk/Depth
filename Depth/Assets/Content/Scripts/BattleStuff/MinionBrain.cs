@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MinionBrain : MonoBehaviour
@@ -106,15 +107,8 @@ public class MinionBrain : MonoBehaviour
 
         _healthBarScript.SetHealth(health);
 
-        GameObject DamageInstance = Instantiate(damageCounter, attacker.transform);
-
-        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(attackStrenght.ToString());
-
-        if (attacker.transform.localScale.x <=0)
-        {
-            DamageInstance.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
-        }
-        // print("Hit");
+        DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
+        print("Hit");
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
 
@@ -146,6 +140,18 @@ public class MinionBrain : MonoBehaviour
             _baseGameScript.endMenu.SetActive(true);
             _baseGameScript.skillMenu.SetActive(false);
             _baseGameScript.iSee = false;
+        }
+    }
+    public void DeathCounter(GameObject target,int num,Color32 color)
+    {
+        GameObject DamageInstance = Instantiate(damageCounter, target.transform);
+
+        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(num.ToString());
+        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().color = color;
+
+        if (target.transform.localScale.x <= 0)
+        {
+            DamageInstance.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
         }
     }
 }
