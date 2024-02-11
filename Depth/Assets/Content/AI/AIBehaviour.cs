@@ -98,6 +98,8 @@ public class AIBehaviour : MonoBehaviour
     */
     private void FindTarget()
     {
+        GameObject playerPartyObject = GameObject.FindGameObjectWithTag("Player");
+
         distanceToClosestTarget = huntingRange;
         //PersistentManager.instance.storedNPCPartys
         //This is where NPC partys are stored while loading between levels
@@ -110,7 +112,7 @@ public class AIBehaviour : MonoBehaviour
                 Debug.LogError("Faction scriptable objects have broken relationships returning all as null");
             }
 
-            if (newTarget.gameObject != null && aiParty.faction.enemyFactions.Contains(newTarget.gameObject.GetComponent<AIBehaviour>().aiParty.faction.factionName) && this.aiParty.totalDamage >= 1.1f * (newTarget.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
+            if (newTarget.gameObject != null && aiParty.faction.enemyFactions.Contains(newTarget.gameObject.GetComponent<AIBehaviour>().aiParty.faction.factionName) && this.aiParty.totalDamage >= 1f * (newTarget.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
             {
                 float distanceToTarget = Vector2.Distance(this.transform.position, newTarget.transform.position);
 
@@ -118,8 +120,13 @@ public class AIBehaviour : MonoBehaviour
                 {
                     target = newTarget;
                     distanceToClosestTarget = Vector2.Distance(this.transform.position, GlobalNPCPartyTracker.globalNPCPartyObjects[i].transform.position);
-
-                    if (this.aiParty.totalDamage >= 1.2f * (target.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
+                    if (distanceToClosestTarget <= Vector2.Distance(playerPartyObject.transform.position, this.transform.position))
+                    // && this.aiParty.totalDamage >= 0.4f * (PersistentManager.instance.playerParty.totalDamage)
+                    {
+                        target = playerPartyObject;
+                        //Debug.Log(target);
+                    }
+                    else if (this.aiParty.totalDamage >= 1.2f * (target.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
                     {
                         target.GetComponent<AIBehaviour>().Nigeru(this.gameObject);
                         //Debug.Log("Hunting " + target);
