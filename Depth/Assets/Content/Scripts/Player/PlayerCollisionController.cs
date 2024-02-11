@@ -51,7 +51,7 @@ public class PlayerCollisionController : MonoBehaviour
             PersistentManager.instance.enemyParty = aiParty;
             PersistentManager.instance.npcGroup = other.gameObject;
             SceneManagerScript.RecordStoredData();
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Battle_Scene");
 
             //Temp removed to test character battles
 
