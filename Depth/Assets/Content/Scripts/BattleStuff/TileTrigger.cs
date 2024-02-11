@@ -29,7 +29,6 @@ public class TileTrigger : MonoBehaviour
         target = collision.gameObject;
         if (_baseGameScript.iSee == true)
         {
-            print("Oh noo");
             Destroy(target);
             target = null;
         }
@@ -37,5 +36,14 @@ public class TileTrigger : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         target = null;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        target = collision.gameObject;
+        if (_baseGameScript.iSee == true)
+        {
+            Destroy(target);
+            target = null;
+        }
     }
 }
