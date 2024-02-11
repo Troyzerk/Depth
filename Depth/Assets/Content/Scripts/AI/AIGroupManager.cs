@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 public class AIGroupManager : MonoBehaviour
 {
     public GameObject aiGroupPrefab;
+    public int aiGroupMaxCount;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class AIGroupManager : MonoBehaviour
 
     public void CheckForAIGroupsSpawn()
     {
-        if (GlobalNPCPartyTracker.globalNPCPartys.Count <= 10)
+        if (GlobalNPCPartyTracker.globalNPCPartys.Count <= aiGroupMaxCount)
         {
             List<GameObject> towns = GlobalTownTracker.globalTownObjects;
             Transform selectedTownLocation = towns[Random.Range(0, towns.Count)].transform;
