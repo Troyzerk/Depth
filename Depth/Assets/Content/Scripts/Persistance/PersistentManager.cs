@@ -9,6 +9,14 @@ public class PersistentManager : MonoBehaviour
     public static PersistentManager instance { get; private set; }
     public Character playerCharacter;
 
+    [Tooltip("Starting Race ID for the Player hero character")]
+    [SerializeField]
+    RaceID heroRaceID;
+
+    [Tooltip("Starting SubRace ID for the Player hero character")]
+    [SerializeField]
+    SubRaceID heroSubRaceID;
+
     public PlayerParty playerParty;
     public Vector3 storedPlayerTransform;
     public AIParty enemyParty;
@@ -19,7 +27,6 @@ public class PersistentManager : MonoBehaviour
     public List<Character> activeCharacters;
     public GameObject AIGroups;
     public GameObject towns;
-    public bool firstLoad;
 
     public int startingPlayerPartySize, startingEnemyPartySize;
 
@@ -39,30 +46,21 @@ public class PersistentManager : MonoBehaviour
         if (AIGroups == null)
         {
             AIGroups = GameObject.Find("AIGroups");
+            DontDestroyOnLoad(AIGroups);
         }
+
         if (towns == null)
         {
             towns = GameObject.Find("Towns");
+            DontDestroyOnLoad(towns);
         }
-
 
         if (instance == null)
         {
             instance = this;
-            firstLoad = true;
-            InitGlobalFactions();
-            //Adds active Races
-            activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
+            InitResources(); // Resources should always be loaded before first load.
             DontDestroyOnLoad(gameObject);
-
-            if (playerParty == null)
-            {
-                ValidatePlayerParty();
-            }
-            if (enemyParty == null)
-            {
-                ValidateNPCParty();
-            }
+            FirstLoad();
         }
         else
         {
@@ -70,23 +68,11 @@ public class PersistentManager : MonoBehaviour
             Debug.LogWarning("Destroying new PersistantManager because one already exists");
         }
 
-        if (instance.firstLoad == true)
-        {
-            instance.firstLoad = false;
-            Debug.LogWarning("First Load Init Happening!!!");
-            NPCPartySpawner.SpawnNPCGroups(10);
-            NPCPartySpawner.SpawnTowns(5);
-        }        
     }
 
-    private void Start()
+    public void InitResources()
     {
-        //Assigns random hero character to start
-        if (playerCharacter == null)
-        {
-            playerCharacter = playerParty.partyLeader;
-            Debug.LogError("PlayerCharacter Ref not set in Persistant Manager");
-        }
+        activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
     }
 
     private void InitGlobalFactions()
@@ -103,15 +89,39 @@ public class PersistentManager : MonoBehaviour
         Debug.Log("stored enemy party = " + instance.enemyParty);
     }
 
+
+    // Validation 
+
+    //First Load will probably have to be reworked when we go to save this data and load it. 
+    public void FirstLoad()
+    {
+        InitGlobalFactions();
+        ValidatePlayerParty();
+        ValidatePlayerCharacter();
+        ValidateNPCParty();
+        NPCPartySpawner.SpawnNPCGroups(10);
+        NPCPartySpawner.SpawnTowns(5);
+
+
+    }
+
+    public void ValidatePlayerCharacter()
+    {
+        playerCharacter = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.partyLeader = playerCharacter;
+    }
     public void ValidatePlayerParty()
     {
         playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
-        if(GameObject.FindGameObjectWithTag("Player")  != null)
+        GlobalPlayerData.playerParty = playerParty;
+        GlobalHolder.playerPartyReference = playerParty;
+
+        // This is weird, should probably get reworked because there isnt always a PlayerPartyManager on the player
+        if (GameObject.FindGameObjectWithTag("Player")  != null)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = playerParty;
         }
-        GlobalPlayerData.playerParty = playerParty;
-        GlobalHolder.playerPartyReference = playerParty;
+        
     }
 
     public void ValidateNPCParty()

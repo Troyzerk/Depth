@@ -43,7 +43,7 @@ public class GameState : MonoBehaviour
         }
         else
         {
-            heroImage = PersistentManager.instance.playerCharacter.portrait;
+            //heroImage = PersistentManager.instance.playerCharacter.portrait;
         }
     }
 

@@ -83,7 +83,9 @@ public class HUDManager : MonoBehaviour
                     var charPortrait = obj.transform.Find("Frame").Find("Portrait").GetComponent<Image>();
 
                     partyBarButton.character = character;
-                    charPortrait.sprite = character.portrait.sprite;
+
+                    //This needs to be re-enabled but it causes a null ref error.
+                    //charPortrait.sprite = character.portrait.sprite;
                     charName.text = character.characterFullName;
 
                 }

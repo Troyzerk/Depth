@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class CharacterGenerator
 {
-    public static Character CreateNewCharacter(RaceID raceID, SubRaceID subRaceID, List<Character> charList)
+    public static Character CreateNewCharacter(RaceID raceID, SubRaceID subRaceID)
     {
         Character newCharacter;
         foreach (var raceStats in PersistentManager.activeRaces)
@@ -18,7 +18,7 @@ public static class CharacterGenerator
                         if (subRaceID == subRaceStat.subRaceID)
                         {
                             //print("Found : " + subRaceStats + " - " + raceStats);
-                            newCharacter = CreateNewCharacterStats(raceStats, subRaceStat, charList);
+                            newCharacter = CreateNewCharacterStats(raceStats, subRaceStat);
                             return newCharacter;
                         }
                     }
@@ -28,15 +28,21 @@ public static class CharacterGenerator
                     Debug.LogWarning("Cant confirm raceID input. " + raceID + ">>>" + subRaceID);
                 }
             }
+
+            //Debug.LogError(raceStats);
         }
+
+        //Debug.LogError(PersistentManager.activeRaces.Count);
+
+        Debug.LogWarning("Creation of character failed because of RaceStatCheck. This is returning null on some character creation.");
         return null;
     }
     public static Character BuyNewCharacter(RaceID raceID, SubRaceID subRaceID, Party party, int price)
     {
-        Character newChar = CreateNewCharacter(raceID, subRaceID, party.characters);
+        Character newChar = CreateNewCharacter(raceID, subRaceID);
         if (party.gold >= price)
         {
-            party.characters.Add(CharacterGenerator.CreateNewCharacter(raceID, subRaceID, party.characters));
+            party.characters.Add(CreateNewCharacter(raceID, subRaceID));
             party.gold -= price;
             GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>().UpdateHUD();
         }
@@ -44,7 +50,7 @@ public static class CharacterGenerator
     }
 
     //Sets random stats for the new character
-    public static Character CreateNewCharacterStats(RaceStats raceStats, SubRaceStats subRacesStats, List<Character> charList)
+    public static Character CreateNewCharacterStats(RaceStats raceStats, SubRaceStats subRacesStats)
     {
         //Instances the new character
         Character newCharacter = ScriptableObject.CreateInstance<Character>();

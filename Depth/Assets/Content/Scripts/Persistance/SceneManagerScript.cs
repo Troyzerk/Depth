@@ -35,6 +35,7 @@ public class SceneManagerScript : MonoBehaviour
     public static void LoadWorldMap()
     {
         SceneManager.LoadScene("LevelTest");
+
     }
 
     public static void RecordStoredData()

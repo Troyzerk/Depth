@@ -44,7 +44,6 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void CalculateStatsTotal()
     {
-        PlayerParty playerParty = PersistentManager.instance.playerParty;
         UpdatePartySpeed();
         PersistentManager.instance.playerParty.totalDamage = 0;
         PersistentManager.instance.playerParty.totalDefence = 0;
