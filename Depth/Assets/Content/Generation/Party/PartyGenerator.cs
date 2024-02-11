@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -17,21 +18,19 @@ public static class PartyGenerator
         aiGroup.comp = GroupComposition.Goblins;
         aiGroup.name = NameGenerator.GenerateGroupName(aiGroup);
         aiGroup.gold = Random.Range(size * 10, size * 20);
-        int partySize = size;
         Faction randomFaction = PersistentManager.factions[Random.Range(0,PersistentManager.factions.Length)];
         
         aiGroup.faction = randomFaction;
 
-        for (int i = 0; i < partySize; i++)
+        for (int i = 0; i < size; i++)
         {
-            Character newChar = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid, aiGroup.characters);
-            aiGroup.characters.Add(newChar);
+            aiGroup.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
             //aiGroup.totalDamage += newChar.damage;
             //aiGroup.totalDefence += newChar.defence;
         }
 
         aiGroup.partySpeed = Random.Range(0.1f, 0.2f);
-        //aiGroup.partyLeader = aiGroup.characters[1];
+        //aiGroup.partyLeader = aiGroup.characters[0];
         return aiGroup;
     }
 
@@ -54,24 +53,9 @@ public static class PartyGenerator
         //generate and add characters to party
         for (int i = 0; i < size; i++)
         {
-            
-            Character newChar = CharacterGenerator.CreateNewCharacter(RaceID.Goblin,SubRaceID.Goblinoid,party.characters);
-            
-            if (party.partyLeader == null)
-            {
-                party.partyLeader = newChar;
-                Debug.Log("PartyLeader Set!");
-            }
-            else
-            {
-                party.characters.Add(newChar);
-            }
-            //party.totalDamage += newChar.damage;
-            //party.totalDefence += newChar.defence;
+            //Debug.Log(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
+            party.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
         }
-
-        PersistentManager.instance.playerParty = party;
-        PersistentManager.instance.playerCharacter = party.partyLeader;
         return party;
     }
 
