@@ -15,6 +15,6 @@ MonoBehaviour:
   range: 1
   skillName: Melee Autoattack
   cooldown: 1
-  damageDelt: 1
+  damageDelt: 2
   damageType: 0
   skillType: 2

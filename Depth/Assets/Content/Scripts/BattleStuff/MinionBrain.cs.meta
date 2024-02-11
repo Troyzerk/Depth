@@ -3,7 +3,14 @@ guid: e89ee77b0cc4b16499601c369d707b34
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - damageCounter: {fileID: 8924931160682021379, guid: e0e2ee6aaa9d4cf49b26312291d295f2,
+      type: 3}
+  - minionRef: {instanceID: 0}
+  - _baseGameScript: {instanceID: 0}
+  - _healthBarScript: {instanceID: 0}
+  - _weaponAnimScript: {instanceID: 0}
+  - target: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
