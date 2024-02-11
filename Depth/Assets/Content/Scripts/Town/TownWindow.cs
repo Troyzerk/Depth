@@ -16,7 +16,19 @@ public class TownWindow : MonoBehaviour
 
     private void Awake()
     {
-        
+        //Checking instance for the TownWindow UI
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            instance = null;
+        }
+
+        if(instance == null)
+        {
+            instance = this;
+        }
+
+
         // define links to UI Button elements
         exitButton = townWindow.transform.Find("Exit").GetComponent<Button>();
         churchButton = townWindow.transform.Find("ChurchButton").GetComponent<Button>();
@@ -38,14 +50,7 @@ public class TownWindow : MonoBehaviour
         exitButton.onClick.AddListener(delegate { CloseTownWindow();});
         townWindow.SetActive(false);
 
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
+        
     }
 
     public void OpenTownWindow()

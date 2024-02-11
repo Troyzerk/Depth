@@ -19,9 +19,7 @@ TagManager:
   - Minion
   - Enemy
   - DialogueSystem
-  - FireSkill
-  - Detection
-  - Tile
+  - QuestLog
   layers:
   - Default
   - TransparentFX
