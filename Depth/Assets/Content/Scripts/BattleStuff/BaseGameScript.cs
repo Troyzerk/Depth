@@ -59,28 +59,33 @@ public class BaseGameScript : MonoBehaviour
         GlobalGameSettings.SetGameSpeed(1);
     }
     void Update()
-    {   
+    {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            Collider2D targetObject= Physics2D.OverlapPoint(mousePosition);
-            if (targetObject != null && targetObject.gameObject.CompareTag("Minion") && skillPress ==false)
+        if (!iSee)
+        { 
+            if (Input.GetMouseButtonDown(0))
             {
-                _selectedObject = targetObject.transform.gameObject;
-                _offSet = _selectedObject.transform.position - mousePosition;
+                Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);
+
+                if (targetObject != null && targetObject.gameObject.CompareTag("Minion") && skillPress == false)
+                {
+
+                    _selectedObject = targetObject.transform.gameObject;
+                    _offSet = _selectedObject.transform.position - mousePosition;
+                }
             }
-        }
-        if (_selectedObject != null)
-        {
-            _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
-            _selectedObject.transform.position = mousePosition + _offSet;
-        }
-        
-        if (Input.GetMouseButtonUp(0) && _selectedObject != null )
-        {
-            _selectedObject.transform.position = tileHover.transform.position;
-            _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
-            _selectedObject = null;
+            if (_selectedObject != null)
+            {
+                _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
+                _selectedObject.transform.position = mousePosition + _offSet;
+            }
+
+            if (Input.GetMouseButtonUp(0) && _selectedObject != null)
+            {
+                _selectedObject.transform.position = tileHover.transform.position;
+                _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
+                _selectedObject = null;
+            }
         }
         if (skillPress)
         {
