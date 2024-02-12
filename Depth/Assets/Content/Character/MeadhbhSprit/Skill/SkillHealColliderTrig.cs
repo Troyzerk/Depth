@@ -25,9 +25,15 @@ public class SkillHealColliderTrig : MonoBehaviour
             int heal = 1;
 
             int health = target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
-            health += heal;
-            target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
-            target.gameObject.GetComponent<MinionBrain>().DeathCounter(target, heal, new Color32(1, 250, 50, 98));
+            int maxhealth = target.gameObject.GetComponent<MinionBrain>().minionRef.health;
+            
+            if (health < maxhealth)
+            {
+                health += heal;
+                target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
+                target.gameObject.GetComponent<MinionBrain>().DeathCounter(target, heal, new Color32(1, 250, 50, 98));
+            }
+            
         }
     }
     private IEnumerator DestroySkill(float seconds)
