@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     public Town town;
+    public static HUDManager instance;
 
 
     // UI Refs
@@ -23,6 +24,7 @@ public class HUDManager : MonoBehaviour
 
     public void Start()
     {
+        instance = this;
         partyContent = GameObject.FindGameObjectWithTag("PartyBarContent").transform;
         UpdateHUD();
     }
