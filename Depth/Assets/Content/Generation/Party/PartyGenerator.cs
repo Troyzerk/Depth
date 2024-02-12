@@ -22,15 +22,22 @@ public static class PartyGenerator
         
         aiGroup.faction = randomFaction;
 
+        if (size < 1)
+        {
+            Debug.Log("NPC Party can NOT have a size of less then 1");
+            size = 1;
+        }
+
         for (int i = 0; i < size; i++)
         {
             aiGroup.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
             //aiGroup.totalDamage += newChar.damage;
             //aiGroup.totalDefence += newChar.defence;
+            
         }
-
+        Debug.Log(aiGroup.characters.Count);
         aiGroup.partySpeed = Random.Range(0.1f, 0.2f);
-        //aiGroup.partyLeader = aiGroup.characters[0];
+        aiGroup.partyLeader = aiGroup.characters.Last();
         return aiGroup;
     }
 

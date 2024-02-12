@@ -14362,6 +14362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6015660178674552646, guid: c685dacd073f5f146ba03755488622b5,
         type: 3}
+      propertyPath: startingEnemyPartySize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015660178674552646, guid: c685dacd073f5f146ba03755488622b5,
+        type: 3}
       propertyPath: startingPlayerPartySize
       value: 6
       objectReference: {fileID: 0}
