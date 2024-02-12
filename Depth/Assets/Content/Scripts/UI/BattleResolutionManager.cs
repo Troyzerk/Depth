@@ -6,6 +6,7 @@ using UnityEngine;
 public class BattleResolutionManager : MonoBehaviour
 {
     int goldReward;
+    int expReward;
 
     //UI
 
@@ -20,7 +21,6 @@ public class BattleResolutionManager : MonoBehaviour
     public void Start()
     {
         CalculateWinnings();
-        //StartCoroutine(StartCalulationDelay());
     }
 
     public void LoadWorldMap()
@@ -31,7 +31,12 @@ public class BattleResolutionManager : MonoBehaviour
     void CalculateWinnings()
     {
         goldReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
-        Debug.Log(goldReward);
+        expReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
+
+        Debug.Log("Rewarded Player with Gold : +" + goldReward);
+        Debug.Log("Rewarded Player with Experience : +" + expReward);
+
+        expRewardText.text = "+ " + expReward.ToString();
         goldRewardText.text = "+ " + goldReward.ToString();
 
         PersistentManager.instance.playerParty.gold += goldReward;
@@ -46,6 +51,8 @@ public class BattleResolutionManager : MonoBehaviour
                 if (randomNumber > 5)
                 {
                     character.status = CharacterStatus.Injured;
+                    character.currentHealth = 1;
+                    Debug.Log(character.characterFullName + " has survived death.");
                 }
                 else
                 {
@@ -73,7 +80,7 @@ public class BattleResolutionManager : MonoBehaviour
 
     private void RemoveNPCEnemyGameObject()
     {
-        Debug.LogWarning("Removing game object : " + PersistentManager.instance.npcGroup);
+        Debug.LogWarning("Removing npc party from play : " + PersistentManager.instance.npcGroup);
         PersistentManager.instance.storedNPCPartys.Remove(PersistentManager.instance.npcGroup);
         Destroy(PersistentManager.instance.enemyParty);
         Destroy(PersistentManager.instance.npcGroup);

@@ -45,14 +45,12 @@ public class PersistentManager : MonoBehaviour
 
         if (AIGroups == null)
         {
-            AIGroups = GameObject.Find("AIGroups");
-            DontDestroyOnLoad(AIGroups);
+            AIGroups = GameObject.Find("PersistantManager/AIGroups");
         }
 
         if (towns == null)
         {
-            towns = GameObject.Find("Towns");
-            DontDestroyOnLoad(towns);
+            towns = GameObject.Find("PersistantManager/Towns");
         }
 
         if (instance == null)
