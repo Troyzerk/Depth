@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1680320478956194181}
   - component: {fileID: 6015660178674552646}
-  - component: {fileID: 3830770471269976451}
+  - component: {fileID: 893476816947416623}
   - component: {fileID: 8010559586869811076}
   m_Layer: 0
   m_Name: PersistantManager
@@ -62,10 +62,11 @@ MonoBehaviour:
   activeCharacters: []
   AIGroups: {fileID: 0}
   towns: {fileID: 0}
+  landmarks: {fileID: 0}
   startingPlayerPartySize: 6
-  startingEnemyPartySize: 0
+  startingEnemyPartySize: 2
   globalFactions: []
---- !u!114 &3830770471269976451
+--- !u!114 &893476816947416623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

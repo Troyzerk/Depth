@@ -25,8 +25,10 @@ public class PersistentManager : MonoBehaviour
     public List<GameObject> storedTowns;
     public List<GameObject> storedNPCPartys;
     public List<Character> activeCharacters;
+
     public GameObject AIGroups;
     public GameObject towns;
+    public GameObject landmarks;
 
     public int startingPlayerPartySize, startingEnemyPartySize;
 
@@ -41,16 +43,13 @@ public class PersistentManager : MonoBehaviour
 
     private void Awake()
     {
-        
 
-        if (AIGroups == null)
+
+        if (AIGroups == null || !towns || !landmarks)
         {
             AIGroups = GameObject.Find("PersistantManager/AIGroups");
-        }
-
-        if (towns == null)
-        {
             towns = GameObject.Find("PersistantManager/Towns");
+            landmarks = GameObject.Find("PersistantManager/Landmarks");
         }
 
         if (instance == null)
@@ -97,8 +96,11 @@ public class PersistentManager : MonoBehaviour
         ValidatePlayerParty();
         ValidatePlayerCharacter();
         ValidateNPCParty();
+
+        //Spawning of content should be moved out of persistant manager into a generator 
         NPCPartySpawner.SpawnNPCGroups(10);
         NPCPartySpawner.SpawnTowns(5);
+        NPCPartySpawner.SpawnLandmark(20);
 
 
     }
