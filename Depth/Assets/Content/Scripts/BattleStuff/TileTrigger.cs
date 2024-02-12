@@ -5,7 +5,6 @@ using UnityEngine;
 public class TileTrigger : MonoBehaviour
 {
     public GameObject target;
-    bool killYourSelf;
     public BaseGameScript _baseGameScript;
 
     void Start()
@@ -29,8 +28,7 @@ public class TileTrigger : MonoBehaviour
         target = collision.gameObject;
         if (_baseGameScript.iSee == true)
         {
-            print("Oh noo");
-            Destroy(target);
+            Destroy(target.transform.parent.gameObject);
             target = null;
         }
     }

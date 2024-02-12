@@ -18,6 +18,7 @@ public class MinionBrain : MonoBehaviour
     [SerializeField] GameObject target;
     public List<Character> playerParty = new();
     public List<Character> NPCParty = new();
+    public Character mainCharacter;
     public float distanceEnemy;
     float timer;
 
@@ -29,9 +30,12 @@ public class MinionBrain : MonoBehaviour
         //_healthBarScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<HealthBarBattleUI>();
         playerParty = PersistentManager.instance.playerParty.characters;
         NPCParty = PersistentManager.instance.enemyParty.characters;
-
+        mainCharacter =PersistentManager.instance.playerCharacter;
         int health = this.gameObject.GetComponent<MinionBrain>().minionRef.health;
-
+        if (mainCharacter != null )
+        {
+            playerParty.Add(mainCharacter);
+        }
         _healthBarScript.SetMaxHealth(health);
 
     }

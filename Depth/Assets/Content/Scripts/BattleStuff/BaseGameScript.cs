@@ -41,6 +41,7 @@ public class BaseGameScript : MonoBehaviour
     public GameObject skillMenu;
     public GameObject endMenu;
 
+
     public bool iSee;
     bool skillPress;
 
@@ -53,32 +54,38 @@ public class BaseGameScript : MonoBehaviour
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
         playerMinionList = PersistentManager.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
+        ValidateMainPlayer(PersistentManager.instance.playerCharacter);
 
         GlobalGameSettings.SetGameSpeed(1);
     }
     void Update()
-    {   
+    {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            Collider2D targetObject= Physics2D.OverlapPoint(mousePosition);
-            if (targetObject != null && targetObject.gameObject.CompareTag("Minion") && skillPress ==false)
+        if (!iSee)
+        { 
+            if (Input.GetMouseButtonDown(0))
             {
-                _selectedObject = targetObject.transform.gameObject;
-                _offSet = _selectedObject.transform.position - mousePosition;
+                Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);
+
+                if (targetObject != null && targetObject.gameObject.CompareTag("Minion") && skillPress == false)
+                {
+
+                    _selectedObject = targetObject.transform.gameObject;
+                    _offSet = _selectedObject.transform.position - mousePosition;
+                }
             }
-        }
-        if (_selectedObject != null)
-        {
-            _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
-            _selectedObject.transform.position = mousePosition + _offSet;
-        }
-        
-        if (Input.GetMouseButtonUp(0) && _selectedObject != null )
-        {
-            _selectedObject.transform.position = tileHover.transform.position;
-            _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
-            _selectedObject = null;
+            if (_selectedObject != null)
+            {
+                _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
+                _selectedObject.transform.position = mousePosition + _offSet;
+            }
+
+            if (Input.GetMouseButtonUp(0) && _selectedObject != null)
+            {
+                _selectedObject.transform.position = tileHover.transform.position;
+                _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
+                _selectedObject = null;
+            }
         }
         if (skillPress)
         {
@@ -169,7 +176,7 @@ public class BaseGameScript : MonoBehaviour
         GameObject minionGameObject = Resources.Load("Minion") as GameObject;
         minionGameObject.transform.localScale = scaleChange;
 
-        for (int i = 0; i < party.Count; i++)
+        for (int i = 1; i < party.Count; i++)
         {
             worldPosition = grid.GetCellCenterWorld(new Vector3Int(1+i, -1));
             clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
@@ -177,6 +184,14 @@ public class BaseGameScript : MonoBehaviour
             clone.GetComponent<MinionBrain>().minionRef = party[i];
 
         }
+    }
+    void ValidateMainPlayer(Character player)
+    {
+        GameObject minionGameObject = Resources.Load("mainMinon") as GameObject;
+        worldPosition = grid.GetCellCenterWorld(new Vector3Int(1, -1));
+        clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
+        clone.name = player.name;
+        clone.GetComponent<MinionBrain>().minionRef = player;
     }
     public void PromoteBattleParties()
     {
