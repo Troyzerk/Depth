@@ -16,9 +16,6 @@ public class MinionBrain : MonoBehaviour
     public weaponAnim _weaponAnimScript;
 
     [SerializeField] GameObject target;
-    public List<Character> playerParty = new();
-    public List<Character> NPCParty = new();
-    public Character mainCharacter;
     public float distanceEnemy;
     float timer;
 
@@ -27,9 +24,6 @@ public class MinionBrain : MonoBehaviour
     void Start()
     {
         _baseGameScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<BaseGameScript>();
-        //_healthBarScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<HealthBarBattleUI>();
-        playerParty = PersistentManager.instance.playerParty.characters;
-        NPCParty = PersistentManager.instance.enemyParty.characters;
         int health = this.gameObject.GetComponent<MinionBrain>().minionRef.health;
         _healthBarScript.SetMaxHealth(health);
 
@@ -44,7 +38,6 @@ public class MinionBrain : MonoBehaviour
             _healthBarScript.SetHealth(health);
             if (this.gameObject.CompareTag("Minion"))
             {
-                DoCheck(NPCParty);
                 target = BattleBehaviour.FriendlyToEnemy(this.gameObject);
                 if (target != null)
                 {
@@ -54,7 +47,6 @@ public class MinionBrain : MonoBehaviour
             }
             if (this.gameObject.CompareTag("Enemy"))
             {
-                DoCheck( playerParty);
                 target = BattleBehaviour.EnemyToFriendly(this.gameObject);
                 if (target != null)
                 {
@@ -62,6 +54,7 @@ public class MinionBrain : MonoBehaviour
                 }
 
             }
+            
 
             if (target != null)
             {
@@ -82,11 +75,9 @@ public class MinionBrain : MonoBehaviour
                         if (timer <=0.1)
                         {
                             _weaponAnimScript.Attack();
-                            print("Wack");
                         }
                         if (timer > minionRef.autoAttackSkill.cooldown)
                         {
-                            
                             IsAttack(target, this.gameObject);
                             
                             timer -= minionRef.autoAttackSkill.cooldown;
@@ -100,6 +91,7 @@ public class MinionBrain : MonoBehaviour
 
     public void IsAttack(GameObject attacker, GameObject defender)
     {
+        DoCheck();
         int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
@@ -107,29 +99,17 @@ public class MinionBrain : MonoBehaviour
         _healthBarScript.SetHealth(health);
 
         DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
-        print("Hit");
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
 
-        if (health <= 0)
-        {
-            defender.gameObject.GetComponent<MinionBrain>().minionRef.status = CharacterStatus.Dead;
-            Object.Destroy(defender);
-        }
+        IsDead(defender);
 
     }
 
-    public void DoCheck(List<Character> attacker)
+    public void DoCheck()
     {
-        int killCount = 0;
-        for (int i = 0; i < attacker.Count; i++)
-        {
-            if (GameObject.Find(attacker[i].name) == null)
-            {
-                killCount++;
-            }
-        }
-        if (killCount == attacker.Count)
+        
+        if (BattleBehaviour.TheWinner())
         {
             Debug.Log("Their all dead");
             if (gameObject.CompareTag("Minion"))
@@ -151,6 +131,15 @@ public class MinionBrain : MonoBehaviour
         if (target.transform.localScale.x <= 0)
         {
             DamageInstance.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+        }
+    }
+    public void IsDead(GameObject target)
+    {
+        if (target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth <= 0)
+        {
+            target.gameObject.GetComponent<MinionBrain>().minionRef.status = CharacterStatus.Dead;
+            Object.Destroy(target);
+
         }
     }
 }

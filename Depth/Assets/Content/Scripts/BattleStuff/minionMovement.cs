@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using static UnityEngine.RuleTile.TilingRuleOutput;
@@ -76,5 +77,38 @@ public static class BattleBehaviour
 
         }
         return targetMinion;
+    }
+
+    public static bool TheWinner()
+    {
+        List<Character> enemyMinionList = PersistentManager.instance.enemyParty.characters;
+        List<Character> playerMinionList = PersistentManager.instance.playerParty.characters;
+        int deathCount = 0;
+
+        foreach (Character attacker in playerMinionList)
+        {
+            if (attacker.status == CharacterStatus.Dead)
+            {
+                deathCount++;
+                if (enemyMinionList.Count == deathCount)
+                {
+                    return true;
+                }
+
+            }
+        }
+        foreach (Character attacker in enemyMinionList)
+        {
+            if (attacker.status == CharacterStatus.Dead)
+            {
+                deathCount++;
+                if (enemyMinionList.Count == deathCount)
+                {
+                    return true;
+                }
+
+            }
+        }
+        return false;
     }
 }
