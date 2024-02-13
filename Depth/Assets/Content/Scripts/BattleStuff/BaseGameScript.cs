@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -150,6 +151,10 @@ public class BaseGameScript : MonoBehaviour
 
     public void Victory()
     {
+        if (playerMinionList.Contains(PersistentManager.instance.playerCharacter))
+        {
+            playerMinionList.Remove(PersistentManager.instance.playerCharacter);
+        }
         PromoteBattleParties();
         SceneManagerScript.LoadBattleResolution();
     }
