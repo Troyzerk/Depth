@@ -26,8 +26,8 @@ public class NPCPartySpawner : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            //GameObject newLandmark = Instantiate(Resources.Load("Landmark") as GameObject, GameObject.Find("PersistantManager/Landmark").transform);
-            //newLandmark.transform.position = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+            GameObject newLandmark = Instantiate(Resources.Load("Landmark") as GameObject, GameObject.Find("PersistantManager/Landmarks").transform);
+            newLandmark.transform.position = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         }
     }
 }

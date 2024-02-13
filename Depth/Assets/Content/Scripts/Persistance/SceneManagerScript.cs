@@ -25,6 +25,9 @@ public class SceneManagerScript : MonoBehaviour
     public static void LoadBattleScene()
     {
         SceneManager.LoadScene("Battle_Scene");
+        PersistentManager.instance.AIGroups.SetActive(false);
+        PersistentManager.instance.towns.SetActive(false);
+        PersistentManager.instance.landmarks.SetActive(false);
     }
 
     public static void LoadBattleResolution()
@@ -35,6 +38,10 @@ public class SceneManagerScript : MonoBehaviour
     public static void LoadWorldMap()
     {
         SceneManager.LoadScene("LevelTest");
+        PersistentManager.instance.AIGroups.SetActive(true);
+        PersistentManager.instance.towns.SetActive(true);
+        PersistentManager.instance.landmarks.SetActive(true);
+
 
     }
 
@@ -49,6 +56,16 @@ public class SceneManagerScript : MonoBehaviour
             }
         }
 
+        GameObject[] landmarks = GameObject.FindGameObjectsWithTag("Landmark");
+        foreach (GameObject landmark in landmarks)
+        {
+            if (!PersistentManager.instance.storedTowns.Contains(landmark))
+            {
+                PersistentManager.instance.storedTowns.Add(landmark);
+            }
+        }
+
+
         GameObject[] aiGroups = GameObject.FindGameObjectsWithTag("AI");
         foreach (GameObject npcGroup in aiGroups)
         {
@@ -62,11 +79,10 @@ public class SceneManagerScript : MonoBehaviour
         {
             PersistentManager.instance.AIGroups = GameObject.Find("AIGroups");
             PersistentManager.instance.towns = GameObject.Find("Towns");
+            PersistentManager.instance.landmarks = GameObject.Find("Landmarks");
         }
         
         PersistentManager.instance.storedPlayerTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
-        DontDestroyOnLoad(PersistentManager.instance.AIGroups);
-        DontDestroyOnLoad(PersistentManager.instance.towns);
         PersistentManager.instance.PrintRecordedData();
     }
 }

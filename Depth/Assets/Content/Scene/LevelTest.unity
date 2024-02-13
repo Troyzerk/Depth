@@ -2219,37 +2219,8 @@ Transform:
   m_Children:
   - {fileID: 1337145424}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &836677157 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1985302681713601962, guid: c685dacd073f5f146ba03755488622b5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4760660579137205786}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &836677159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 836677157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65153f55b021713449f0dc35ea848d3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentQuests: []
-  currentGoal:
-    type: 0
-    goalName: 
-    isQuestGoalCompleted: 0
-    requiredAmount: 0
-    currentAmount: 0
-    questStep: 0
-    description: 
-  questEntryUIs: []
-  startingQuest: {fileID: 11400000, guid: 8f46405a02442e2418403e6aadff449a, type: 2}
 --- !u!1001 &1037396856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13955,7 +13926,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: 140, z: 0}
 --- !u!1 &1637815024 stripped
 GameObject:
@@ -13963,37 +13934,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 355049734}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1753331663
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1753331664}
-  m_Layer: 0
-  m_Name: Towns
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1753331664
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753331663}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.637539, y: 0.37279457, z: -0.053926602}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775953667
 GameObject:
   m_ObjectHideFlags: 0
@@ -14060,7 +14000,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805565262 stripped
 GameObject:
@@ -14165,37 +14105,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!1 &2009937361
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2009937362}
-  m_Layer: 0
-  m_Name: AIGroups
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2009937362
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009937361}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.056910235, y: -0.6268368, z: 0.030568141}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2891599348160883972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14370,24 +14279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PersistantManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6015660178674552646, guid: c685dacd073f5f146ba03755488622b5,
-        type: 3}
-      propertyPath: heroSubRaceID
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6015660178674552646, guid: c685dacd073f5f146ba03755488622b5,
-        type: 3}
-      propertyPath: startingPlayerPartySize
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1985302681713601962, guid: c685dacd073f5f146ba03755488622b5,
-        type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 836677159}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c685dacd073f5f146ba03755488622b5, type: 3}
 --- !u!1001 &7369264506540259055
 PrefabInstance:
