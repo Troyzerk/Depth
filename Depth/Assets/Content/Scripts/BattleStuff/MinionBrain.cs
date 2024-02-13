@@ -30,12 +30,7 @@ public class MinionBrain : MonoBehaviour
         //_healthBarScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<HealthBarBattleUI>();
         playerParty = PersistentManager.instance.playerParty.characters;
         NPCParty = PersistentManager.instance.enemyParty.characters;
-        mainCharacter =PersistentManager.instance.playerCharacter;
         int health = this.gameObject.GetComponent<MinionBrain>().minionRef.health;
-        if (mainCharacter != null )
-        {
-            playerParty.Add(mainCharacter);
-        }
         _healthBarScript.SetMaxHealth(health);
 
     }
@@ -50,7 +45,7 @@ public class MinionBrain : MonoBehaviour
             if (this.gameObject.CompareTag("Minion"))
             {
                 DoCheck(NPCParty);
-                target = BattleBehaviour.FindClosestEnemy(PersistentManager.instance.enemyParty.characters, this.gameObject);
+                target = BattleBehaviour.FriendlyToEnemy(this.gameObject);
                 if (target != null)
                 {
                     Debug.DrawLine(transform.position, target.transform.position, Color.red);
@@ -60,7 +55,7 @@ public class MinionBrain : MonoBehaviour
             if (this.gameObject.CompareTag("Enemy"))
             {
                 DoCheck( playerParty);
-                target = BattleBehaviour.FindClosestEnemy(PersistentManager.instance.playerParty.characters, this.gameObject);
+                target = BattleBehaviour.EnemyToFriendly(this.gameObject);
                 if (target != null)
                 {
                     Debug.DrawLine(transform.position, target.transform.position, Color.green);
