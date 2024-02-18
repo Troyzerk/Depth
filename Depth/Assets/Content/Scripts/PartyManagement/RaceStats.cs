@@ -15,7 +15,7 @@ public class RaceStats : ScriptableObject
     public List<string> raceLastNames = new();
     public List<Image> portraits = new();
     public List<DamageType> startingDamageType = new();
-    public List<Skill> startingAutoAttackSkill = new();
+    public List<AbilityStats> startingAutoAttackSkill = new();
 
 
     public int maxStartingHealth;
