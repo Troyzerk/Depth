@@ -36,6 +36,7 @@ public class PersistentManager : MonoBehaviour
     public Faction[] globalFactions;
 
     public static List<RaceStats> activeRaces = new();
+    public static List<Job> activeJobs = new();
     public static Faction[] factions;
     
 
@@ -69,7 +70,15 @@ public class PersistentManager : MonoBehaviour
 
     public void InitResources()
     {
+        //Loading the Goblin Race
         activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
+
+        //Get all jobs
+        Job[] tempArray = Resources.LoadAll<Job>("Job");
+        foreach (Job job in tempArray)
+        {
+            activeJobs.Add(job);
+        }
     }
 
     private void InitGlobalFactions()

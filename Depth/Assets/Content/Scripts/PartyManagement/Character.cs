@@ -11,6 +11,7 @@ public class Character : ScriptableObject
     public string characterFirstName;
     public string characterLastName;
     public string title;
+    public Job job;
 
     public RaceID race;
     public SubRaceID subRace;

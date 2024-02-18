@@ -1827,7 +1827,7 @@ RectTransform:
   - {fileID: 7211643977492068297}
   - {fileID: 2013331898634692786}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4152,6 +4152,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TownMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 337731815545094255, guid: d16cdef486ba3834ba136e03943febc6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1405285251834576127, guid: d16cdef486ba3834ba136e03943febc6,
         type: 3}
