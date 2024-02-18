@@ -35,7 +35,7 @@ public static class PartyGenerator
             //aiGroup.totalDefence += newChar.defence;
             
         }
-        Debug.Log(aiGroup.characters.Count);
+        //Debug.Log(aiGroup.characters.Count);
         aiGroup.partySpeed = Random.Range(0.1f, 0.2f);
         aiGroup.partyLeader = aiGroup.characters.Last();
         return aiGroup;

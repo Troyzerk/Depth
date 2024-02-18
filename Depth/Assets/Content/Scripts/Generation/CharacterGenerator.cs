@@ -80,6 +80,7 @@ public static class CharacterGenerator
         newCharacter.damage = Random.Range(raceStats.minStartingDamage, raceStats.maxStartingDamage);
         newCharacter.defence = Random.Range(raceStats.minStartingDefence, raceStats.maxStartingDefence);
         newCharacter.status = CharacterStatus.Healthy;
+        newCharacter.job = PersistentManager.activeJobs[Random.Range(0,PersistentManager.activeJobs.Count)];
 
         //Skills
         newCharacter.autoAttackSkill = raceStats.startingAutoAttackSkill[Random.Range(0, raceStats.startingAutoAttackSkill.Count)];
