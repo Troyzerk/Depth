@@ -49,14 +49,14 @@ MonoBehaviour:
   startingDamageType: 0000000005000000
   startingAutoAttackSkill:
   - {fileID: 11400000, guid: 82303fccb370fbb4c88e99280df0f448, type: 2}
-  maxStartingHealth: 10
-  minStartingHealth: 5
+  maxStartingHealth: 120
+  minStartingHealth: 100
   maxStartingAge: 1
   minStartingAge: 10
   maxStartingMana: -1
   minStartingMana: -5
-  maxStartingDamage: 5
-  minStartingDamage: 1
+  maxStartingDamage: 20
+  minStartingDamage: 5
   maxStartingDefence: 5
   minStartingDefence: 1
   maxStartingSpeed: 0.3
