@@ -18,6 +18,5 @@ public class TownInfo : MonoBehaviour
     {
 
         townText.GetComponent<TMP_Text>().text = town.townName;
-        Debug.Log(town.townName);
     }
 }

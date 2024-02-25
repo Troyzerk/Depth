@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1680320478956194181}
   - component: {fileID: 6015660178674552646}
+  - component: {fileID: 893476816947416623}
   - component: {fileID: 8010559586869811076}
   m_Layer: 0
   m_Name: PersistantManager
@@ -29,7 +30,10 @@ Transform:
   m_LocalPosition: {x: 0.12777212, y: 1.7881335, z: -5.5181675}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 9121592453765685250}
+  - {fileID: 2060090802492345419}
+  - {fileID: 7258575788002055600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,12 +49,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a241182bff5f0f44b51af39acdfe862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCharacter: {fileID: 0}
+  heroRaceID: 0
+  heroSubRaceID: 2
   playerParty: {fileID: 0}
+  storedPlayerTransform: {x: 0, y: 0, z: 0}
   enemyParty: {fileID: 0}
+  npcGroup: {fileID: 0}
   globalCharacterNames: []
-  startingPlayerPartySize: 0
-  startingEnemyPartySize: 0
+  storedTowns: []
+  storedNPCPartys: []
+  activeCharacters: []
+  AIGroups: {fileID: 0}
+  towns: {fileID: 0}
+  landmarks: {fileID: 0}
+  startingPlayerPartySize: 6
+  startingEnemyPartySize: 2
   globalFactions: []
+--- !u!114 &893476816947416623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985302681713601962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65153f55b021713449f0dc35ea848d3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentQuests: []
+  currentGoal:
+    type: 0
+    goalName: 
+    isQuestGoalCompleted: 0
+    requiredAmount: 0
+    currentAmount: 0
+    questStep: 0
+    description: 
+  questEntryUIs: []
+  startingQuest: {fileID: 11400000, guid: 8f46405a02442e2418403e6aadff449a, type: 2}
 --- !u!114 &8010559586869811076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,3 +103,96 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene:
     m_Handle: 0
+--- !u!1 &3817047373453811168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060090802492345419}
+  m_Layer: 0
+  m_Name: Towns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2060090802492345419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3817047373453811168}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5097668, y: -1.415339, z: 5.464241}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1680320478956194181}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4723061302280092568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9121592453765685250}
+  m_Layer: 0
+  m_Name: AIGroups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9121592453765685250
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4723061302280092568}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.18468235, y: -2.4149704, z: 5.5487356}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1680320478956194181}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8364001326246119387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7258575788002055600}
+  m_Layer: 0
+  m_Name: Landmarks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7258575788002055600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8364001326246119387}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -867.5502, y: 147.68535, z: -6.8853006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1680320478956194181}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

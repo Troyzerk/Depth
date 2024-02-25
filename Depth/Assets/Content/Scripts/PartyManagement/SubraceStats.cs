@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "SubRaceStats", menuName = "Global/Races/SubRaceStats")]
 public class SubRaceStats : ScriptableObject
@@ -20,5 +21,5 @@ public class SubRaceStats : ScriptableObject
     public int damageModifier;
     public int defenceModifier;
     public DamageType damageTypeOverride;
-    public Sprite portraitOverride;
+    public Image portraitOverride;
 }

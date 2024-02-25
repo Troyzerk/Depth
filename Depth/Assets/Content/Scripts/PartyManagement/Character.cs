@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Content/Create new Character")]
 public class Character : ScriptableObject
@@ -10,12 +11,13 @@ public class Character : ScriptableObject
     public string characterFirstName;
     public string characterLastName;
     public string title;
+    public Job job;
 
     public RaceID race;
     public SubRaceID subRace;
     public SubRaceStats subRaceStats;
 
-    public Sprite portrait;
+    public Image portrait; 
 
     public int level;
     public int currentExperience;
@@ -30,8 +32,8 @@ public class Character : ScriptableObject
     public int defence;
     public DamageType damageType;
     
-    public Skill autoAttackSkill;
-    public List <Skill> skills = new();
+    public AbilityStats autoAttackSkill;
+    public List <AbilityStats> skills = new();
 
     public CharacterStatus status = CharacterStatus.Healthy;
     

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerPartyManager : MonoBehaviour
 {
-
+    public static PlayerPartyManager instance;  
+    
     public PlayerParty playerParty;
     public GameObject playerBanner;
     public Transform partyContent;
@@ -15,18 +16,14 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void Awake()
     {
-        
-        //GlobalPlayerData.player = gameObject;
-
-        //References the transform for the characterPortraitButton
-        //This should be moved to a party content manager (NOT YET CREATED)
-        
-
-        
-
-        //HUD ref and update
-        
-
+        if (instance==null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Start()
@@ -35,7 +32,6 @@ public class PlayerPartyManager : MonoBehaviour
 
         if(PersistentManager.instance.storedPlayerTransform != null)
         {
-            Debug.LogWarning("Setting player location to stored location.");
             this.gameObject.transform.position = PersistentManager.instance.storedPlayerTransform;
         }
         
@@ -48,7 +44,6 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void CalculateStatsTotal()
     {
-        PlayerParty playerParty = PersistentManager.instance.playerParty;
         UpdatePartySpeed();
         PersistentManager.instance.playerParty.totalDamage = 0;
         PersistentManager.instance.playerParty.totalDefence = 0;

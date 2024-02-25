@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "RaceStats", menuName = "Global/Races/RaceStats")]
 public class RaceStats : ScriptableObject
@@ -12,9 +13,9 @@ public class RaceStats : ScriptableObject
     public List<SubRaceStats> possibleSubRaces = new();
     public List<string> raceFirstNames = new();
     public List<string> raceLastNames = new();
-    public List<Sprite> portraits = new();
+    public List<Image> portraits = new();
     public List<DamageType> startingDamageType = new();
-    public List<Skill> startingAutoAttackSkill = new();
+    public List<AbilityStats> startingAutoAttackSkill = new();
 
 
     public int maxStartingHealth;

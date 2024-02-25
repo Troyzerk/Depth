@@ -124,7 +124,7 @@ public class AIBehaviour : MonoBehaviour
                     // && this.aiParty.totalDamage >= 0.4f * (PersistentManager.instance.playerParty.totalDamage)
                     {
                         target = playerPartyObject;
-                        Debug.Log(target);
+                        //Debug.Log(target);
                     }
                     else if (this.aiParty.totalDamage >= 1.2f * (target.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
                     {

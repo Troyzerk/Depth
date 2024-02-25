@@ -38,6 +38,33 @@ public class PlayerCollisionController : MonoBehaviour
             }
 
         }
+
+        if (other.gameObject.CompareTag("Landmark"))
+        {
+            Landmark landmark = other.gameObject.GetComponent<LandmarkManager>().landmark;
+            // this needs to be fully implemented when experience per character is working.
+            if (landmark.rewardType == LandmarkRewardType.Experience)
+            {
+                Debug.Log("Player given Experience : +" + landmark.rewardAmount);
+                HUDManager.instance.UpdateHUD();
+            }
+            if (landmark.rewardType == LandmarkRewardType.Gold)
+            {
+                Debug.Log("Player given Gold : +" + landmark.rewardAmount);
+                PersistentManager.instance.playerParty.gold += landmark.rewardAmount;
+                HUDManager.instance.UpdateHUD();
+            }
+            if (landmark.rewardType == LandmarkRewardType.NewRecruit)
+            {
+                Debug.Log("Player given New Recruit");
+                PersistentManager.instance.playerParty.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
+                HUDManager.instance.UpdateHUD();
+            }
+
+            Destroy(other.gameObject);
+
+        }
+
         if (other.gameObject.CompareTag("AI") )
         {
             List<Character> playerParty = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.characters;
@@ -51,11 +78,12 @@ public class PlayerCollisionController : MonoBehaviour
             PersistentManager.instance.enemyParty = aiParty;
             PersistentManager.instance.npcGroup = other.gameObject;
             SceneManagerScript.RecordStoredData();
-            SceneManager.LoadScene(1);
+            SceneManagerScript.LoadBattleScene();
+            
 
             //Temp removed to test character battles
 
-            
+
             /*
             bool victorious = gameManager.GetComponent<GameState>().ResolveBattle(aiParty.characters, playerParty);
 
@@ -76,10 +104,12 @@ public class PlayerCollisionController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             */
-            
+
           }
 
-    }
+        
 
+    }
+  
 
 }
