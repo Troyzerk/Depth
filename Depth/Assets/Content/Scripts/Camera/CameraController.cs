@@ -8,7 +8,8 @@ public class CameraController : MonoBehaviour
     //I don't understand the math 
     //I got the 4 on the 1st try and thought I knew why
     //The 7.1 from trial and error begs to differ
-    public float PanSpeedX = 7.1f;
+    //I believe this is due to the scaling of the tilemap, both numbers are exactly half of the scale
+    public float PanSpeedX = 7.125f;
     public float PanSpeedY = 4f;
     
     //Zoom control variables
@@ -22,6 +23,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         thisCam = this.gameObject.GetComponent<Camera>();
+        thisCam.transform.position = new Vector3(PersistentManager.instance.storedPlayerTransform.x, PersistentManager.instance.storedPlayerTransform.x, thisCam.transform.position.z);
     }
 
     void Update()
