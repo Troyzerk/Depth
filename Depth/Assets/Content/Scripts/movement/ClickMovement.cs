@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class ClickMovement : MonoBehaviour
 {
@@ -11,10 +12,28 @@ public class ClickMovement : MonoBehaviour
     public bool moving;
     public static bool movementLock = false;
 
+    //NavMesh Variables
+    private Vector3 target;
+    NavMeshAgent agent;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+
     private void Start()
     {
-        playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
+        //playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
         clickCol = GameObject.Find("ClickCol");
+        
+    }
+
+    public void Reload()
+    {
+        target = agent.transform.position;
+        lastClickedPos = agent.transform.position;
+        clickCol.transform.position = agent.transform.position;
+        Debug.Log(target);
     }
 
     public void UpdatedSelectedLocation()
@@ -27,6 +46,7 @@ public class ClickMovement : MonoBehaviour
     {
         movementLock = !movementLock;
     }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && movementLock == false)
@@ -37,14 +57,29 @@ public class ClickMovement : MonoBehaviour
             clickCol.gameObject.GetComponent<clickColChecker>().check = false;
         }
 
-        if (moving && (Vector2)transform.position != lastClickedPos)
+        /*if (moving && (Vector2)transform.position != lastClickedPos)
         {
             float step = playerPartyManager.playerParty.partySpeed * Time.deltaTime;
             transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
         } else
         {
             moving = false;                                                                                                                                                                                                                                                                                      
+        }*/
+
+        SetTargetPosition();
+        SetAgentPosition();
+    }
+
+    private void SetTargetPosition()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
 
+    private void SetAgentPosition()
+    {
+        agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
+    }
 }
