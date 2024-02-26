@@ -105,13 +105,6 @@ public class PersistentManager : MonoBehaviour
         ValidatePlayerParty();
         ValidatePlayerCharacter();
         ValidateNPCParty();
-
-        //Spawning of content should be moved out of persistant manager into a generator 
-        NPCPartySpawner.SpawnNPCGroups(10);
-        NPCPartySpawner.SpawnTowns(5);
-        NPCPartySpawner.SpawnLandmark(20);
-
-
     }
 
     public void ValidatePlayerCharacter()
