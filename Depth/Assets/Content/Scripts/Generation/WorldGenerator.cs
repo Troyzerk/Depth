@@ -21,9 +21,15 @@ public class WorldGenerator : MonoBehaviour
 
     float offsetX = 100f;
     float offsetY = 100f;
+
     GameObject tileGrid;
     GameObject tileMap;
     Tilemap tileMapComp;
+
+    GameObject tileGridL1;
+    GameObject tileMapL1;
+    Tilemap tileMapCompL1;
+
 
     public TileBase nonblockerTile;
     public TileBase blockerTile;
@@ -48,12 +54,11 @@ public class WorldGenerator : MonoBehaviour
         nonblockingTileDatas = new List<TileData>();
 
         RandomiseValues();
-        InitializeWorld();
+        InitializeWorldGrids();
         AddTiles();
 
         //Spawn things
         NPCPartySpawner.SpawnNPCGroups(10);
-        //SpawnTowns(5);
         NPCPartySpawner.SpawnLandmark(20);
         SpawnSomething(5, Resources.Load("Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
 
@@ -65,7 +70,7 @@ public class WorldGenerator : MonoBehaviour
         offsetY = Random.Range(0, 99999999f);
     }
 
-    public void InitializeWorld()
+    public void InitializeWorldGrids()
     {
         tileGrid = new();
         tileGrid.name = "TileGrid";
@@ -78,7 +83,21 @@ public class WorldGenerator : MonoBehaviour
         tileMap.AddComponent<TilemapRenderer>().sortingOrder = -100;
         tileMap.transform.SetParent(tileGrid.transform);
 
+        tileGridL1 = new();
+        tileGridL1.name = "TileGridL1";
+        tileGridL1.AddComponent<Grid>();
+        tileGridL1.GetComponent<Grid>().cellSize = new Vector3(0.5f, 0.5f, 0);
+
+        tileMapL1 = new();
+        tileMapL1.name = "TileMapL1";
+        tileMapCompL1 = tileMap.AddComponent<Tilemap>();
+        tileMapL1.AddComponent<TilemapRenderer>().sortingOrder = -99;
+        tileMapL1.transform.SetParent(tileGridL1.transform);
+
+
+
         tileGrid.transform.position = new Vector3((cellXAmount / 4)*-1, (cellYAmount / 4) * -1);
+        tileGridL1.transform.position = new Vector3((cellXAmount / 4) * -1, (cellYAmount / 4) * -1);
     }
 
     public void AddTiles()
@@ -171,9 +190,6 @@ public class WorldGenerator : MonoBehaviour
             
         }
     }
-
-
-
     public void SpawnSomething(int count, GameObject objectToSpawn, Transform parentTransform, List<TileData> tileArrayToSpawnOn)
     {
         for (int i = 0; i < count;)
