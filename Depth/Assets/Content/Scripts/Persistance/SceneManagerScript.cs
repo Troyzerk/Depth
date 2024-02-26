@@ -42,7 +42,7 @@ public class SceneManagerScript : MonoBehaviour
         PersistentManager.instance.towns.SetActive(true);
         PersistentManager.instance.landmarks.SetActive(true);
 
-
+        PersistentManager.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
     }
 
     public static void RecordStoredData()

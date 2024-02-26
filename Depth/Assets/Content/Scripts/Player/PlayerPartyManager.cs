@@ -19,6 +19,7 @@ public class PlayerPartyManager : MonoBehaviour
         if (instance==null)
         {
             instance = this;
+            PersistentManager.instance.playerPartyObject = this.gameObject;
         }
         else
         {

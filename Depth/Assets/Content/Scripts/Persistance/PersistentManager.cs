@@ -17,6 +17,7 @@ public class PersistentManager : MonoBehaviour
     [SerializeField]
     SubRaceID heroSubRaceID;
 
+    public GameObject playerPartyObject;
     public PlayerParty playerParty;
     public Vector3 storedPlayerTransform;
     public AIParty enemyParty;
