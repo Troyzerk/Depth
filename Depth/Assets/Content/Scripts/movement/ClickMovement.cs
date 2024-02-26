@@ -25,13 +25,21 @@ public class ClickMovement : MonoBehaviour
     {
         //playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
         clickCol = GameObject.Find("ClickCol");
+        
+    }
+
+    public void Reload()
+    {
+        target = agent.transform.position;
+        lastClickedPos = agent.transform.position;
+        clickCol.transform.position = agent.transform.position;
+        Debug.Log(target);
     }
 
     public void UpdatedSelectedLocation()
     {
         lastClickedPos = clickCol.gameObject.GetComponent<clickColChecker>().otherColLocation;
         clickCol.gameObject.transform.position = lastClickedPos;
-
     }
 
     public void MoveLock()
@@ -41,8 +49,7 @@ public class ClickMovement : MonoBehaviour
 
     private void Update()
     {
-        // && movementLock == false
-        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false && movementLock == false)
         {
             lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             clickCol.transform.position = lastClickedPos;

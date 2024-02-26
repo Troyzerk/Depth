@@ -23,13 +23,18 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         thisCam = this.gameObject.GetComponent<Camera>();
-        thisCam.transform.position = new Vector3(PersistentManager.instance.storedPlayerTransform.x, PersistentManager.instance.storedPlayerTransform.x, thisCam.transform.position.z);
+        ResetCamPosition();
     }
 
     void Update()
     {
         Pan();
         Zoom();
+    }
+
+    public void ResetCamPosition()
+    {
+        thisCam.transform.position = new Vector3(PersistentManager.instance.storedPlayerTransform.x, PersistentManager.instance.storedPlayerTransform.x, thisCam.transform.position.z);
     }
 
     public void Pan()
