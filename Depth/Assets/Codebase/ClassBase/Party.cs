@@ -18,6 +18,7 @@ public class Party : ScriptableObject
     public List<Character> characters = new();
 
     public int gold = 0;
+    public int reputation = 0;
 
     //start//
 
@@ -25,11 +26,12 @@ public class Party : ScriptableObject
      * functionality needs to be added to calculate these. 
      * remove this comment after finishing work on it. 
      */
+
     public int totalDamage;
     public int totalDefence;
     public float partySpeed;
     public float totalSpeed;
-    public int reputation;
+    
 
     //end//
 }
