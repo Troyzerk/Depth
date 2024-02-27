@@ -18,6 +18,7 @@ public class MinionBrain : MonoBehaviour
     [SerializeField] GameObject target;
     public float distanceEnemy;
     float timer;
+    bool finding = false;
 
     bool isAttack;
 
@@ -31,8 +32,16 @@ public class MinionBrain : MonoBehaviour
 
     private void Update()
     {
+        if (finding) 
+        {
+            if (target == null) 
+            {
+                FindTarget();
+            }
+        }
         if (_baseGameScript.iSee)
         {
+            DoCheck();
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
@@ -69,14 +78,12 @@ public class MinionBrain : MonoBehaviour
 
     public void IsAttack(GameObject attacker, GameObject defender)
     {
-        DoCheck();
-        print(defender);
 
         int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
 
-        //DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
+        DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
 
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
@@ -125,7 +132,7 @@ public class MinionBrain : MonoBehaviour
     public void FindTarget()
     {
         int health = this.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
-        print("Finding");
+        finding = true;
 
         _healthBarScript.SetHealth(health);
         if (this.gameObject.CompareTag("Minion"))

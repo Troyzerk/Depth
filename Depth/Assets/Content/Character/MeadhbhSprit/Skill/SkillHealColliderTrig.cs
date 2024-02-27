@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class SkillHealColliderTrig : MonoBehaviour
 {
-    [SerializeField] private float coolDown;
-    private void Awake()
-    {
-        StartCoroutine(DestroySkill(coolDown));
-    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Minion") )
@@ -19,7 +14,6 @@ public class SkillHealColliderTrig : MonoBehaviour
     }
     public void DealHeal(GameObject target)
     {
-        print(target);
         if (target != null)
         {
             int heal = 1;
@@ -32,13 +26,9 @@ public class SkillHealColliderTrig : MonoBehaviour
                 health += heal;
                 target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
                 target.gameObject.GetComponent<MinionBrain>().DeathCounter(target, heal, new Color32(1, 250, 50, 98));
+                target.transform.GetChild(0).transform.GetChild(0).GetComponent<HealthBarBattleUI>().SetHealth(health);
             }
             
         }
-    }
-    private IEnumerator DestroySkill(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        Destroy(this.gameObject);
     }
 }
