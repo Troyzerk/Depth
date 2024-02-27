@@ -15,9 +15,10 @@ public class BattleResolutionManager : MonoBehaviour
 
     public void Awake()
     {
+        // we should change this to be set manually in a prefab rather then having the extra code.
         goldRewardText = GameObject.Find("RewardContentWindow/RewardContainer/GoldText").GetComponent<TMP_Text>();
         expRewardText = GameObject.Find("RewardContentWindow/RewardContainer/ExperienceText").GetComponent<TMP_Text>();
-        repRewardText = GameObject.Find("RewardContentWindow/RewardContainer/ExperienceText").GetComponent<TMP_Text>();
+        repRewardText = GameObject.Find("RewardContentWindow/RewardContainer/RepText").GetComponent<TMP_Text>();
     }
 
     public void Start()
@@ -34,14 +35,18 @@ public class BattleResolutionManager : MonoBehaviour
     {
         goldReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
         expReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
+        repReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
 
         Debug.Log("Rewarded Player with Gold : +" + goldReward);
         Debug.Log("Rewarded Player with Experience : +" + expReward);
+        Debug.Log("Rewarded Player with Reputation : +" + repReward);
 
         expRewardText.text = "+ " + expReward.ToString();
         goldRewardText.text = "+ " + goldReward.ToString();
+        repRewardText.text = "+ " + repReward.ToString();
 
         PersistentManager.instance.playerParty.gold += goldReward;
+        PersistentManager.instance.playerParty.reputation += repReward;
 
         List<Character> charactersToRemove = new List<Character>();
 
