@@ -26,6 +26,7 @@ public class SkillColliderTrig : MonoBehaviour
             target.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
             target.gameObject.GetComponent<MinionBrain>().DeathCounter(target,damage,new Color32(250,34,0,98));
             target.gameObject.GetComponent<MinionBrain>().IsDead(target);
+            target.transform.GetChild(0).transform.GetChild(0).GetComponent<HealthBarBattleUI>().SetHealth(health);
         }
     }
 
