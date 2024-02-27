@@ -118,6 +118,18 @@ public class BaseGameScript : MonoBehaviour
         menu.SetActive(false);
         iSee = true;
 
+        GameObject[] _tilePrefabs;
+        _tilePrefabs = GameObject.FindGameObjectsWithTag("Tile");
+
+        foreach (GameObject Prefab in _tilePrefabs)
+        {
+            Destroy(Prefab);
+        }
+        if (iSee)
+        {
+            skillMenu.SetActive(true);
+        }
+
         foreach (Character enemy in enemyMinionList)
         {
             folderFound.SetActive(true);
@@ -138,18 +150,6 @@ public class BaseGameScript : MonoBehaviour
                 playerObject.gameObject.GetComponent<MinionBrain>().FindTarget();
             }
 
-        }
-
-        GameObject[] _tilePrefabs;
-        _tilePrefabs = GameObject.FindGameObjectsWithTag("Tile");
-
-        foreach (GameObject Prefab in _tilePrefabs)
-        {
-            Destroy(Prefab);
-        }
-        if (iSee)
-        {
-            skillMenu.SetActive(true);
         }
 
     }
