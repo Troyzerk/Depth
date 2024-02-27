@@ -41,6 +41,7 @@ public class MinionBrain : MonoBehaviour
         }
         if (_baseGameScript.iSee)
         {
+            DoCheck();
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
@@ -77,7 +78,6 @@ public class MinionBrain : MonoBehaviour
 
     public void IsAttack(GameObject attacker, GameObject defender)
     {
-        DoCheck();
 
         int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
 
