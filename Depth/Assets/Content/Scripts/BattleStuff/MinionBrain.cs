@@ -33,29 +33,6 @@ public class MinionBrain : MonoBehaviour
     {
         if (_baseGameScript.iSee)
         {
-            int health = this.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
-
-            _healthBarScript.SetHealth(health);
-            if (this.gameObject.CompareTag("Minion"))
-            {
-                target = BattleBehaviour.FriendlyToEnemy(this.gameObject);
-                if (target != null)
-                {
-                    Debug.DrawLine(transform.position, target.transform.position, Color.red);
-                }
-
-            }
-            if (this.gameObject.CompareTag("Enemy"))
-            {
-                target = BattleBehaviour.EnemyToFriendly(this.gameObject);
-                if (target != null)
-                {
-                    Debug.DrawLine(transform.position, target.transform.position, Color.green);
-                }
-
-            }
-            
-
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
@@ -78,10 +55,11 @@ public class MinionBrain : MonoBehaviour
                         }
                         if (timer > minionRef.autoAttackSkill.cooldown)
                         {
-                            IsAttack(target, this.gameObject);
+                            IsAttack(this.gameObject,target);
                             
                             timer -= minionRef.autoAttackSkill.cooldown;
                             isAttack = false;
+                            
                         }
                     }
                 }
@@ -92,16 +70,17 @@ public class MinionBrain : MonoBehaviour
     public void IsAttack(GameObject attacker, GameObject defender)
     {
         DoCheck();
+        print(defender);
+
         int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
 
-        _healthBarScript.SetHealth(health);
+        //DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
 
-        DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
-
+        defender.transform.GetChild(0).transform.GetChild(0).GetComponent<HealthBarBattleUI>().SetHealth(health);
         IsDead(defender);
 
     }
@@ -112,6 +91,7 @@ public class MinionBrain : MonoBehaviour
         if (BattleBehaviour.TheWinner())
         {
             Debug.Log("Their all dead");
+            FindTarget();
             if (gameObject.CompareTag("Minion"))
             {
                 _baseGameScript.Victory();
@@ -139,6 +119,31 @@ public class MinionBrain : MonoBehaviour
         {
             target.gameObject.GetComponent<MinionBrain>().minionRef.status = CharacterStatus.Dead;
             Object.Destroy(target);
+
+        }
+    }
+    public void FindTarget()
+    {
+        int health = this.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
+        print("Finding");
+
+        _healthBarScript.SetHealth(health);
+        if (this.gameObject.CompareTag("Minion"))
+        {
+            target = BattleBehaviour.FriendlyToEnemy(this.gameObject);
+            if (target != null)
+            {
+                Debug.DrawLine(transform.position, target.transform.position, Color.red);
+            }
+
+        }
+        if (this.gameObject.CompareTag("Enemy"))
+        {
+            target = BattleBehaviour.EnemyToFriendly(this.gameObject);
+            if (target != null)
+            {
+                Debug.DrawLine(transform.position, target.transform.position, Color.green);
+            }
 
         }
     }

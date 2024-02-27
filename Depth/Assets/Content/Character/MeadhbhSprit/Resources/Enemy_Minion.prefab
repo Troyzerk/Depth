@@ -32,8 +32,8 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6114022873288726606}
   - {fileID: 7835400337707037584}
+  - {fileID: 6114022873288726606}
   - {fileID: 7677883633515187827}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -181,8 +181,6 @@ MonoBehaviour:
   _healthBarScript: {fileID: 81827389899488578}
   _weaponAnimScript: {fileID: 5635174038271774812}
   target: {fileID: 0}
-  playerParty: []
-  NPCParty: []
   distanceEnemy: 0
 --- !u!1 &4642197889665914325
 GameObject:
@@ -360,6 +358,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1552980730013407103}
     m_Modifications:
+    - target: {fileID: 1417368381733201401, guid: 95b49657e937224479c8dbc6d4b3ca82,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4763682499829656680, guid: 95b49657e937224479c8dbc6d4b3ca82,
         type: 3}
       propertyPath: m_Pivot.x

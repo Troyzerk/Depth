@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,6 +43,8 @@ public class BaseGameScript : MonoBehaviour
     public GameObject skillMenu;
     public GameObject endMenu;
 
+    GameObject folderFound;
+
 
     public bool iSee;
     bool skillPress;
@@ -58,6 +61,10 @@ public class BaseGameScript : MonoBehaviour
         ValidateMainPlayer(PersistentManager.instance.playerCharacter);
 
         GlobalGameSettings.SetGameSpeed(1);
+
+        ValidateNPCParty(enemyMinionList);
+        folderFound = GameObject.FindGameObjectWithTag("AI");
+        folderFound.SetActive(false);
     }
     void Update()
     {
@@ -111,7 +118,27 @@ public class BaseGameScript : MonoBehaviour
         menu.SetActive(false);
         iSee = true;
 
-        ValidateNPCParty(enemyMinionList);
+        foreach (Character enemy in enemyMinionList)
+        {
+            folderFound.SetActive(true);
+            if (GameObject.Find(enemy.name) != null)
+            {   
+                GameObject enemyObject = GameObject.Find(enemy.name);
+                enemyObject.gameObject.GetComponent<MinionBrain>().FindTarget();
+
+            }
+
+        }
+
+        foreach (Character player in playerMinionList)
+        {
+            if (GameObject.Find(player.name) != null) 
+            {
+                GameObject playerObject = GameObject.Find(player.name);
+                playerObject.gameObject.GetComponent<MinionBrain>().FindTarget();
+            }
+
+        }
 
         GameObject[] _tilePrefabs;
         _tilePrefabs = GameObject.FindGameObjectsWithTag("Tile");
