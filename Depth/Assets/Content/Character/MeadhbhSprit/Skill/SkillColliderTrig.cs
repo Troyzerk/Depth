@@ -5,11 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class SkillColliderTrig : MonoBehaviour
 {
-    [SerializeField] private float coolDown, repeatTrigger;
-    private void Awake()
-    {
-        StartCoroutine(DestroySkill(coolDown));
-    }
+    [SerializeField] private float repeatTrigger;
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Enemy" ))
@@ -31,12 +27,6 @@ public class SkillColliderTrig : MonoBehaviour
             target.gameObject.GetComponent<MinionBrain>().DeathCounter(target,damage,new Color32(250,34,0,98));
             target.gameObject.GetComponent<MinionBrain>().IsDead(target);
         }
-    }
-
-    private IEnumerator DestroySkill(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        Destroy(this.gameObject);
     }
 
     private IEnumerator BurnBitch(float seconds, GameObject target)

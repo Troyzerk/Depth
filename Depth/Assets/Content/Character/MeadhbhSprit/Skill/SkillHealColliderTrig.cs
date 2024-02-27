@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class SkillHealColliderTrig : MonoBehaviour
 {
-    [SerializeField] private float coolDown;
-    private void Awake()
-    {
-        StartCoroutine(DestroySkill(coolDown));
-    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Minion") )
@@ -35,10 +30,5 @@ public class SkillHealColliderTrig : MonoBehaviour
             }
             
         }
-    }
-    private IEnumerator DestroySkill(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        Destroy(this.gameObject);
     }
 }
