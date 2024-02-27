@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class WorldGenerator : MonoBehaviour
+public class WorldGeneratorManager : MonoBehaviour
 {
     [SerializeField]
     private bool debugTileData = false;
@@ -61,6 +61,7 @@ public class WorldGenerator : MonoBehaviour
         NPCPartySpawner.SpawnNPCGroups(10);
         NPCPartySpawner.SpawnLandmark(20);
         SpawnSomething(5, Resources.Load("Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
+        SpawnSomething(1, Resources.Load("HordeDen") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
 
 
     }
