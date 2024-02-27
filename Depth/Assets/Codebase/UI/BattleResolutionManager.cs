@@ -7,15 +7,17 @@ public class BattleResolutionManager : MonoBehaviour
 {
     int goldReward;
     int expReward;
+    int repReward;
 
     //UI
 
-    TMP_Text expRewardText, goldRewardText;
+    TMP_Text expRewardText, goldRewardText, repRewardText;
 
     public void Awake()
     {
         goldRewardText = GameObject.Find("RewardContentWindow/RewardContainer/GoldText").GetComponent<TMP_Text>();
         expRewardText = GameObject.Find("RewardContentWindow/RewardContainer/ExperienceText").GetComponent<TMP_Text>();
+        repRewardText = GameObject.Find("RewardContentWindow/RewardContainer/ExperienceText").GetComponent<TMP_Text>();
     }
 
     public void Start()
