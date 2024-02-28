@@ -32,9 +32,10 @@ public class CameraController : MonoBehaviour
         Zoom();
     }
 
+
     public void ResetCamPosition()
     {
-        thisCam.transform.position = new Vector3(PersistentManager.instance.storedPlayerTransform.x, PersistentManager.instance.storedPlayerTransform.x, thisCam.transform.position.z);
+        thisCam.transform.position = new Vector3(PlayerData.instance.partyTransform.x, PlayerData.instance.partyTransform.y, thisCam.transform.position.z);
     }
 
     public void Pan()

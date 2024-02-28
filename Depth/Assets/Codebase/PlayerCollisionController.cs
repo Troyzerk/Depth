@@ -51,13 +51,13 @@ public class PlayerCollisionController : MonoBehaviour
             if (landmark.rewardType == LandmarkRewardType.Gold)
             {
                 Debug.Log("Player given Gold : +" + landmark.rewardAmount);
-                PersistentManager.instance.playerParty.gold += landmark.rewardAmount;
+                PlayerData.instance.playerParty.gold += landmark.rewardAmount;
                 HUDManager.instance.UpdateHUD();
             }
             if (landmark.rewardType == LandmarkRewardType.NewRecruit)
             {
                 Debug.Log("Player given New Recruit");
-                PersistentManager.instance.playerParty.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
+                PlayerData.instance.playerParty.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
                 HUDManager.instance.UpdateHUD();
             }
 

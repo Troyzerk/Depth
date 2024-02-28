@@ -44,12 +44,12 @@ public class HUDManager : MonoBehaviour
     {
         //Init();
         PlayerPartyManager.instance.CalculateStatsTotal();
-        goldCounter.text = PersistentManager.instance.playerParty.gold.ToString();
-        repCounter.text = PersistentManager.instance.playerParty.reputation.ToString();
-        float simpleSpeed = Mathf.Round(PersistentManager.instance.playerParty.partySpeed +100)/100;
+        goldCounter.text = PlayerData.instance.playerParty.gold.ToString();
+        repCounter.text = PlayerData.instance.playerParty.reputation.ToString();
+        float simpleSpeed = Mathf.Round(PlayerData.instance.playerParty.partySpeed +100)/100;
         partySpeedCounter.text = simpleSpeed.ToString();
-        partyDefenceCounter.text = PersistentManager.instance.playerParty.totalDefence.ToString();
-        partyDamageCounter.text = PersistentManager.instance.playerParty.totalDamage.ToString();
+        partyDefenceCounter.text = PlayerData.instance.playerParty.totalDefence.ToString();
+        partyDamageCounter.text = PlayerData.instance.playerParty.totalDamage.ToString();
         UpdatePartyHud();
         print("Updated entire HUD");
     }
@@ -58,7 +58,7 @@ public class HUDManager : MonoBehaviour
     public static void UpdatePartyHud()
     {
         //Update Party size UI on banner
-        GameObject.Find("Player/Banner/BannerPartyCountText").GetComponent<TextMesh>().text = PersistentManager.instance.playerParty.characters.Count.ToString();
+        GameObject.Find("Player/Banner/BannerPartyCountText").GetComponent<TextMesh>().text = PlayerData.instance.playerParty.characters.Count.ToString();
 
         //Cleanup of HUD before Updating
         foreach (GameObject obj in partyHud)
@@ -68,7 +68,7 @@ public class HUDManager : MonoBehaviour
         partyHud.Clear();
 
         //Updating Party Hud to show characters
-        foreach (Character character in PersistentManager.instance.playerParty.characters)
+        foreach (Character character in PlayerData.instance.playerParty.characters)
         {
             if (character!=null)
             {

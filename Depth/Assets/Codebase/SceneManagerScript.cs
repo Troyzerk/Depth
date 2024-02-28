@@ -42,7 +42,7 @@ public class SceneManagerScript : MonoBehaviour
         PersistentManager.instance.towns.SetActive(true);
         PersistentManager.instance.landmarks.SetActive(true);
 
-        PersistentManager.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
+        PlayerData.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
     }
 
     public static void RecordStoredData()
@@ -82,7 +82,7 @@ public class SceneManagerScript : MonoBehaviour
             PersistentManager.instance.landmarks = GameObject.Find("Landmarks");
         }
         
-        PersistentManager.instance.storedPlayerTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
+        PlayerData.instance.partyTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
         PersistentManager.instance.PrintRecordedData();
     }
 }
