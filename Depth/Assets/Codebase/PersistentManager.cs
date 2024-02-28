@@ -20,12 +20,17 @@ public class PersistentManager : MonoBehaviour
     public GameObject playerPartyObject;
     public PlayerParty playerParty;
     public Vector3 storedPlayerTransform;
+    public List<Quest> playerQuests;
+
+
     public AIParty enemyParty;
     public GameObject npcGroup;
     public List<string> globalCharacterNames = new();
     public List<GameObject> storedTowns;
     public List<GameObject> storedNPCPartys;
     public List<Character> activeCharacters;
+
+
 
     public GameObject AIGroups;
     public GameObject towns;
@@ -37,7 +42,6 @@ public class PersistentManager : MonoBehaviour
     public Faction[] globalFactions;
 
     public static List<RaceStats> activeRaces = new();
-    public static List<Job> activeJobs = new();
     public static Faction[] factions;
     
 
@@ -74,12 +78,6 @@ public class PersistentManager : MonoBehaviour
         //Loading the Goblin Race
         activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
 
-        //Get all jobs
-        Job[] tempArray = Resources.LoadAll<Job>("Job");
-        foreach (Job job in tempArray)
-        {
-            activeJobs.Add(job);
-        }
     }
 
     private void InitGlobalFactions()

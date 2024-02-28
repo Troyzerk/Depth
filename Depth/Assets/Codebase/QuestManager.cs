@@ -3,79 +3,48 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-
+/*
+ * This script will manage the triggering of the all Quest functionality 
+ * 
+ */
 
 public class QuestManager : MonoBehaviour
 {
-    public List<Quest> currentQuests = new();
-    public QuestGoal currentGoal;
-    public List<GameObject> questEntryUIs = new();
-
-    // This starting quest gets set all the time. We will need to somehow make this dynamic
-    public Quest startingQuest;
-    // Add methods for starting quests, completing quests, updating objectives, etc.
+    
 
     public void Start()
     {
-        currentQuests.Clear();
-        currentQuests.Add(QuestGenerator.GenerateQuest("first Quest", "kill someone", QuestGoalType.Kill,1));
-        startingQuest.currentGoal = startingQuest.questGoals[0];
-        currentGoal = startingQuest.currentGoal;
-        ReinitializeQuestEntrys();
-    }
-
-    /*
-     * Functions from here down are to manage the
-     * quest display on the UI.
-     * 
-     */
-
-    public void ReinitializeQuestEntrys()
-    {
-        /*
-         * Currently we do not check if the quest already exists as an entry so we will have to be carful when adding
-         * new quests as entrys.
-         * 
-         * 
-         */
         
-        
-        
-        foreach (GameObject obj in questEntryUIs)
+        if (PersistentManager.instance.playerQuests == null)
         {
-            Destroy(obj);
-        }
-        GameObject QuestLog = GameObject.Find("HUD/QuestLog");
-        foreach (Quest quest in currentQuests)
-        {
-            GameObject obj = Instantiate(Resources.Load("QuestEntry") as GameObject, QuestLog.transform);
-            obj.name = "QuestEntry-" + quest.questName;
-            GameObject.Find("HUD/QuestLog/" + obj.name + "/Title/QuestTitle").GetComponent<TMP_Text>().text = quest.questName;
-            GameObject.Find("HUD/QuestLog/" + obj.name + "/Title/QuestGoalStep").GetComponent<TMP_Text>().text = "1/"+ quest.questGoals.Count;
-
-            //Current goal is not set.
-            if(quest.currentGoal == null)
-            {
-                Debug.LogWarning("Current goal reference in Quest list in Quest manager is missing");
-                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalDescription").GetComponent<TMP_Text>().text = quest.description;
-                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalProgress").GetComponent<TMP_Text>().text = "Missing Text";
-            }
-            else
-            {
-                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalDescription").GetComponent<TMP_Text>().text = quest.currentGoal.description;
-                GameObject.Find("HUD/QuestLog/" + obj.name + "/QuestGoalProgress").GetComponent<TMP_Text>().text = quest.currentGoal.currentAmount.ToString() + "/" + startingQuest.currentGoal.requiredAmount.ToString();
-            }
-            
+            Debug.LogWarning("Quest Manager is empty");
         }
     }
-    
-    
-    // We should use this as a quick update rather then always destroying and recreating
+
     public void UpdateExistingQuestEntrys()
     {
-        foreach(GameObject questEntry in questEntryUIs)
+        foreach(Quest quest in PersistentManager.instance.playerQuests)
         {
             //GameObject.Find("HUD/QuestLog/" + questEntry.name + "/Title/QuestTitle").GetComponent<TMP_Text>().text = quest.questName;
         }
+    }
+
+    public List<Quest> CheckAllQuests()
+    {
+        List<Quest> quests = new List<Quest>();
+
+        foreach (Quest quest in PersistentManager.instance.playerQuests)
+        {
+            if (quest.isCompleted)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        return quests;
     }
 }
