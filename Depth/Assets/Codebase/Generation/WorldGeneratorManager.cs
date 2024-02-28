@@ -60,8 +60,8 @@ public class WorldGeneratorManager : MonoBehaviour
         //Spawn things
         NPCPartySpawner.SpawnNPCGroups(10);
         NPCPartySpawner.SpawnLandmark(20);
-        SpawnSomething(5, Resources.Load("Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
-        SpawnSomething(1, Resources.Load("HordeDen") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
+        SpawnSomething(5, Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
+        SpawnSomething(1, Resources.Load("Gameplay/HordeDen") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
 
 
     }

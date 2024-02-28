@@ -17,7 +17,7 @@ public class NPCPartySpawner : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject newtown = Instantiate(Resources.Load("Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform);
+            GameObject newtown = Instantiate(Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform);
             newtown.transform.position = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         }
     }
@@ -26,7 +26,7 @@ public class NPCPartySpawner : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            GameObject newLandmark = Instantiate(Resources.Load("Landmark") as GameObject, GameObject.Find("PersistantManager/Landmarks").transform);
+            GameObject newLandmark = Instantiate(Resources.Load("Gameplay/Landmark") as GameObject, GameObject.Find("PersistantManager/Landmarks").transform);
             newLandmark.transform.position = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         }
     }

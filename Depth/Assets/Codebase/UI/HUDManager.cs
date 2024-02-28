@@ -73,7 +73,7 @@ public class HUDManager : MonoBehaviour
             if (character!=null)
             {
                 Transform partyContent = GameObject.FindGameObjectWithTag("PartyBarContent").transform;
-                GameObject obj = Instantiate(Resources.Load("characterPortraitButton") as GameObject, partyContent);
+                GameObject obj = Instantiate(Resources.Load("UI/characterPortraitButton") as GameObject, partyContent);
                 obj.name = character.name;
 
                 if (!partyHud.Contains(obj))

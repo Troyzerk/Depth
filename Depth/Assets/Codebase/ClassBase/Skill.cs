@@ -67,6 +67,7 @@ public class RangedAutoAttack : AutoAttack
  * 
  */
 
+
 [CreateAssetMenu(fileName = "New Damage Skill", menuName = "Content/Damage/DamageSkill")]
 public class DamageSkill : Skill
 {
