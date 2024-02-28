@@ -45,12 +45,12 @@ public class BattleResolutionManager : MonoBehaviour
         goldRewardText.text = "+ " + goldReward.ToString();
         repRewardText.text = "+ " + repReward.ToString();
 
-        PersistentManager.instance.playerParty.gold += goldReward;
-        PersistentManager.instance.playerParty.reputation += repReward;
+        PlayerData.instance.playerParty.gold += goldReward;
+        PlayerData.instance.playerParty.reputation += repReward;
 
         List<Character> charactersToRemove = new List<Character>();
 
-        foreach (Character character in PersistentManager.instance.playerParty.characters)
+        foreach (Character character in PlayerData.instance.playerParty.characters)
         {
             if (character.status == CharacterStatus.Dead)
             {
@@ -78,7 +78,7 @@ public class BattleResolutionManager : MonoBehaviour
         // Remove dead characters after the loop
         foreach (Character character in charactersToRemove)
         {
-            PersistentManager.instance.playerParty.characters.Remove(character);
+            PlayerData.instance.playerParty.characters.Remove(character);
         }
         RemoveNPCEnemyGameObject();
 

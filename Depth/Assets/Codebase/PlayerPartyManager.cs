@@ -29,13 +29,10 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void Start()
     {
-        playerParty = PersistentManager.instance.playerParty;
-        PersistentManager.instance.playerPartyObject = gameObject;
+        playerParty = PlayerData.instance.playerParty;
+        PlayerData.instance.playerPartyObject = gameObject;
 
-        if (PersistentManager.instance.storedPlayerTransform != null)
-        {
-            this.gameObject.transform.position = PersistentManager.instance.storedPlayerTransform;
-        }
+        this.gameObject.transform.position = PlayerData.instance.partyTransform; 
         
         partyContent = GameObject.FindGameObjectWithTag("PartyBarContent").transform;
         CalculateStatsTotal();
@@ -47,14 +44,14 @@ public class PlayerPartyManager : MonoBehaviour
     public void CalculateStatsTotal()
     {
         UpdatePartySpeed();
-        PersistentManager.instance.playerParty.totalDamage = 0;
-        PersistentManager.instance.playerParty.totalDefence = 0;
-        foreach (Character character in PersistentManager.instance.playerParty.characters)
+        PlayerData.instance.playerParty.totalDamage = 0;
+        PlayerData.instance.playerParty.totalDefence = 0;
+        foreach (Character character in PlayerData.instance.playerParty.characters)
         {
             if (character != null)
             {
-                PersistentManager.instance.playerParty.totalDamage += character.damage;
-                PersistentManager.instance.playerParty.totalDefence += character.defence;
+                PlayerData.instance.playerParty.totalDamage += character.damage;
+                PlayerData.instance.playerParty.totalDefence += character.defence;
             }
             
         }
@@ -63,24 +60,24 @@ public class PlayerPartyManager : MonoBehaviour
     {
         //hudManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
 
-        if (PersistentManager.instance.playerParty.characters != null)
+        if (PlayerData.instance.playerParty.characters != null)
         {
             //Update Speed Data
-            foreach (Character character in PersistentManager.instance.playerParty.characters)
+            foreach (Character character in PlayerData.instance.playerParty.characters)
             {
                 if (character!= null)
                 {
-                    PersistentManager.instance.playerParty.totalSpeed = PersistentManager.instance.playerParty.totalSpeed + character.speed;
+                    PlayerData.instance.playerParty.totalSpeed = PlayerData.instance.playerParty.totalSpeed + character.speed;
                 }
             }
-            if (PersistentManager.instance.playerParty.totalSpeed == 0)
+            if (PlayerData.instance.playerParty.totalSpeed == 0)
             {
                 Debug.LogWarning("Party Speed is 0 because speed isnt set.");
             }
             else
             {
-                PersistentManager.instance.playerParty.partySpeed = (PersistentManager.instance.playerParty.totalSpeed / PersistentManager.instance.playerParty.characters.Count);
-                PersistentManager.instance.playerParty.totalSpeed = 0;
+                PlayerData.instance.playerParty.partySpeed = (PlayerData.instance.playerParty.totalSpeed / PlayerData.instance.playerParty.characters.Count);
+                PlayerData.instance.playerParty.totalSpeed = 0;
                 HUDManager.UpdatePartyHud();
             }
             
@@ -88,7 +85,7 @@ public class PlayerPartyManager : MonoBehaviour
         else
         {
             print("partyManager.party is empty.");
-            PersistentManager.instance.playerParty.totalSpeed = 0;
+            PlayerData.instance.playerParty.totalSpeed = 0;
         }
     }
 }

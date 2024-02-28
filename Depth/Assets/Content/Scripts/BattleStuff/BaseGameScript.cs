@@ -56,7 +56,7 @@ public class BaseGameScript : MonoBehaviour
         PersistentManager.instance.AIGroups.SetActive(false);
         PersistentManager.instance.towns.SetActive(false);
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
-        playerMinionList = PersistentManager.instance.playerParty.characters;
+        playerMinionList = PlayerData.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
         ValidateMainPlayer(PersistentManager.instance.playerCharacter);
 
@@ -227,7 +227,7 @@ public class BaseGameScript : MonoBehaviour
     }
     public void PromoteBattleParties()
     {
-        PersistentManager.instance.playerParty.characters = playerMinionList;
+        PlayerData.instance.playerParty.characters = playerMinionList;
         PersistentManager.instance.enemyParty.characters = enemyMinionList;
     }
 }

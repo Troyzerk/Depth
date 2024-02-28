@@ -4,17 +4,35 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public static PlayerData instance;
+
+    //Quest
+    public List<Quest> quests;
+    public Quest activeQuest;
+
+    // Race
+    [Tooltip("Starting Race ID for the Player hero character")]
+    [SerializeField]
+    RaceID heroRaceID;
+
+    [Tooltip("Starting SubRace ID for the Player hero character")]
+    [SerializeField]
+    SubRaceID heroSubRaceID;
+
+    //Vars
+    public PlayerParty playerParty;
+    public GameObject playerPartyObject;
+    public Vector3 partyTransform;
+
+
 
     [System.Serializable]
-    public class PlayerVarData
+    public class PlayerSaveData
     {
         public string playerName;
         public int playerDeaths;
         public int highestLevel;
     }
-
-    public static PlayerData instance;
-
     private void Awake()
     {
         if (instance == null)
@@ -25,12 +43,16 @@ public class PlayerData : MonoBehaviour
         else
         {
             Destroy(this);
-        }
-        
+        }       
         
     }
 
     private void Start()
+    {
+        
+    }
+
+    public void CheckForLoadedData()
     {
         if (System.IO.File.Exists(Application.dataPath + "/UserData/playerData.json"))
         {
@@ -42,10 +64,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-
     public void CreateNewData(string username)
     {
-        PlayerVarData player = new PlayerVarData
+        PlayerSaveData player = new PlayerSaveData
         {
             playerName = username,
             playerDeaths = 0,
@@ -57,7 +78,7 @@ public class PlayerData : MonoBehaviour
     {
         string json = System.IO.File.ReadAllText(Application.dataPath + "/UserData/playerData.json");
 
-        PlayerVarData loadedPlayer = JsonUtility.FromJson<PlayerVarData>(json);
+        PlayerSaveData loadedPlayer = JsonUtility.FromJson<PlayerSaveData>(json);
 
         // Now you can access the loaded player data
         string playerName = loadedPlayer.playerName;
@@ -69,7 +90,7 @@ public class PlayerData : MonoBehaviour
 
     }
 
-    public void SaveData(PlayerVarData player)
+    public void SaveData(PlayerSaveData player)
     {
         string json = JsonUtility.ToJson(player);
         System.IO.File.WriteAllText(Application.dataPath + "/UserData/playerData.json", json);

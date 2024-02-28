@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,7 @@ public class PersistentManager : MonoBehaviour
     public static PersistentManager instance { get; private set; }
     public Character playerCharacter;
 
-    [Tooltip("Starting Race ID for the Player hero character")]
-    [SerializeField]
-    RaceID heroRaceID;
-
-    [Tooltip("Starting SubRace ID for the Player hero character")]
-    [SerializeField]
-    SubRaceID heroSubRaceID;
-
-    public GameObject playerPartyObject;
-    public PlayerParty playerParty;
-    public Vector3 storedPlayerTransform;
-    public List<Quest> playerQuests;
+    public TextAsset skillTable;
 
 
     public AIParty enemyParty;
@@ -78,6 +68,8 @@ public class PersistentManager : MonoBehaviour
         //Loading the Goblin Race
         activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
 
+
+
     }
 
     private void InitGlobalFactions()
@@ -90,7 +82,6 @@ public class PersistentManager : MonoBehaviour
     {
         Debug.Log("stored NPC Party amount = " + storedNPCPartys.Count);
         Debug.Log("stored Towns amount = " + storedTowns.Count);
-        Debug.Log("stored player party = " + instance.playerParty);
         Debug.Log("stored enemy party = " + instance.enemyParty);
     }
 
@@ -113,14 +104,14 @@ public class PersistentManager : MonoBehaviour
     }
     public void ValidatePlayerParty()
     {
-        playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
-        GlobalPlayerData.playerParty = playerParty;
-        GlobalHolder.playerPartyReference = playerParty;
+        PlayerData.instance.playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
+        GlobalPlayerData.playerParty = PlayerData.instance.playerParty;
+        GlobalHolder.playerPartyReference = PlayerData.instance.playerParty;
 
         // This is weird, should probably get reworked because there isnt always a PlayerPartyManager on the player
         if (GameObject.FindGameObjectWithTag("Player")  != null)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = playerParty;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = PlayerData.instance.playerParty;
         }
         
     }

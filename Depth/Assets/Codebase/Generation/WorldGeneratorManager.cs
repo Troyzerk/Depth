@@ -13,9 +13,6 @@ public class WorldGeneratorManager : MonoBehaviour
     public int cellXAmount;
     public int cellYAmount;
 
-
-
-
     public float scale = 20f;
     public float blockerClamp = 0.6f;
 

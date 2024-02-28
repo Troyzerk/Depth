@@ -48,7 +48,7 @@ public static class BattleBehaviour
         float closestDistance = Mathf.Infinity;
         Character mainCharacter = PersistentManager.instance.playerCharacter;
 
-        List<Character> playerMinionList = PersistentManager.instance.playerParty.characters;
+        List<Character> playerMinionList = PlayerData.instance.playerParty.characters;
         if (!playerMinionList.Contains(mainCharacter))
         {
             playerMinionList.Add(mainCharacter);
@@ -82,7 +82,7 @@ public static class BattleBehaviour
     public static bool TheWinner()
     {
         List<Character> enemyMinionList = PersistentManager.instance.enemyParty.characters;
-        List<Character> playerMinionList = PersistentManager.instance.playerParty.characters;
+        List<Character> playerMinionList = PlayerData.instance.playerParty.characters;
         int deathCount = 0;
 
         foreach (Character attacker in playerMinionList)
