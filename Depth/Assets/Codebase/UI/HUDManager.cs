@@ -57,7 +57,6 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateHUD()
     {
-        //Init();
         PlayerPartyManager.instance.CalculateStatsTotal();
         goldCounter.text = PlayerData.instance.playerParty.gold.ToString();
         repCounter.text = PlayerData.instance.playerParty.reputation.ToString();
@@ -66,7 +65,6 @@ public class HUDManager : MonoBehaviour
         partyDefenceCounter.text = PlayerData.instance.playerParty.totalDefence.ToString();
         partyDamageCounter.text = PlayerData.instance.playerParty.totalDamage.ToString();
         UpdatePartyHud();
-        print("Updated entire HUD");
     }
 
 

@@ -16,9 +16,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 12f6be45ff19f5740b5a34947f4a0139, type: 2}
   currentGoalIndex: 0
   questName: Cave Splunking
-  description: The troglodyte has stolen our food, get it back.
+  description: Defeat an enemy Party
   questProgressCurrentStep: 0
-  experienceReward: 30
-  goldReward: 11
+  experienceReward: 100
+  goldReward: 100
   characterReward: 1
-  isCompleted: 1
+  isCompleted: 0

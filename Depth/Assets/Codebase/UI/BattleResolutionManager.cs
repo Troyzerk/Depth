@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
 public class BattleResolutionManager : MonoBehaviour
 {
+    
     int goldReward;
     int expReward;
     int repReward;
@@ -23,6 +26,9 @@ public class BattleResolutionManager : MonoBehaviour
 
     public void Start()
     {
+        //EventSubscribe
+
+        QuestManager.instance.OnBattleResolved += ResolveQuests;
         CalculateWinnings();
     }
 
@@ -33,9 +39,9 @@ public class BattleResolutionManager : MonoBehaviour
 
     void CalculateWinnings()
     {
-        goldReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
-        expReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
-        repReward = PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
+        goldReward = PersistentManager.instance.enemyParty.characters.Count * UnityEngine.Random.Range(1, 10);
+        expReward = PersistentManager.instance.enemyParty.characters.Count * UnityEngine.Random.Range(1, 10);
+        repReward = PersistentManager.instance.enemyParty.characters.Count * UnityEngine.Random.Range(1, 10);
 
         Debug.Log("Rewarded Player with Gold : +" + goldReward);
         Debug.Log("Rewarded Player with Experience : +" + expReward);
@@ -54,7 +60,7 @@ public class BattleResolutionManager : MonoBehaviour
         {
             if (character.status == CharacterStatus.Dead)
             {
-                int randomNumber = Random.Range(1, 10);
+                int randomNumber = UnityEngine.Random.Range(1, 10);
                 if (randomNumber > 5)
                 {
                     character.status = CharacterStatus.Injured;
@@ -68,7 +74,7 @@ public class BattleResolutionManager : MonoBehaviour
                 }
             }
 
-            character.currentExperience += PersistentManager.instance.enemyParty.characters.Count * Random.Range(1, 10);
+            character.currentExperience += PersistentManager.instance.enemyParty.characters.Count * UnityEngine.    Random.Range(1, 10);
             if (character.currentExperience >= character.maxExperience)
             {
                 character.level += 1;
@@ -82,7 +88,7 @@ public class BattleResolutionManager : MonoBehaviour
         }
         RemoveNPCEnemyGameObject();
 
-
+        
     }
 
     private void RemoveNPCEnemyGameObject()
@@ -91,6 +97,11 @@ public class BattleResolutionManager : MonoBehaviour
         PersistentManager.instance.storedNPCPartys.Remove(PersistentManager.instance.npcGroup);
         Destroy(PersistentManager.instance.enemyParty);
         Destroy(PersistentManager.instance.npcGroup);
+    }
+
+    private void ResolveQuests(object sender, EventArgs e)
+    {
+        QuestManager.instance.DefeatedEnemyParty(PersistentManager.instance.enemyParty);
     }
 
 

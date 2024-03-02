@@ -36,6 +36,11 @@ public class Quest : ScriptableObject
          * is up and running. 
          */
     }
+
+    public Goal CheckCurrentGoal()
+    {
+        return goals[currentGoalIndex];
+    }
 }
 
 

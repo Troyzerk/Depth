@@ -11,10 +11,6 @@ public class Goal : ScriptableObject
 
     public bool isCompleted;
 
-    public int experienceReward;
-    public int goldReward;
-    public int characterReward;
-
     public virtual void Awake()
     {
         Init();
@@ -23,7 +19,7 @@ public class Goal : ScriptableObject
     {
 
     }
-    public virtual void GenerateTarget()
+    public virtual void ProgressGoal()
     {
 
     }

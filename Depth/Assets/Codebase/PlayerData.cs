@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     public static PlayerData instance { get; set; }
-    public event EventHandler OnPlayerDataValidated;
 
     //Quest
     public List<Quest> quests;

@@ -9,6 +9,7 @@ using UnityEngine;
 public class PersistentManager : MonoBehaviour
 {
     public static PersistentManager instance { get; set; }
+
     public Character playerCharacter;
 
     public TextAsset skillTable;
