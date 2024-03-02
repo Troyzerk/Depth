@@ -6,23 +6,30 @@ using System.Linq;
 [CreateAssetMenu(fileName = "NewQuest", menuName = "Questing/NewQuest")]
 public class Quest : ScriptableObject
 {
+    public List<Goal> goals;
+    public int currentGoalIndex;
+
+
     public string questName;
     public string description;
+
+
+    public int questProgressCurrentStep, experienceReward, goldReward, characterReward;
+
     public bool isCompleted;
-    public int experienceReward;
 
 
-    public void Awake()
+    void Awake()
     {
         
     }
 
-    public void CheckGoals()
+    public virtual void CheckGoals()
     {
         
     }
 
-    void GiveReward()
+    public virtual void GiveReward()
     {
         /*
          * We will have to polish this more when the combatEvent system

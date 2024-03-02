@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Races", menuName = "Global/Races")]
-public class GlobalRaces : ScriptableObject
-{
-    public RaceStats raceStats;
 
-}
+/*
+ *  Having Enums like this is okay, Its more of a personal preference if you wnat to hold them together or not. 
+ *  In this project we will group enums by kind. In this instance all enums here are related to vars in the 
+ *  race/subrace classes. 
+ * 
+ *  We might want to think about removing the faction and damage stuff to its own .cs file though. 
+ *  
+ *  - Troy Kinane 01/03/24
+ * 
+ */
 
 
 public enum RaceID

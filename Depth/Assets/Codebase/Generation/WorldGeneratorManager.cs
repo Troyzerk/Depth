@@ -37,13 +37,10 @@ public class WorldGeneratorManager : MonoBehaviour
     public List<TileData> nonblockingTileDatas;
 
 
-
-
-
     private Dictionary<TileBase, TileData> dataFromTiles;
 
-    // Start is called before the first frame update
-    public void Awake()
+
+    public void CreateWorld()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
         tileDatas = new List<TileData>();
@@ -54,13 +51,16 @@ public class WorldGeneratorManager : MonoBehaviour
         InitializeWorldGrids();
         AddTiles();
 
+        SpawnGameplayObjects();
+    }
+
+    public void SpawnGameplayObjects()
+    {
         //Spawn things
         NPCPartySpawner.SpawnNPCGroups(10);
         NPCPartySpawner.SpawnLandmark(20);
-        SpawnSomething(5, Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
-        SpawnSomething(1, Resources.Load("Gameplay/HordeDen") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
-
-
+        SpawnSomething(5, Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistentManager/Towns").transform, nonblockingTileDatas);
+        SpawnSomething(1, Resources.Load("Gameplay/HordeDen") as GameObject, GameObject.Find("PersistentManager/Towns").transform, nonblockingTileDatas);
     }
     public void RandomiseValues()
     {
@@ -88,7 +88,7 @@ public class WorldGeneratorManager : MonoBehaviour
 
         tileMapL1 = new();
         tileMapL1.name = "TileMapL1";
-        tileMapCompL1 = tileMap.AddComponent<Tilemap>();
+        tileMapCompL1 = tileMapL1.AddComponent<Tilemap>();
         tileMapL1.AddComponent<TilemapRenderer>().sortingOrder = -99;
         tileMapL1.transform.SetParent(tileGridL1.transform);
 

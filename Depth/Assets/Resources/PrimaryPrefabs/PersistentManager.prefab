@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1680320478956194181}
   - component: {fileID: 6015660178674552646}
+  - component: {fileID: -6183477319496372336}
   - component: {fileID: 893476816947416623}
   - component: {fileID: 8010559586869811076}
   m_Layer: 0
-  m_Name: PersistantManager
-  m_TagString: Untagged
+  m_Name: PersistentManager
+  m_TagString: Frontend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,10 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCharacter: {fileID: 0}
-  heroRaceID: 0
-  heroSubRaceID: 2
-  playerParty: {fileID: 0}
-  storedPlayerTransform: {x: 0, y: 0, z: 0}
+  skillTable: {fileID: 0}
   enemyParty: {fileID: 0}
   npcGroup: {fileID: 0}
   globalCharacterNames: []
@@ -66,6 +64,26 @@ MonoBehaviour:
   startingPlayerPartySize: 6
   startingEnemyPartySize: 2
   globalFactions: []
+--- !u!114 &-6183477319496372336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985302681713601962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858ee666af302b48a8341ec9fe71a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quests: []
+  activeQuest: {fileID: 0}
+  heroRaceID: 0
+  heroSubRaceID: 0
+  playerCharacter: {fileID: 0}
+  playerParty: {fileID: 0}
+  playerPartyObject: {fileID: 0}
+  partyTransform: {x: 0, y: 0, z: 0}
 --- !u!114 &893476816947416623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,17 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65153f55b021713449f0dc35ea848d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentQuests: []
-  currentGoal:
-    type: 0
-    goalName: 
-    isQuestGoalCompleted: 0
-    requiredAmount: 0
-    currentAmount: 0
-    questStep: 0
-    description: 
-  questEntryUIs: []
-  startingQuest: {fileID: 11400000, guid: 8f46405a02442e2418403e6aadff449a, type: 2}
+  questLog: {fileID: 0}
+  questLogEntryUIs: []
 --- !u!114 &8010559586869811076
 MonoBehaviour:
   m_ObjectHideFlags: 0

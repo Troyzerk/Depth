@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfc1e3ddbf6d134dbebb0d021785aef, type: 3}
   m_Name: MainQuest
   m_EditorClassIdentifier: 
+  goals:
+  - {fileID: 11400000, guid: 87a584836fafb794fa96f933f52a64b6, type: 2}
+  - {fileID: 11400000, guid: d256050466fe694469c45796d20a700c, type: 2}
+  currentGoalIndex: 0
   questName: MainQuest
   description: 'Chapter 1 : Do the thing'
+  questProgressMaxSteps: 3
+  questProgressCurrentStep: 0
   isCompleted: 0
   experienceReward: 100

@@ -9,6 +9,14 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+ *      This baseGameScript needs to be renamed to make it easier to defrinciate between the battle scene
+ *      game manager and the world map game manager. 
+ *      -Troy
+ * 
+ * 
+ */
+
 public class BaseGameScript : MonoBehaviour
 {
     
