@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfc1e3ddbf6d134dbebb0d021785aef, type: 3}
   m_Name: SideQuest-BottomsUp
   m_EditorClassIdentifier: 
-  questName: Side Quest
-  description: 'Find meadhbh the troglodyte '
-  isCompleted: 0
-  experienceReward: 10
+  goals:
+  - {fileID: 11400000, guid: 12f6be45ff19f5740b5a34947f4a0139, type: 2}
+  currentGoalIndex: 0
+  questName: Cave Splunking
+  description: The troglodyte has stolen our food, get it back.
+  questProgressCurrentStep: 0
+  experienceReward: 30
+  goldReward: 11
+  characterReward: 1
+  isCompleted: 1

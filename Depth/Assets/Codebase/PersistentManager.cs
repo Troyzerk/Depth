@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor.SearchService;
 using UnityEngine;
 
 public class PersistentManager : MonoBehaviour
 {
-    public static PersistentManager instance { get; private set; }
+    public static PersistentManager instance { get; set; }
     public Character playerCharacter;
 
     public TextAsset skillTable;
@@ -34,48 +35,21 @@ public class PersistentManager : MonoBehaviour
     public static List<RaceStats> activeRaces = new();
     public static Faction[] factions;
     
-
-    
-
-    private void Awake()
+    public void Init()
     {
-
-
-        if (AIGroups == null || !towns || !landmarks)
+        if (!AIGroups || !towns || !landmarks)
         {
             AIGroups = GameObject.Find("PersistantManager/AIGroups");
             towns = GameObject.Find("PersistantManager/Towns");
             landmarks = GameObject.Find("PersistantManager/Landmarks");
         }
-
-        if (instance == null)
-        {
-            instance = this;
-            InitResources(); // Resources should always be loaded before first load.
-            DontDestroyOnLoad(gameObject);
-            FirstLoad();
-        }
-        else
-        {
-            Destroy(gameObject);
-            Debug.LogWarning("Destroying new PersistantManager because one already exists");
-        }
-
+        ValidatePlayerParty();
     }
 
     public void InitResources()
     {
         //Loading the Goblin Race
         activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
-
-
-
-    }
-
-    private void InitGlobalFactions()
-    {
-        factions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();
-        globalFactions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();
     }
 
     public void PrintRecordedData()
@@ -83,26 +57,8 @@ public class PersistentManager : MonoBehaviour
         Debug.Log("stored NPC Party amount = " + storedNPCPartys.Count);
         Debug.Log("stored Towns amount = " + storedTowns.Count);
         Debug.Log("stored enemy party = " + instance.enemyParty);
-    }
-
-
-    // Validation 
-
-    //First Load will probably have to be reworked when we go to save this data and load it. 
-    public void FirstLoad()
-    {
-        InitGlobalFactions();
-        ValidatePlayerParty();
-        ValidatePlayerCharacter();
-        ValidateNPCParty();
-    }
-
-    public void ValidatePlayerCharacter()
-    {
-        playerCharacter = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.partyLeader = playerCharacter;
-    }
-    public void ValidatePlayerParty()
+    }  
+    private void ValidatePlayerParty()
     {
         PlayerData.instance.playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
         GlobalPlayerData.playerParty = PlayerData.instance.playerParty;

@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public static PlayerData instance;
+    public static PlayerData instance { get; set; }
+    public event EventHandler OnPlayerDataValidated;
 
     //Quest
     public List<Quest> quests;
@@ -20,6 +22,7 @@ public class PlayerData : MonoBehaviour
     SubRaceID heroSubRaceID;
 
     //Vars
+    public Character playerCharacter;
     public PlayerParty playerParty;
     public GameObject playerPartyObject;
     public Vector3 partyTransform;
@@ -33,25 +36,16 @@ public class PlayerData : MonoBehaviour
         public int playerDeaths;
         public int highestLevel;
     }
-    private void Awake()
+
+
+    public void ValidatePlayerCharacter()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }       
-        
+        playerCharacter = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.partyLeader = playerCharacter;
+        PersistentManager.instance.playerCharacter = playerCharacter;
     }
 
-    private void Start()
-    {
-        
-    }
-
+    // LOADING JSON //
     public void CheckForLoadedData()
     {
         if (System.IO.File.Exists(Application.dataPath + "/UserData/playerData.json"))
@@ -63,7 +57,6 @@ public class PlayerData : MonoBehaviour
             CreateNewData("User");
         }
     }
-
     public void CreateNewData(string username)
     {
         PlayerSaveData player = new PlayerSaveData
@@ -89,7 +82,6 @@ public class PlayerData : MonoBehaviour
         Debug.Log($"JSON Player Name: {playerName} , Number of Player Deaths : {playerDeaths} ,Highest Level : {highestLevel}");
 
     }
-
     public void SaveData(PlayerSaveData player)
     {
         string json = JsonUtility.ToJson(player);

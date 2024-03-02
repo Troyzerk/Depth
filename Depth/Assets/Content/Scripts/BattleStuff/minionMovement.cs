@@ -9,6 +9,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 /*
  * Handles movement, detection and destruction of NPC characters in the battle scene.
+ * 
  */
 public static class BattleBehaviour
 {

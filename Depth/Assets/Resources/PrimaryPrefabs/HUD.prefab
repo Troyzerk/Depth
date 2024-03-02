@@ -1827,7 +1827,7 @@ RectTransform:
   - {fileID: 7211643977492068297}
   - {fileID: 2013331898634692786}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1852,7 +1852,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1953,8 +1953,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -159.9978, y: -25}
-  m_SizeDelta: {x: 319.9957, y: -50}
+  m_AnchoredPosition: {x: -200.2815, y: -25}
+  m_SizeDelta: {x: 400.563, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848479501126015074
 MonoBehaviour:
@@ -1994,7 +1994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9f5169eeb320f40be839b85329853a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeQuest: {fileID: 0}
 --- !u!1 &8221836280113066187
 GameObject:
   m_ObjectHideFlags: 0

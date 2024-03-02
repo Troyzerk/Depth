@@ -4,6 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ *  After some investigation we should be using this HUDManager to kick off functions and assign subscriptions to 
+ *  trigger events for global updates. We should try to keep individual subscriptions isolated to HUD scripts.
+ *  
+ *  For example : 
+ *      We should have the the HeroStatCard subscribed to the Character stat change event so that when stats change the card
+ *      triggers its UI update. 
+ *  
+ *  This should be the case for all UI Updating in this project. 
+ *  
+ *  -Troy 01/03/24
+ * 
+ */
+
+
 public class HUDManager : MonoBehaviour
 {
     public Town town;
