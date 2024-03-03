@@ -59,16 +59,25 @@ public class PersistentManager : MonoBehaviour
         Debug.Log("stored Towns amount = " + storedTowns.Count);
         Debug.Log("stored enemy party = " + instance.enemyParty);
     }  
+
+    /*
+     *  This Validation for the player party should include validation for the player character too. 
+     *  Since creating a character doesnt automatically add 
+     * 
+     * 
+     */
+
     private void ValidatePlayerParty()
     {
         PlayerData.instance.playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
         GlobalPlayerData.playerParty = PlayerData.instance.playerParty;
         GlobalHolder.playerPartyReference = PlayerData.instance.playerParty;
+        PlayerData.instance.playerParty.GeneratePlayerCharacter();
 
         // This is weird, should probably get reworked because there isnt always a PlayerPartyManager on the player
         if (GameObject.FindGameObjectWithTag("Player")  != null)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = PlayerData.instance.playerParty;
+            //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = PlayerData.instance.playerParty;
         }
         
     }

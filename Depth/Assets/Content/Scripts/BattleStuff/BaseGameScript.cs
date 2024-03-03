@@ -66,7 +66,7 @@ public class BaseGameScript : MonoBehaviour
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
         playerMinionList = PlayerData.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
-        ValidateMainPlayer(PersistentManager.instance.playerCharacter);
+        ValidateMainPlayer(PlayerData.instance.playerCharacter);
 
         GlobalGameSettings.SetGameSpeed(1);
 
@@ -230,7 +230,8 @@ public class BaseGameScript : MonoBehaviour
         GameObject minionGameObject = Resources.Load("mainMinon") as GameObject;
         worldPosition = grid.GetCellCenterWorld(new Vector3Int(1, -1));
         clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
-        clone.name = player.name;
+        print(player);
+        clone.name = player.characterFullName;
         clone.GetComponent<MinionBrain>().minionRef = player;
     }
     public void PromoteBattleParties()

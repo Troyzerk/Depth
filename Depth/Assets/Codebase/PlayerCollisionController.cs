@@ -67,43 +67,11 @@ public class PlayerCollisionController : MonoBehaviour
 
         if (other.gameObject.CompareTag("AI") )
         {
-            List<Character> playerParty = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.characters;
-            AIParty aiParty = other.GetComponent<AIBehaviour>().aiParty;
-            print("Player VS " + aiParty.partyName );
-            int fullReward = aiParty.characters.Count * 10;
-            int targetPartyCount = aiParty.characters.Count;
-
-            GlobalHolder.enemyPartyReference = aiParty;
-
-            PersistentManager.instance.enemyParty = aiParty;
+            GlobalHolder.enemyPartyReference = other.GetComponent<AIBehaviour>().aiParty;
+            PersistentManager.instance.enemyParty = other.GetComponent<AIBehaviour>().aiParty;
             PersistentManager.instance.npcGroup = other.gameObject;
             SceneManagerScript.RecordStoredData();
             SceneManagerScript.LoadBattleScene();
-            
-
-            //Temp removed to test character battles
-
-
-            /*
-            bool victorious = gameManager.GetComponent<GameState>().ResolveBattle(aiParty.characters, playerParty);
-
-            if (victorious)
-            {
-                Destroy(other.gameObject);
-                playerPartyManager.playerParty.gold += fullReward;
-                hudManager.UpdateHUD();
-            }
-            else if (!victorious && playerParty.Count != 0)
-            {
-                //unresolved
-                targetPartyCount -= aiParty.characters.Count;
-                playerPartyManager.playerParty.gold += targetPartyCount * 10;
-            }
-            else if (!victorious && playerParty.Count == 0)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            */
 
           }
 

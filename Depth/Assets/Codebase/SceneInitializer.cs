@@ -31,7 +31,7 @@ public class SceneInitializer : MonoBehaviour
 
         if (!GameObject.FindGameObjectWithTag("Frontend"))
         {
-            persistentManagerGameObject = CreateAndSetObject("PrimaryPrefabs/PersistantManager", "PersistentManager", true);
+            persistentManagerGameObject = CreateAndSetObject("PrimaryPrefabs/PersistentManager", "PersistentManager", true);
         }
         else
         {
@@ -62,9 +62,27 @@ public class SceneInitializer : MonoBehaviour
             Debug.LogWarning("Could NOT create new player because one already exists in the scene. Please remove as this gets created on load.");
         }
 
+        if (!GameObject.FindGameObjectWithTag("HUD"))
+        {
+            CreateAndSetObject("PrimaryPrefabs/HUD", "HUD", true);
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("HUD");
+            Debug.LogWarning("Could NOT create new HUD because one already exists in the scene. Please remove as this gets created on load.");
+        }
 
-        
+        if (!GameObject.FindGameObjectWithTag("DialogueSystem"))
+        {
+            CreateAndSetObject("PrimaryPrefabs/DialogueSystem", "DialogueSystem", true);
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("DialogueSystem");
+            Debug.LogWarning("Could NOT create new DialogueSystem because one already exists in the scene. Please remove as this gets created on load.");
+        }
 
+        print("[FRONTEND] LOADING RESOURCES FINISHED!");
 
         // Loading Faction Data //
         PersistentManager.factions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();
@@ -78,6 +96,7 @@ public class SceneInitializer : MonoBehaviour
     public virtual void PostLoadResources()
     {
         CreateWorld();
+        InitGameObjects();
     }
 
     public GameObject CreateAndSetObject(string path, string name, bool dontDestroyOnLoad)
@@ -91,6 +110,17 @@ public class SceneInitializer : MonoBehaviour
         return obj;
     }
 
+    [Tooltip("initializes gameobjects like cameracontroller and click col checker")]
+    public virtual void InitGameObjects()
+    {
+        PersistentManager.instance.InitResources();
+        PersistentManager.instance.Init();
+
+        QuestManager.instance.Init();
+
+        GameObject.Find("MainCamera").GetComponent<CameraController>().Init();
+        GameObject.Find("ClickCol").GetComponent<clickColChecker>().Init();
+    }
     public virtual void CreateWorld()
     {
         GameObject obj = CreateAndSetObject("PrimaryPrefabs/WorldGenerator", "WorldGenerator", false);

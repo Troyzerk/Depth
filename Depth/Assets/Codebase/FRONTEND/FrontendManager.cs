@@ -15,38 +15,64 @@ using UnityEngine;
 
 public class FrontendManager : SceneInitializer
 {
+    public static FrontendManager Instance { get; private set; }
+    public static bool isGenerated = false;
 
     public override void Initialize()
     {
+        Debug.Log("[FRONTEND] Init start");
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         base.Initialize();
-        DontDestroyOnLoad(gameObject);
-        Debug.Log($"[FRONTEND] Initialzing Frontend");
-        GameObject persistentManager = LoadResources();
+        if (!isGenerated)
+        {
+            DontDestroyOnLoad(gameObject);
+            Debug.Log($"[FRONTEND] Initialzing Frontend");
+            GameObject persistentManager = LoadResources();
 
-        /* 
-         * initialize singltons 
-         * Do not call anything but [Singlton.instance = x ]
-         * this is just for setting instances.
-         */
+            /* 
+             * initialize singltons 
+             * Do not call anything but [Singlton.instance = x ]
+             * this is just for setting instances.
+             */
 
-        if (persistentManager.GetComponent<PersistentManager>())
-        {
-            PersistentManager.instance = persistentManager.GetComponent<PersistentManager>();
-            Debug.Log($"[FRONTEND : LOADING] PersistentManager: " + PersistentManager.instance);
+            if (persistentManager.GetComponent<PersistentManager>())
+            {
+                PersistentManager.instance = persistentManager.GetComponent<PersistentManager>();
+                Debug.Log($"[FRONTEND : LOADING] PersistentManager: " + PersistentManager.instance);
+            }
+            if (persistentManager.GetComponent<PlayerData>())
+            {
+                PlayerData.instance = persistentManager.GetComponent<PlayerData>();
+                Debug.Log($"[FRONTEND : LOADING] Player Data: " + PlayerData.instance);
+            }
+            if (persistentManager.GetComponent<QuestManager>())
+            {
+                QuestManager.instance = persistentManager.GetComponent<QuestManager>();
+                Debug.Log($"[FRONTEND : LOADING] Quest manager: " + QuestManager.instance);
+            }
+            if (HUDManager.instance == null)
+            {
+                HUDManager.instance = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
+                Debug.Log($"[FRONTEND : LOADING] World HUD: " + HUDManager.instance);
+            }
+
+
+            PostLoadResources();
+            isGenerated = true;
         }
-        if (persistentManager.GetComponent<PlayerData>())
+        else
         {
-            PlayerData.instance = persistentManager.GetComponent<PlayerData>();
-            Debug.Log($"[FRONTEND : LOADING] Player Data: " + PlayerData.instance);
-        }
-        if (persistentManager.GetComponent<QuestManager>())
-        {
-            QuestManager.instance = persistentManager.GetComponent<QuestManager>();
-            Debug.Log($"[FRONTEND : LOADING] Quest manager: " + QuestManager.instance);
+            Debug.Log("[FRONTEND] Finished.");
         }
         
-        
-        PostLoadResources();
     }
 
     public override void PostLoadResources()
@@ -55,7 +81,8 @@ public class FrontendManager : SceneInitializer
         PersistentManager.instance.Init();
 
         QuestManager.instance.Init();
-        //PersistentManager.instance.ValidateNPCParty();
+
+        InitGameObjects();
 
         base.PostLoadResources();
         Debug.Log($"[FRONTEND] LOADING: Post loading Resource");
