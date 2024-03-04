@@ -13,16 +13,14 @@ MonoBehaviour:
   m_Name: BlockerTile
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -293708460, guid: 2cfa0fe76d89c8643a4cf0f7de854671, type: 3}
-  m_DefaultGameObject: {fileID: 544999541523074470, guid: 0926fa54ab4a4984dadeb2d904c8e60f,
-    type: 3}
-  m_DefaultColliderType: 1
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 2
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
     - {fileID: -293708460, guid: 2cfa0fe76d89c8643a4cf0f7de854671, type: 3}
     - {fileID: -2091203104, guid: 2cfa0fe76d89c8643a4cf0f7de854671, type: 3}
-    m_GameObject: {fileID: 544999541523074470, guid: 0926fa54ab4a4984dadeb2d904c8e60f,
-      type: 3}
+    m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.894
