@@ -39,9 +39,9 @@ public class HUDManager : MonoBehaviour
 
     public void Start()
     {
-        instance = this;
+        DontDestroyOnLoad(gameObject);
         partyContent = GameObject.FindGameObjectWithTag("PartyBarContent").transform;
-        UpdateHUD();
+        
     }
     public void Init()
     {
@@ -50,14 +50,12 @@ public class HUDManager : MonoBehaviour
         partySpeedCounter = HUDGlobalStats.instance.PartySpeedCounterText.GetComponent<TMP_Text>();
         partyDefenceCounter = HUDGlobalStats.instance.PartyDefenceCounterText.GetComponent<TMP_Text>();
         partyDamageCounter = HUDGlobalStats.instance.PartyDamageCounterText.GetComponent<TMP_Text>();
-
         HeroContainerManager.instance.StatButtonPress();
-
+        UpdateHUD();
     }
 
     public void UpdateHUD()
     {
-        //Init();
         PlayerPartyManager.instance.CalculateStatsTotal();
         goldCounter.text = PlayerData.instance.playerParty.gold.ToString();
         repCounter.text = PlayerData.instance.playerParty.reputation.ToString();
@@ -66,7 +64,6 @@ public class HUDManager : MonoBehaviour
         partyDefenceCounter.text = PlayerData.instance.playerParty.totalDefence.ToString();
         partyDamageCounter.text = PlayerData.instance.playerParty.totalDamage.ToString();
         UpdatePartyHud();
-        print("Updated entire HUD");
     }
 
 

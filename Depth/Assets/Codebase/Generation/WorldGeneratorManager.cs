@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 
 public class WorldGeneratorManager : MonoBehaviour
 {
+
+    
     [SerializeField]
     private bool debugTileData = false;
 
@@ -19,11 +21,11 @@ public class WorldGeneratorManager : MonoBehaviour
     float offsetX = 100f;
     float offsetY = 100f;
 
-    GameObject tileGrid;
+    public static GameObject tileGrid;
     GameObject tileMap;
     Tilemap tileMapComp;
 
-    GameObject tileGridL1;
+    public static GameObject tileGridL1;
     GameObject tileMapL1;
     Tilemap tileMapCompL1;
 
@@ -96,6 +98,9 @@ public class WorldGeneratorManager : MonoBehaviour
 
         tileGrid.transform.position = new Vector3((cellXAmount / 4)*-1, (cellYAmount / 4) * -1);
         tileGridL1.transform.position = new Vector3((cellXAmount / 4) * -1, (cellYAmount / 4) * -1);
+
+        DontDestroyOnLoad(tileGridL1);
+        DontDestroyOnLoad(tileGrid);
     }
 
     public void AddTiles()

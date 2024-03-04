@@ -7,7 +7,7 @@ public class clickColChecker : MonoBehaviour
     public bool check = false;
     public Vector2 otherColLocation;
     public ClickMovement clickMove;
-    private void Start()
+    public void Init()
     {
         clickMove = GameObject.FindGameObjectWithTag("Player").GetComponent<ClickMovement>();
     }

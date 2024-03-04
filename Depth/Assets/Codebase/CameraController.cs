@@ -18,11 +18,10 @@ public class CameraController : MonoBehaviour
     public float MaxOrthoSize = 4f;
 
     private Vector3 panOrigin;
-    private Camera thisCam;
 
-    private void Start()
+    public void Init()
     {
-        thisCam = this.gameObject.GetComponent<Camera>();
+
         ResetCamPosition();
     }
 
@@ -35,7 +34,7 @@ public class CameraController : MonoBehaviour
 
     public void ResetCamPosition()
     {
-        thisCam.transform.position = new Vector3(PlayerData.instance.partyTransform.x, PlayerData.instance.partyTransform.y, thisCam.transform.position.z);
+        gameObject.GetComponent<Camera>().transform.position = new Vector3(PlayerData.instance.partyTransform.x, PlayerData.instance.partyTransform.y, gameObject.GetComponent<Camera>().transform.position.z);
     }
 
     public void Pan()
@@ -68,7 +67,7 @@ public class CameraController : MonoBehaviour
         {
             // Adjusting the ortho size based on the scroll input and ZoomSpeed
             // Clamp the value to make it stay within the limits
-            thisCam.orthographicSize = Mathf.Clamp(thisCam.orthographicSize - scroll * ZoomSpeed, MinOrthoSize, MaxOrthoSize);
+            gameObject.GetComponent<Camera>().orthographicSize = Mathf.Clamp(gameObject.GetComponent<Camera>().orthographicSize - scroll * ZoomSpeed, MinOrthoSize, MaxOrthoSize);
         }
     }
 }

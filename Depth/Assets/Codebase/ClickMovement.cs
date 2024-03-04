@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using UnityEditor.SearchService;
 
 public class ClickMovement : MonoBehaviour
 {
@@ -23,17 +24,17 @@ public class ClickMovement : MonoBehaviour
 
     private void Start()
     {
-        //playerPartyManager = GameObject.Find("Player").GetComponent<PlayerPartyManager>();
         clickCol = GameObject.Find("ClickCol");
         
     }
 
     public void Reload()
     {
+        clickCol = GameObject.Find("ClickCol");
+        print(clickCol);
         target = agent.transform.position;
         lastClickedPos = agent.transform.position;
         clickCol.transform.position = agent.transform.position;
-        Debug.Log(target);
     }
 
     public void UpdatedSelectedLocation()

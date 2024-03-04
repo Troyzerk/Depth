@@ -31,16 +31,25 @@ public class QuestLogEntry : MonoBehaviour
         int currentGoalIndex = PlayerData.instance.quests[questLogEntryIndex].currentGoalIndex;
         List<Goal> goals = PlayerData.instance.quests[questLogEntryIndex].goals;
 
+        if(PlayerData.instance.quests[questLogEntryIndex].goals.Count < currentGoalIndex)
+        {
+            questGoalProgress.GetComponent<TMP_Text>().text = goals.Count.ToString();
+        }
+        else
+        {
+            // Updating Text
+            questTitle.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].questName;
+            Debug.LogWarning(goals[currentGoalIndex].discriptor.goalName);
+            goalTitle.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalName;
+            questGoalDescription.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalDescription;
+
+            // QuestProgress setting
+            questGoalMaxStep.GetComponent<TMP_Text>().text = goals.Count.ToString();
+            questGoalProgress.GetComponent<TMP_Text>().text = currentGoalIndex.ToString();
+        }
 
 
-        // Updating Text
-        questTitle.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].questName;
-        goalTitle.GetComponent<TMP_Text>().text = goals[currentGoalIndex].goalName;
-        questGoalDescription.GetComponent<TMP_Text>().text = goals[currentGoalIndex].description;
-
-        // QuestProgress setting
-        questGoalMaxStep.GetComponent<TMP_Text>().text = goals.Count.ToString();
-        questGoalProgress.GetComponent<TMP_Text>().text = currentGoalIndex.ToString();
+        
 
         if (PlayerData.instance.quests[questLogEntryIndex].isCompleted && !completeButton.activeInHierarchy)
         {
