@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class spriteDeath : MonoBehaviour
 {
-    [SerializeField] private float coolDown;
-    private void Awake()
-    {
-        StartCoroutine(DestroySelf(coolDown));
-    }
+    public float coolDown;
 
-    private IEnumerator DestroySelf(float seconds)
+    public IEnumerator DestroySelf(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Destroy(this.gameObject);
+        this.transform.position = new Vector3(0, 0, 0);
+        this.gameObject.SetActive(false);
     }
 }

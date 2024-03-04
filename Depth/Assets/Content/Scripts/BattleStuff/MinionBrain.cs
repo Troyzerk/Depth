@@ -79,7 +79,7 @@ public class MinionBrain : MonoBehaviour
     public void IsAttack(GameObject attacker, GameObject defender)
     {
 
-        int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
+        int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damage;
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
 

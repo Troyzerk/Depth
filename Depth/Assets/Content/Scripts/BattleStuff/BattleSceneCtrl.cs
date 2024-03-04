@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEditor;
@@ -22,8 +23,8 @@ public class BaseGameScript : MonoBehaviour
     private GameObject clone;
     
     public GameObject _selectedObject;
-    public Vector3 _offSet;
-    public Vector3 skillOffSet;
+    Vector3 _offSet;
+    Vector3 skillOffSet;
     private Collider2D targetObject;
 
     public GameObject enemyTarget;
@@ -48,8 +49,6 @@ public class BaseGameScript : MonoBehaviour
 
     public bool iSee;
     bool skillPress;
-
-    public SpellScript _spellScript;
 
     void Start()
     {
@@ -108,7 +107,8 @@ public class BaseGameScript : MonoBehaviour
                 _skillSelect.transform.GetChild(0).gameObject.SetActive(false);
                 _skillSelect.transform.GetChild(1).gameObject.SetActive(true);
                 skillPress = false;
-                
+                _skillSelect.gameObject.GetComponent<spriteDeath>().DestroySelf(3);
+
             }  
         }
     }
@@ -150,23 +150,24 @@ public class BaseGameScript : MonoBehaviour
                 playerObject.gameObject.GetComponent<MinionBrain>().FindTarget();
             }
 
+        } 
+
+    }
+    GameObject skillPrefab;
+    public void SkillCast(string skill)
+    {
+        print(skill +" Skill Set");
+        GameObject skillFind = GameObject.Find ("Skills");
+        for (int i = 0; i < skillFind.transform.childCount; i++)
+        {
+            if (skillFind.transform.GetChild(i).name == skill)
+            {
+                skillPrefab = skillFind.transform.GetChild(i).gameObject;
+            }
+
         }
-
-    }
-    public void SkillFire()
-    {
-        print("Fire Skill Set");
-        GameObject skillPreb = Instantiate(fireSkill);
-        _skillSelect = skillPreb.transform.gameObject;
-        skillPress = true;
-
-    }
-
-    public void SkillHeal()
-    {
-        print("Heal Skill Set");
-        GameObject skillPreb = Instantiate(healSkill);
-        _skillSelect = skillPreb.transform.gameObject;
+        skillPrefab.gameObject.SetActive(true);
+        _skillSelect = skillPrefab.transform.gameObject;
         skillPress = true;
 
     }

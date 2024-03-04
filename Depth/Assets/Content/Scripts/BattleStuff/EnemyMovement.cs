@@ -93,7 +93,7 @@ public class EnemyMovement : MonoBehaviour
     {
         isAttacking = true;
 
-        attackStrenght = this.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damageDelt;
+        attackStrenght = this.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damage;
 
         health -= attackStrenght;
         founder.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
