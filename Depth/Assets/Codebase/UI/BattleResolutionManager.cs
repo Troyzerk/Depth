@@ -26,10 +26,8 @@ public class BattleResolutionManager : MonoBehaviour
 
     public void Start()
     {
-        //EventSubscribe
-
-        QuestManager.instance.OnBattleResolved += ResolveQuests;
         CalculateWinnings();
+        ResolveQuests();
     }
 
     public void LoadWorldMap()
@@ -99,9 +97,11 @@ public class BattleResolutionManager : MonoBehaviour
         Destroy(PersistentManager.instance.npcGroup);
     }
 
-    private void ResolveQuests(object sender, EventArgs e)
+    private void ResolveQuests()
     {
+        
         QuestManager.instance.DefeatedEnemyParty(PersistentManager.instance.enemyParty);
+        
     }
 
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using static UnityEngine.Rendering.CoreUtils;
@@ -23,34 +24,35 @@ public class QuestManager : MonoBehaviour
 
 
     public event EventHandler OnQuestUpdateUI;
+
+    private List<string> questNames = new List<string>();
     
     public List<GameObject> questLogEntryUIs = new List<GameObject>();
-    private string questResourceDir = "Quests";
 
 
 
     public void Init()
     {
+        questNames.Add("hello");
+        questNames.Add("there");
+        questNames.Add("my");
+        questNames.Add("name");
+        questNames.Add("is");
+        questNames.Add("Troy");
+        
+        
         questLog = GameObject.FindGameObjectWithTag("QuestLog");
-        if (PlayerData.instance.quests == null)
-        {
-            Debug.LogWarning("Quest Manager is empty");
-        }
-        else
-        {
-            InitQuests();
-        }
+        InitQuests();
     }
 
     
 
     public void InitQuests()
     {
-        if (PlayerData.instance.quests.Count <= 0)
+        if (PlayerData.instance.quests == null)
         {
-            PlayerData.instance.quests.Clear();
             PlayerData.instance.quests = new List<Quest>();
-            PlayerData.instance.quests = ImportRandomQuestFromResources(1);
+            PlayerData.instance.quests = GenerateQuests(2);
 
             foreach (Quest quest in PlayerData.instance.quests)
             {
@@ -79,33 +81,33 @@ public class QuestManager : MonoBehaviour
         
     }
     
-
-    private List<Quest> ImportRandomQuestFromResources(int amount)
+    public void CompletedCurrrentGoal(Quest quest)
     {
-        Quest[] questArray = Resources.LoadAll("Quests", typeof(Quest)).Cast<Quest>().ToArray();
+        quest.CheckCurrentGoal().isCompleted = true;
+        quest.ProgressQuest();
+        Debug.Log(quest.questName + " : Completed! -> Updating UI");
+        UpdateAllQuestData();
+    }
 
-        if (questArray == null)
+    Quest GenerateQuest(int numOfGoals)
+    {
+        Quest quest = new Quest();
+        quest.goldReward = 100;
+        quest.goldReward = 100;
+        quest.questName = questNames[UnityEngine.Random.Range(0, questNames.Count)];
+        quest.description = questNames[UnityEngine.Random.Range(0, questNames.Count)];
+        quest.currentGoalIndex = 0;
+        quest.PopulateQuestWithRandomGoals(numOfGoals);
+        return quest;
+    }
+    List<Quest> GenerateQuests(int numberOfQuests)
+    {
+        List<Quest> quests = new List<Quest>();
+        for(int i = 0; i < numberOfQuests; i++)
         {
-            // if your getting an error here please check the resource folder that contains quests.
-            // you should have scriptable objects of type Quest in there. 
-            Debug.LogWarning("Could not import any quests for dir: Resources/" + questResourceDir);
-            return null;
+            quests.Add(GenerateQuest(UnityEngine.Random.Range(1, 3)));
         }
-        else
-        {
-            List<Quest> questList = new();
-            List<Quest> newQuestList = new();
-            questList.AddRange(questArray);
-            for (int i = 0;i < amount;)
-            {
-                newQuestList.Add(questList[UnityEngine.Random.Range(0, questList.Count)]);
-                i++;
-            }
-            Debug.LogWarning("Imported Random Quest because persistant manager doesnt have any set.");
-            return questList;
-        }
-
-        
+        return quests;
     }
     private void AddNewQuestLogUI()
     {
@@ -119,9 +121,27 @@ public class QuestManager : MonoBehaviour
         {
             if(quest.CheckCurrentGoal() is DefeatGoal)
             {
-                quest.CheckCurrentGoal().isCompleted = true;
-                Debug.Log(quest.questName + " : Completed! -> Updating UI");
-                UpdateAllQuestData();
+                CompletedCurrrentGoal(quest);
+            }
+        }
+        UpdateAllQuestData();
+        print("Resolving quests finished");
+    }
+    public void PickedUpLandmark(Landmark landmark)
+    {
+        foreach(Quest quest in PlayerData.instance.quests)
+        {
+            if (quest.CheckCurrentGoal() is CollectLandmarkGoal && landmark.rewardType == LandmarkRewardType.Gold)
+            {
+                CompletedCurrrentGoal(quest);
+            }
+            else if (landmark.rewardType == LandmarkRewardType.Experience)
+            {
+
+            }
+            else if (landmark.rewardType == LandmarkRewardType.NewRecruit)
+            {
+
             }
         }
     }

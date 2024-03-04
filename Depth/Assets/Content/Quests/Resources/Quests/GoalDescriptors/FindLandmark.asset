@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26fc54f7ec2991f47ae6c780f7c0ded7, type: 3}
-  m_Name: SideQuest_Goal1
+  m_Script: {fileID: 11500000, guid: e2c12fd63f5126d489b4cc1af7607b74, type: 3}
+  m_Name: FindLandmark
   m_EditorClassIdentifier: 
-  goalName: Defeat a party
-  description: Win a battle vs an enemy party
-  isCompleted: 0
-  experienceReward: 0
-  goldReward: 0
-  characterReward: 0
+  type: 2
+  goalName: Discovering Delvoria
+  goalDescription: Find a landmark

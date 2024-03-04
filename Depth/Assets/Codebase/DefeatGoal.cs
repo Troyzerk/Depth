@@ -7,12 +7,12 @@ using UnityEngine;
  * 
  */
 
-[CreateAssetMenu(fileName = "NewGoal", menuName = "Questing/NewDefeatGoal")]
 public class DefeatGoal : Goal
 {
-    public override void Awake()
+    public override void Init()
     {
-        base.Awake();
+        type = GoalType.DefeatParty;
+        base.Init();
         //subscribe progressgoal function to an event in the battleResolutionManager
     }
     public override void ProgressGoal()

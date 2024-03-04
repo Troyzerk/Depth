@@ -77,10 +77,7 @@ public class FrontendManager : SceneInitializer
 
     public override void PostLoadResources()
     {
-        PersistentManager.instance.InitResources();
-        PersistentManager.instance.Init();
-
-        QuestManager.instance.Init();
+        
 
         InitGameObjects();
 

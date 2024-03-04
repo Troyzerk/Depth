@@ -60,7 +60,7 @@ public class PlayerCollisionController : MonoBehaviour
                 PlayerData.instance.playerParty.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
                 HUDManager.instance.UpdateHUD();
             }
-
+            QuestManager.instance.PickedUpLandmark(landmark);
             Destroy(other.gameObject);
 
         }
