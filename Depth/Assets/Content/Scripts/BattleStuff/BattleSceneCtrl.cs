@@ -156,7 +156,6 @@ public class BaseGameScript : MonoBehaviour
     GameObject skillPrefab;
     public void SkillCast(string skill)
     {
-        print(skill +" Skill Set");
         GameObject skillFind = GameObject.Find ("Skills");
         for (int i = 0; i < skillFind.transform.childCount; i++)
         {
