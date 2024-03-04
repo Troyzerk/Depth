@@ -16,7 +16,7 @@ public class DialogueSystem : MonoBehaviour
     TMP_Text dialogueText, nameText;
     int dialogueIndex;
 
-    private void Awake()
+    private void Init()
     {
         continueButton = dialogueBox.transform.Find("NextButton").GetComponent<Button>();
         dialogueText = dialogueBox.transform.Find("Content/DialogueText").GetComponent<TMP_Text>();

@@ -7,14 +7,13 @@ using UnityEngine.UIElements;
 
 public class WorldGeneratorManager : MonoBehaviour
 {
+
+    
     [SerializeField]
     private bool debugTileData = false;
 
     public int cellXAmount;
     public int cellYAmount;
-
-
-
 
     public float scale = 20f;
     public float blockerClamp = 0.6f;
@@ -22,11 +21,11 @@ public class WorldGeneratorManager : MonoBehaviour
     float offsetX = 100f;
     float offsetY = 100f;
 
-    GameObject tileGrid;
+    public static GameObject tileGrid;
     GameObject tileMap;
     Tilemap tileMapComp;
 
-    GameObject tileGridL1;
+    public static GameObject tileGridL1;
     GameObject tileMapL1;
     Tilemap tileMapCompL1;
 
@@ -40,13 +39,10 @@ public class WorldGeneratorManager : MonoBehaviour
     public List<TileData> nonblockingTileDatas;
 
 
-
-
-
     private Dictionary<TileBase, TileData> dataFromTiles;
 
-    // Start is called before the first frame update
-    public void Awake()
+
+    public void CreateWorld()
     {
         dataFromTiles = new Dictionary<TileBase, TileData>();
         tileDatas = new List<TileData>();
@@ -57,13 +53,16 @@ public class WorldGeneratorManager : MonoBehaviour
         InitializeWorldGrids();
         AddTiles();
 
+        SpawnGameplayObjects();
+    }
+
+    public void SpawnGameplayObjects()
+    {
         //Spawn things
         NPCPartySpawner.SpawnNPCGroups(10);
         NPCPartySpawner.SpawnLandmark(20);
-        SpawnSomething(5, Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
-        SpawnSomething(1, Resources.Load("Gameplay/HordeDen") as GameObject, GameObject.Find("PersistantManager/Towns").transform,nonblockingTileDatas);
-
-
+        SpawnSomething(5, Resources.Load("Gameplay/Town") as GameObject, GameObject.Find("PersistentManager/Towns").transform, nonblockingTileDatas);
+        SpawnSomething(1, Resources.Load("Gameplay/HordeDen") as GameObject, GameObject.Find("PersistentManager/Towns").transform, nonblockingTileDatas);
     }
     public void RandomiseValues()
     {
@@ -91,7 +90,7 @@ public class WorldGeneratorManager : MonoBehaviour
 
         tileMapL1 = new();
         tileMapL1.name = "TileMapL1";
-        tileMapCompL1 = tileMap.AddComponent<Tilemap>();
+        tileMapCompL1 = tileMapL1.AddComponent<Tilemap>();
         tileMapL1.AddComponent<TilemapRenderer>().sortingOrder = -99;
         tileMapL1.transform.SetParent(tileGridL1.transform);
 
@@ -99,6 +98,9 @@ public class WorldGeneratorManager : MonoBehaviour
 
         tileGrid.transform.position = new Vector3((cellXAmount / 4)*-1, (cellYAmount / 4) * -1);
         tileGridL1.transform.position = new Vector3((cellXAmount / 4) * -1, (cellYAmount / 4) * -1);
+
+        DontDestroyOnLoad(tileGridL1);
+        DontDestroyOnLoad(tileGrid);
     }
 
     public void AddTiles()

@@ -1,36 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public static PlayerData instance { get; set; }
+
+    //Quest
+    public List<Quest> quests;
+    public Quest activeQuest;
+
+    // Race
+    [Tooltip("Starting Race ID for the Player hero character")]
+    [SerializeField]
+    RaceID heroRaceID;
+
+    [Tooltip("Starting SubRace ID for the Player hero character")]
+    [SerializeField]
+    SubRaceID heroSubRaceID;
+
+    //Vars
+    public Character playerCharacter;
+    public PlayerParty playerParty;
+    public GameObject playerPartyObject;
+    public Vector3 partyTransform;
+
+
 
     [System.Serializable]
-    public class PlayerVarData
+    public class PlayerSaveData
     {
         public string playerName;
         public int playerDeaths;
         public int highestLevel;
     }
 
-    public static PlayerData instance;
 
-    private void Awake()
+    public void ValidatePlayerCharacter()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else
-        {
-            Destroy(this);
-        }
-        
-        
+        playerCharacter = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.partyLeader = playerCharacter;
+        PersistentManager.instance.playerCharacter = playerCharacter;
     }
 
-    private void Start()
+    // LOADING JSON //
+    public void CheckForLoadedData()
     {
         if (System.IO.File.Exists(Application.dataPath + "/UserData/playerData.json"))
         {
@@ -41,11 +56,9 @@ public class PlayerData : MonoBehaviour
             CreateNewData("User");
         }
     }
-
-
     public void CreateNewData(string username)
     {
-        PlayerVarData player = new PlayerVarData
+        PlayerSaveData player = new PlayerSaveData
         {
             playerName = username,
             playerDeaths = 0,
@@ -57,7 +70,7 @@ public class PlayerData : MonoBehaviour
     {
         string json = System.IO.File.ReadAllText(Application.dataPath + "/UserData/playerData.json");
 
-        PlayerVarData loadedPlayer = JsonUtility.FromJson<PlayerVarData>(json);
+        PlayerSaveData loadedPlayer = JsonUtility.FromJson<PlayerSaveData>(json);
 
         // Now you can access the loaded player data
         string playerName = loadedPlayer.playerName;
@@ -68,8 +81,7 @@ public class PlayerData : MonoBehaviour
         Debug.Log($"JSON Player Name: {playerName} , Number of Player Deaths : {playerDeaths} ,Highest Level : {highestLevel}");
 
     }
-
-    public void SaveData(PlayerVarData player)
+    public void SaveData(PlayerSaveData player)
     {
         string json = JsonUtility.ToJson(player);
         System.IO.File.WriteAllText(Application.dataPath + "/UserData/playerData.json", json);

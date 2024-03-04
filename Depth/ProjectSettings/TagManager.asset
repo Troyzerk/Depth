@@ -22,6 +22,7 @@ TagManager:
   - QuestLog
   - Detection
   - Landmark
+  - Frontend
   layers:
   - Default
   - TransparentFX

@@ -25,9 +25,7 @@ public class SceneManagerScript : MonoBehaviour
     public static void LoadBattleScene()
     {
         SceneManager.LoadScene("Battle_Scene");
-        PersistentManager.instance.AIGroups.SetActive(false);
-        PersistentManager.instance.towns.SetActive(false);
-        PersistentManager.instance.landmarks.SetActive(false);
+        SwitchActiveStates(false);
     }
 
     public static void LoadBattleResolution()
@@ -38,11 +36,8 @@ public class SceneManagerScript : MonoBehaviour
     public static void LoadWorldMap()
     {
         SceneManager.LoadScene("LevelTest");
-        PersistentManager.instance.AIGroups.SetActive(true);
-        PersistentManager.instance.towns.SetActive(true);
-        PersistentManager.instance.landmarks.SetActive(true);
-
-        PersistentManager.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
+        SwitchActiveStates(true);
+        PlayerData.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
     }
 
     public static void RecordStoredData()
@@ -82,7 +77,17 @@ public class SceneManagerScript : MonoBehaviour
             PersistentManager.instance.landmarks = GameObject.Find("Landmarks");
         }
         
-        PersistentManager.instance.storedPlayerTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
+        PlayerData.instance.partyTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
         PersistentManager.instance.PrintRecordedData();
+    }
+
+    public static void SwitchActiveStates(bool isActive)
+    {
+        PersistentManager.instance.AIGroups.SetActive(isActive);
+        PersistentManager.instance.towns.SetActive(isActive);
+        PersistentManager.instance.landmarks.SetActive(isActive);
+        HUDManager.instance.gameObject.SetActive(isActive);
+        PlayerData.instance.playerPartyObject.SetActive(isActive);
+        WorldGeneratorManager.tileGridL1.SetActive(isActive);
     }
 }

@@ -1,26 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor.SearchService;
 using UnityEngine;
 
 public class PersistentManager : MonoBehaviour
 {
-    public static PersistentManager instance { get; private set; }
+    public static PersistentManager instance { get; set; }
+
     public Character playerCharacter;
 
-    [Tooltip("Starting Race ID for the Player hero character")]
-    [SerializeField]
-    RaceID heroRaceID;
-
-    [Tooltip("Starting SubRace ID for the Player hero character")]
-    [SerializeField]
-    SubRaceID heroSubRaceID;
-
-    public GameObject playerPartyObject;
-    public PlayerParty playerParty;
-    public Vector3 storedPlayerTransform;
-    public List<Quest> playerQuests;
+    public TextAsset skillTable;
 
 
     public AIParty enemyParty;
@@ -44,83 +36,48 @@ public class PersistentManager : MonoBehaviour
     public static List<RaceStats> activeRaces = new();
     public static Faction[] factions;
     
-
-    
-
-    private void Awake()
+    public void Init()
     {
-
-
-        if (AIGroups == null || !towns || !landmarks)
+        if (!AIGroups || !towns || !landmarks)
         {
             AIGroups = GameObject.Find("PersistantManager/AIGroups");
             towns = GameObject.Find("PersistantManager/Towns");
             landmarks = GameObject.Find("PersistantManager/Landmarks");
         }
-
-        if (instance == null)
-        {
-            instance = this;
-            InitResources(); // Resources should always be loaded before first load.
-            DontDestroyOnLoad(gameObject);
-            FirstLoad();
-        }
-        else
-        {
-            Destroy(gameObject);
-            Debug.LogWarning("Destroying new PersistantManager because one already exists");
-        }
-
+        ValidatePlayerParty();
     }
 
     public void InitResources()
     {
         //Loading the Goblin Race
         activeRaces.Add(Resources.Load("RaceStats/Goblin_RaceStats") as RaceStats);
-
-    }
-
-    private void InitGlobalFactions()
-    {
-        factions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();
-        globalFactions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();
     }
 
     public void PrintRecordedData()
     {
         Debug.Log("stored NPC Party amount = " + storedNPCPartys.Count);
         Debug.Log("stored Towns amount = " + storedTowns.Count);
-        Debug.Log("stored player party = " + instance.playerParty);
         Debug.Log("stored enemy party = " + instance.enemyParty);
-    }
+    }  
 
+    /*
+     *  This Validation for the player party should include validation for the player character too. 
+     *  Since creating a character doesnt automatically add 
+     * 
+     * 
+     */
 
-    // Validation 
-
-    //First Load will probably have to be reworked when we go to save this data and load it. 
-    public void FirstLoad()
+    private void ValidatePlayerParty()
     {
-        InitGlobalFactions();
-        ValidatePlayerParty();
-        ValidatePlayerCharacter();
-        ValidateNPCParty();
-    }
-
-    public void ValidatePlayerCharacter()
-    {
-        playerCharacter = CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty.partyLeader = playerCharacter;
-    }
-    public void ValidatePlayerParty()
-    {
-        playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
-        GlobalPlayerData.playerParty = playerParty;
-        GlobalHolder.playerPartyReference = playerParty;
+        PlayerData.instance.playerParty = PartyGenerator.GeneratePlayerParty(startingPlayerPartySize);
+        GlobalPlayerData.playerParty = PlayerData.instance.playerParty;
+        GlobalHolder.playerPartyReference = PlayerData.instance.playerParty;
+        PlayerData.instance.playerParty.GeneratePlayerCharacter();
 
         // This is weird, should probably get reworked because there isnt always a PlayerPartyManager on the player
         if (GameObject.FindGameObjectWithTag("Player")  != null)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = playerParty;
+            //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>().playerParty = PlayerData.instance.playerParty;
         }
         
     }

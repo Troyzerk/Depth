@@ -10,6 +10,14 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+ *      This baseGameScript needs to be renamed to make it easier to defrinciate between the battle scene
+ *      game manager and the world map game manager. 
+ *      -Troy
+ * 
+ * 
+ */
+
 public class BaseGameScript : MonoBehaviour
 {
     
@@ -55,9 +63,9 @@ public class BaseGameScript : MonoBehaviour
         PersistentManager.instance.AIGroups.SetActive(false);
         PersistentManager.instance.towns.SetActive(false);
         enemyMinionList = PersistentManager.instance.enemyParty.characters;
-        playerMinionList = PersistentManager.instance.playerParty.characters;
+        playerMinionList = PlayerData.instance.playerParty.characters;
         ValidatePlayerParty(playerMinionList);
-        ValidateMainPlayer(PersistentManager.instance.playerCharacter);
+        ValidateMainPlayer(PlayerData.instance.playerCharacter);
 
         GlobalGameSettings.SetGameSpeed(1);
 
@@ -222,12 +230,13 @@ public class BaseGameScript : MonoBehaviour
         GameObject minionGameObject = Resources.Load("mainMinon") as GameObject;
         worldPosition = grid.GetCellCenterWorld(new Vector3Int(1, -1));
         clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
-        clone.name = player.name;
+        print(player);
+        clone.name = player.characterFullName;
         clone.GetComponent<MinionBrain>().minionRef = player;
     }
     public void PromoteBattleParties()
     {
-        PersistentManager.instance.playerParty.characters = playerMinionList;
+        PlayerData.instance.playerParty.characters = playerMinionList;
         PersistentManager.instance.enemyParty.characters = enemyMinionList;
     }
 }

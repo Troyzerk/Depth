@@ -4,6 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ *  After some investigation we should be using this HUDManager to kick off functions and assign subscriptions to 
+ *  trigger events for global updates. We should try to keep individual subscriptions isolated to HUD scripts.
+ *  
+ *  For example : 
+ *      We should have the the HeroStatCard subscribed to the Character stat change event so that when stats change the card
+ *      triggers its UI update. 
+ *  
+ *  This should be the case for all UI Updating in this project. 
+ *  
+ *  -Troy 01/03/24
+ * 
+ */
+
+
 public class HUDManager : MonoBehaviour
 {
     public Town town;
@@ -24,9 +39,9 @@ public class HUDManager : MonoBehaviour
 
     public void Start()
     {
-        instance = this;
+        DontDestroyOnLoad(gameObject);
         partyContent = GameObject.FindGameObjectWithTag("PartyBarContent").transform;
-        UpdateHUD();
+        
     }
     public void Init()
     {
@@ -35,30 +50,27 @@ public class HUDManager : MonoBehaviour
         partySpeedCounter = HUDGlobalStats.instance.PartySpeedCounterText.GetComponent<TMP_Text>();
         partyDefenceCounter = HUDGlobalStats.instance.PartyDefenceCounterText.GetComponent<TMP_Text>();
         partyDamageCounter = HUDGlobalStats.instance.PartyDamageCounterText.GetComponent<TMP_Text>();
-
         HeroContainerManager.instance.StatButtonPress();
-
+        UpdateHUD();
     }
 
     public void UpdateHUD()
     {
-        //Init();
         PlayerPartyManager.instance.CalculateStatsTotal();
-        goldCounter.text = PersistentManager.instance.playerParty.gold.ToString();
-        repCounter.text = PersistentManager.instance.playerParty.reputation.ToString();
-        float simpleSpeed = Mathf.Round(PersistentManager.instance.playerParty.partySpeed +100)/100;
+        goldCounter.text = PlayerData.instance.playerParty.gold.ToString();
+        repCounter.text = PlayerData.instance.playerParty.reputation.ToString();
+        float simpleSpeed = Mathf.Round(PlayerData.instance.playerParty.partySpeed +100)/100;
         partySpeedCounter.text = simpleSpeed.ToString();
-        partyDefenceCounter.text = PersistentManager.instance.playerParty.totalDefence.ToString();
-        partyDamageCounter.text = PersistentManager.instance.playerParty.totalDamage.ToString();
+        partyDefenceCounter.text = PlayerData.instance.playerParty.totalDefence.ToString();
+        partyDamageCounter.text = PlayerData.instance.playerParty.totalDamage.ToString();
         UpdatePartyHud();
-        print("Updated entire HUD");
     }
 
 
     public static void UpdatePartyHud()
     {
         //Update Party size UI on banner
-        GameObject.Find("Player/Banner/BannerPartyCountText").GetComponent<TextMesh>().text = PersistentManager.instance.playerParty.characters.Count.ToString();
+        GameObject.Find("Player/Banner/BannerPartyCountText").GetComponent<TextMesh>().text = PlayerData.instance.playerParty.characters.Count.ToString();
 
         //Cleanup of HUD before Updating
         foreach (GameObject obj in partyHud)
@@ -68,7 +80,7 @@ public class HUDManager : MonoBehaviour
         partyHud.Clear();
 
         //Updating Party Hud to show characters
-        foreach (Character character in PersistentManager.instance.playerParty.characters)
+        foreach (Character character in PlayerData.instance.playerParty.characters)
         {
             if (character!=null)
             {
