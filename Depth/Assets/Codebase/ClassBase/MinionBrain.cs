@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
@@ -79,11 +80,11 @@ public class MinionBrain : MonoBehaviour
     public void IsAttack(GameObject attacker, GameObject defender)
     {
 
-        int attackStrenght = attacker.gameObject.GetComponent<MinionBrain>().minionRef.autoAttackSkill.damage;
+        int attackStrenght = 2;
 
         int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
 
-        DeathCounter(attacker, attackStrenght, new Color32(250, 223,10, 98));
+        target.transform.GetChild(1).GetComponent<deathCounter_Ctrl>().SpawnCounter(attacker, attackStrenght, new Color32(250, 223, 10, 98));
 
         health -= attackStrenght;
         defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
@@ -138,19 +139,11 @@ public class MinionBrain : MonoBehaviour
         if (this.gameObject.CompareTag("Minion"))
         {
             target = BattleBehaviour.FriendlyToEnemy(this.gameObject);
-            if (target != null)
-            {
-                Debug.DrawLine(transform.position, target.transform.position, Color.red);
-            }
 
         }
         if (this.gameObject.CompareTag("Enemy"))
         {
             target = BattleBehaviour.EnemyToFriendly(this.gameObject);
-            if (target != null)
-            {
-                Debug.DrawLine(transform.position, target.transform.position, Color.green);
-            }
 
         }
     }
