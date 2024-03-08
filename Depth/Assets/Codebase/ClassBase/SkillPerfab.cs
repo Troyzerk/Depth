@@ -14,6 +14,14 @@ public class SkillPerfab : MonoBehaviour
     public bool isDamage = false;
 
     GameObject enemyTarget;
+
+    private void Update()
+    {
+        if (transform.GetChild(1).gameObject.activeInHierarchy)
+        {
+            StartCoroutine(DeActivate(skill.cooldown)); 
+        }
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         enemyTarget = col.gameObject;
@@ -27,7 +35,7 @@ public class SkillPerfab : MonoBehaviour
     public void TriggerSkill(GameObject target)
     {
         StartCoroutine(skill.OverTime(gameObject, target));
-        StartCoroutine(DeActivate(skill.cooldown));        
+               
     }
 
     public IEnumerator DeActivate(float seconds)

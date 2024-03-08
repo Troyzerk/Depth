@@ -21,6 +21,7 @@ public class deathCounter_Ctrl : MonoBehaviour
                 }
             }
         }
+        print(DamageCounter);
     }
     public void SpawnCounter(GameObject target, int num, Color32 color)
     {
