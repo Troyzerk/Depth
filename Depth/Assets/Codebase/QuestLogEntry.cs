@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEditor;
 
 /*
  *  This script should be attached to the QuestLogEntry Prefab and subscribe to the UI Events that get called
@@ -21,41 +22,39 @@ public class QuestLogEntry : MonoBehaviour
     public void Awake()
     {
         // subscribes the UpdateUI function to the OnQuestUpdate event handler
-        QuestManager.instance.OnQuestUpdateUI += UpdateUI;
+        print(PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal());
+        QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
         completeButton.SetActive(false);
     }
 
-    private void UpdateUI(object sender, EventArgs e)
+    private void UpdateQuestUI(object sender, EventArgs e)
     {
-        // Grabbing Goal Data
-        int currentGoalIndex = PlayerData.instance.quests[questLogEntryIndex].currentGoalIndex;
-        List<Goal> goals = PlayerData.instance.quests[questLogEntryIndex].goals;
-
-        if(PlayerData.instance.quests[questLogEntryIndex].goals.Count < currentGoalIndex)
+        //Update the quest log instance to the current goal data.
+        
+        Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
+        Quest quest = PlayerData.instance.quests[questLogEntryIndex];
+        print(PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal());
+        if (goal.discriptor == null)
         {
-            questGoalProgress.GetComponent<TMP_Text>().text = goals.Count.ToString();
+            Debug.LogError("Discriptor has gotten Lost");
+        }
+
+        questTitle.GetComponent<TMP_Text>().text = quest.questName;
+        goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
+        questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+        questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
+        questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+
+        if (quest.isCompleted)
+        {
+            questGoalProgress.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+            completeButton.SetActive(true);
         }
         else
         {
-            // Updating Text
-            questTitle.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].questName;
-            Debug.LogWarning(goals[currentGoalIndex].discriptor.goalName);
-            goalTitle.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalName;
-            questGoalDescription.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalDescription;
-
-            // QuestProgress setting
-            questGoalMaxStep.GetComponent<TMP_Text>().text = goals.Count.ToString();
-            questGoalProgress.GetComponent<TMP_Text>().text = currentGoalIndex.ToString();
-        }
-
-
-        
-
-        if (PlayerData.instance.quests[questLogEntryIndex].isCompleted && !completeButton.activeInHierarchy)
-        {
-            questGoalProgress.GetComponent<TMP_Text>().text = goals.Count.ToString();
             completeButton.SetActive(true);
         }
+
 
     }
 

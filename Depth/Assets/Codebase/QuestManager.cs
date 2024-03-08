@@ -33,12 +33,12 @@ public class QuestManager : MonoBehaviour
 
     public void Init()
     {
-        questNames.Add("hello");
-        questNames.Add("there");
-        questNames.Add("my");
-        questNames.Add("name");
-        questNames.Add("is");
-        questNames.Add("Troy");
+        questNames.Add("Red Quest");
+        questNames.Add("Blue Quest");
+        questNames.Add("Green Quest");
+        questNames.Add("White Quest");
+        questNames.Add("Black Quest");
+        questNames.Add("Orange Quest");
         
         
         questLog = GameObject.FindGameObjectWithTag("QuestLog");
@@ -53,32 +53,26 @@ public class QuestManager : MonoBehaviour
         {
             PlayerData.instance.quests = new List<Quest>();
             PlayerData.instance.quests = GenerateQuests(2);
-
+            print(PlayerData.instance.quests[0].goals[0].discriptor);
             foreach (Quest quest in PlayerData.instance.quests)
             {
                 AddNewQuestLogUI();
             }
 
+            print(PlayerData.instance.quests[0].goals[0].discriptor);
             for (int i = 0; i < PlayerData.instance.quests.Count; i++)
             {
                 questLogEntryUIs[i].GetComponent<QuestLogEntry>().questLogEntryIndex = i;
             }
 
         }
+        print("before");
         UpdateAllQuestData();
     }
 
     public void UpdateAllQuestData()
     {
-        foreach (Quest quest in PlayerData.instance.quests)
-        {
-            if (quest.currentGoalIndex >= quest.goals.Count)
-            {
-                quest.isCompleted = true;
-            }
-        }
-        OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
-        
+       OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
     }
     
     public void CompletedCurrrentGoal(Quest quest)

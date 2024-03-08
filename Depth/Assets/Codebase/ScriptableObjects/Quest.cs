@@ -50,27 +50,24 @@ public class Quest
         }
         else
         {
-            goals.Clear();
             for (int i = 0; i < goalAmount; i++)
             {
-                int randomClass = Random.Range(0, 2);
+                int randomClass = Random.Range(0, 1);
                 switch (randomClass)
                 {
-                    case 0:
+                    case 0:                     
                         goals.Add(new DefeatGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 0");
+                        Debug.Log("DefeatGoal assigned to " + questName);
                         break;
                     case 1:
                         goals.Add(new CollectLandmarkGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 1");
-                        break;
-                    case 2:
-                        goals.Add(new DefeatGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 2");
+                        Debug.Log("CollectLandmarkGoal assigned to " + questName);
                         break;
                 }
-                Debug.Log(goals.Count + " : After switch output");
+                
             }
+
+            Debug.Log("Number of goals in " + questName + " : " + goals.Count + " ");
             if (goals.Count <= 0)
             {
                 Debug.LogError("Goals.Count : " + goals.Count + " : population of list failed.");
@@ -80,10 +77,9 @@ public class Quest
 
             foreach (Goal goal in goals)
             {
-                goal.Generate(goal.type);
-                if (!goal.discriptor)
+                if(goal.discriptor == null)
                 {
-                    Debug.LogError("Goal discriptor is null.");
+                    goal.GenerateGoalDiscriptor(goal.type);
                 }
             }
         }
@@ -91,4 +87,14 @@ public class Quest
     }
 }
 
+
+/*
+ * 
+ * goal.Generate(goal.type);
+                if (!goal.discriptor)
+                {
+                    Debug.LogError("Goal discriptor is null.");
+                }
+ * 
+ */
 
