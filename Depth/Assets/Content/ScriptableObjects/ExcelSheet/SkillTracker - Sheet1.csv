@@ -1,0 +1,4 @@
+ID,Name,Cooldown,DamageType,SkillType,Damage,DamageVarity,Range,SkillPrefab,ButtonSprite
+0,Fire,3,Physical,Active,2,2,2,,
+1,Heal,3,Fire,Active,4,3,2,,
+2,poision,2,Poison,Active,2,2,2,,

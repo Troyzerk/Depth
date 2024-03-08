@@ -6,8 +6,12 @@ public enum SkillType
 {
     Passive,
     Active,
-    AutoAttack,
-    AOE,
+    AutoAttack
+}
+public enum SkillIntent
+{
+    Damage,
+    Heal
 }
 
 /*
@@ -18,15 +22,17 @@ public enum SkillType
  * This is the main system for our game so we have to be very careful with 
  * preventing it from getting messy. 
  */
-
+[CreateAssetMenu(fileName = "New Skill", menuName = "Skill/normalSkill")]
 public class Skill : ScriptableObject
 {
     public string skillName;
+
     public DamageType damageType;
     public SkillType skillType;
+    public SkillIntent skillIntent;
 
     //needs renaming
-    public int damageDelt;
+    public int damage;
 
     [Tooltip("Defines the variety in damage delt : if set to 5 damage will randomise 5 +/-. If Damage is 10 then damage ranges from 5-15")]
     public int damageVariety;
@@ -34,92 +40,20 @@ public class Skill : ScriptableObject
     public int range;
     public float cooldown;
 
-    public void Init()
+    public Sprite buttonSprite;
+
+    public virtual void Awake()
     {
-        
+        Debug.Log("Hello there");
     }
+
     public virtual void Cast()
     {
-        //Ability Cast
-        //Example : Spawn Object, apply damage
+        Debug.Log("Cast");
     }
-}
-
-
-public class AutoAttack : Skill
-{
-
-}
-
-public class MeleeAutoAttack : AutoAttack
-{
-
-}
-
-public class RangedAutoAttack : AutoAttack
-{
-
-}
-
-/*
- * Damage Abilities 
- * The first class is the BaseDamage ability class
- * 
- */
-
-
-[CreateAssetMenu(fileName = "New Damage Skill", menuName = "Content/Damage/DamageSkill")]
-public class DamageSkill : Skill
-{
-    public override void Cast()
+    public virtual IEnumerator OverTime(GameObject self, GameObject target)
     {
-        base.Cast();
-    }
-}
-
-[CreateAssetMenu(fileName = "New Damage Skill", menuName = "Content/Damage/TargetDamageSkill")]
-public class TargetDamageAbility : DamageSkill
-{
-    public override void Cast()
-    {
-        base.Cast();
-    }
-}
-[CreateAssetMenu(fileName = "New Damage Skill", menuName = "Content/Damage/AOEDamageSkill")]
-public class AOEDamageSkill : DamageSkill
-{
-    public string Hello;
-    public override void Cast()
-    {
-        base.Cast();
-    }
-}
-
-/*
- * Healing Abilities 
- * The first class is the Base Healing ability class
- * 
- */
-public class HealingSkill : Skill
-{
-    public override void Cast()
-    {
-        base.Cast();
+        yield return null;
 
     }
 }
-public class TargetHealingSkill : HealingSkill
-{
-    public override void Cast()
-    {
-        base.Cast();
-    }
-}
-public class AOEHealingSkill : HealingSkill
-{
-    public override void Cast()
-    {
-        base.Cast();
-    }
-}
-
