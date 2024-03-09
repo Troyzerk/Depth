@@ -219,6 +219,10 @@ public class BattleSceneCtrl : MonoBehaviour
             clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("AI").transform);
             clone.name = party[i].name;
             clone.GetComponent<MinionBrain>().minionRef = party[i];
+
+            GameObject weaponName = clone.GetComponent<MinionBrain>().minionRef.autoAttackSkill.weapon;
+            GameObject weapon = Resources.Load(weaponName.name) as GameObject;
+            Instantiate(weapon, worldPosition, Quaternion.identity, clone.transform);
         }
     }
     void ValidatePlayerParty(List<Character> party)
@@ -229,10 +233,15 @@ public class BattleSceneCtrl : MonoBehaviour
 
         for (int i = 1; i < party.Count; i++)
         {
+            
             worldPosition = grid.GetCellCenterWorld(new Vector3Int(1+i, -1));
             clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
             clone.name = party[i].name;
             clone.GetComponent<MinionBrain>().minionRef = party[i];
+
+            GameObject weaponName = clone.GetComponent<MinionBrain>().minionRef.autoAttackSkill.weapon;
+            GameObject weapon = Resources.Load(weaponName.name) as GameObject;
+            Instantiate(weapon, worldPosition, Quaternion.identity, clone.transform);
 
         }
     }
@@ -241,7 +250,6 @@ public class BattleSceneCtrl : MonoBehaviour
         GameObject minionGameObject = Resources.Load("mainMinon") as GameObject;
         worldPosition = grid.GetCellCenterWorld(new Vector3Int(1, -1));
         clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
-        print(player);
         clone.name = player.characterFullName;
         clone.GetComponent<MinionBrain>().minionRef = player;
     }

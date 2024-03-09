@@ -30,6 +30,7 @@ public class button_TypeCast : MonoBehaviour
     }
     public void ClickButton()
     {
+        print(skill.cooldown);
         StartCoroutine(DisableButtonForSeconds(skill.cooldown));
     }
     private IEnumerator DisableButtonForSeconds(float seconds)

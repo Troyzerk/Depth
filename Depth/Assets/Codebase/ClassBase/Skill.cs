@@ -42,14 +42,9 @@ public class Skill : ScriptableObject
 
     public Sprite buttonSprite;
 
-    public virtual void Awake()
-    {
-        Debug.Log("Hello there");
-    }
-
     public virtual void Cast()
     {
-        Debug.Log("Cast");
+        
     }
     public virtual IEnumerator OverTime(GameObject self, GameObject target)
     {
