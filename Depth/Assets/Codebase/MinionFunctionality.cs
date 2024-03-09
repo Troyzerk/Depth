@@ -8,7 +8,6 @@ public static class MinionFunctionality
     
     public static void AttackIt(GameObject target, GameObject self,float cooldown,int damage)
     {
-        Debug.Log("Attacking");
         self.transform.GetChild(3).GetComponent<Animator>().SetTrigger("Attack");
         
         int attackStrenght = damage;

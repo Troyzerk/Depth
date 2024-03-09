@@ -252,6 +252,10 @@ public class BattleSceneCtrl : MonoBehaviour
         clone = Instantiate(minionGameObject, worldPosition, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
         clone.name = player.characterFullName;
         clone.GetComponent<MinionBrain>().minionRef = player;
+
+        GameObject weaponName = clone.GetComponent<MinionBrain>().minionRef.autoAttackSkill.weapon;
+        GameObject weapon = Resources.Load(weaponName.name) as GameObject;
+        Instantiate(weapon, worldPosition, Quaternion.identity, clone.transform);
     }
     public void PromoteBattleParties()
     {

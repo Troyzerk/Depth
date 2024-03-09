@@ -442,10 +442,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6570409496799979505}
     m_Modifications:
+    - target: {fileID: 3035255114242821717, guid: 469432733a693b34583e5397f75d2135,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3574490280413112220, guid: 469432733a693b34583e5397f75d2135,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028588698632172719, guid: 469432733a693b34583e5397f75d2135,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4260541993599405171, guid: 469432733a693b34583e5397f75d2135,
         type: 3}
       propertyPath: m_Name
       value: DeathCounterContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508984239384962399, guid: 469432733a693b34583e5397f75d2135,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9095378558420041092, guid: 469432733a693b34583e5397f75d2135,
         type: 3}
@@ -455,7 +475,7 @@ PrefabInstance:
     - target: {fileID: 9095378558420041092, guid: 469432733a693b34583e5397f75d2135,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 9095378558420041092, guid: 469432733a693b34583e5397f75d2135,
         type: 3}
