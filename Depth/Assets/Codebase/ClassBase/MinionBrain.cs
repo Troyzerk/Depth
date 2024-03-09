@@ -42,7 +42,11 @@ public class MinionBrain : MonoBehaviour
         }
         if (_baseGameScript.iSee)
         {
-            DoCheck();
+            if (target == null)
+            {
+                DoCheck();
+            }
+            
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
@@ -55,42 +59,20 @@ public class MinionBrain : MonoBehaviour
                 }
                 if (distanceEnemy <= minionRef.autoAttackSkill.range)
                 {
-                    isAttack = true;
-                    if (isAttack)
+                    Character autoBrain = gameObject.GetComponent<MinionBrain>().minionRef;
+                    timer += Time.deltaTime;
+                    if (timer > autoBrain.autoAttackSkill.cooldown)
                     {
-                        timer += Time.deltaTime;
-                        if (timer <=0.1)
-                        {
-                            _weaponAnimScript.Attack();
-                        }
-                        if (timer > minionRef.autoAttackSkill.cooldown)
-                        {
-                            IsAttack(this.gameObject,target);
-                            
-                            timer -= minionRef.autoAttackSkill.cooldown;
-                            isAttack = false;
-                            
-                        }
+                        
+                        autoBrain.autoAttackSkill.target = target;
+                        autoBrain.autoAttackSkill.self = gameObject;
+                        autoBrain.autoAttackSkill.Cast();
+                        timer -= autoBrain.autoAttackSkill.cooldown;
                     }
+                    IsDead(target);
                 }
             }
         }
-    }
-
-    public void IsAttack(GameObject attacker, GameObject defender)
-    {
-
-        int attackStrenght = 2;
-
-        int health = defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth;
-
-        target.transform.GetChild(1).GetComponent<deathCounter_Ctrl>().SpawnCounter(attacker, attackStrenght, new Color32(250, 223, 10, 98));
-
-        health -= attackStrenght;
-        defender.gameObject.GetComponent<MinionBrain>().minionRef.currentHealth = health;
-        defender.transform.GetChild(0).transform.GetChild(0).GetComponent<HealthBarBattleUI>().SetHealth(health);
-        IsDead(defender);
-
     }
 
     public void DoCheck()

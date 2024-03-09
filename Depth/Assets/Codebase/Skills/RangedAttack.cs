@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Skill", menuName = "Skill/MeleeSkill")]
-
-public class MeleeAttackSkill : AutoAttackSkill
+[CreateAssetMenu(fileName = "New Skill", menuName = "Skill/RangedSkill")]
+public class RangedAttack : AutoAttackSkill
 {
     public override void Cast()
     {
@@ -13,5 +11,4 @@ public class MeleeAttackSkill : AutoAttackSkill
 
         base.Cast();
     }
-
 }
