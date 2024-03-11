@@ -7,8 +7,8 @@ public class AutoAttackSkill : Skill
 {
     public int damageDealt;
 
-    public GameObject target;
     public GameObject self;
 
     public GameObject weapon;
+
 }

@@ -7,6 +7,7 @@ public class RangedAttack : AutoAttackSkill
 {
     public override void Cast()
     {
+        Debug.Log("Rangeskill Skill Casting");
         MinionFunctionality.AttackIt(target, self, cooldown, damage);
 
         base.Cast();

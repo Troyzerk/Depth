@@ -41,10 +41,14 @@ public class Skill : ScriptableObject
     public float cooldown;
 
     public Sprite buttonSprite;
+    public Color32 color;
+    public int tickDamage;
+
+    public List<GameObject> targets;
+    public GameObject target;
 
     public virtual void Cast()
-    {
-        
+    {      
     }
     public virtual IEnumerator OverTime(GameObject self, GameObject target)
     {

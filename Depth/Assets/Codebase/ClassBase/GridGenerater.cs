@@ -19,11 +19,11 @@ public class GridGenerater : MonoBehaviour
 
     void Start()
     {
-        GererateGrid();
+        //GererateGrid();
         
     }
 
-    void GererateGrid()
+    public void GererateGrid()
     {
         for (int x = 0; x<width;x++)
         {

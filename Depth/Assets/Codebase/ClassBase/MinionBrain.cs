@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MinionBrain : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class MinionBrain : MonoBehaviour
     float timer;
     bool finding = false;
 
-    bool isAttack;
+    public bool isAttacking;
 
     void Start()
     {
@@ -50,25 +51,16 @@ public class MinionBrain : MonoBehaviour
             if (target != null)
             {
                 distanceEnemy = (transform.position - target.transform.position).sqrMagnitude;
-                isAttack = false;
 
                 if (distanceEnemy > minionRef.autoAttackSkill.range)
                 {
-                    
                     transform.position = Vector2.MoveTowards(transform.position, target.transform.position, minionRef.speed * Time.deltaTime);
                 }
-                if (distanceEnemy <= minionRef.autoAttackSkill.range)
+                if (distanceEnemy <= minionRef.autoAttackSkill.range && isAttacking == false)
                 {
+                    isAttacking = true;
                     Character autoBrain = gameObject.GetComponent<MinionBrain>().minionRef;
-                    timer += Time.deltaTime;
-                    if (timer > autoBrain.autoAttackSkill.cooldown)
-                    {
-                        
-                        autoBrain.autoAttackSkill.target = target;
-                        autoBrain.autoAttackSkill.self = gameObject;
-                        autoBrain.autoAttackSkill.Cast();
-                        timer -= autoBrain.autoAttackSkill.cooldown;
-                    }
+                    StartCoroutine (CoolDown (autoBrain.autoAttackSkill.cooldown));
                     IsDead(target);
                 }
             }
@@ -89,18 +81,6 @@ public class MinionBrain : MonoBehaviour
             _baseGameScript.endMenu.SetActive(true);
             _baseGameScript.skillMenu.SetActive(false);
             _baseGameScript.iSee = false;
-        }
-    }
-    public void DeathCounter(GameObject target,int num,Color32 color)
-    {
-        GameObject DamageInstance = Instantiate(damageCounter, target.transform);
-
-        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(num.ToString());
-        DamageInstance.transform.GetChild(0).GetComponent<TextMeshPro>().color = color;
-
-        if (target.transform.localScale.x <= 0)
-        {
-            DamageInstance.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
         }
     }
     public void IsDead(GameObject target)
@@ -128,5 +108,17 @@ public class MinionBrain : MonoBehaviour
             target = BattleBehaviour.EnemyToFriendly(this.gameObject);
 
         }
+    }
+
+    public IEnumerator CoolDown(float seconds)
+    {
+        Character autoBrain = gameObject.GetComponent<MinionBrain>().minionRef;
+        yield return new WaitForSeconds(seconds);
+        autoBrain.autoAttackSkill.target = target;
+        autoBrain.autoAttackSkill.self = gameObject;
+        autoBrain.autoAttackSkill.Cast();
+        timer -= autoBrain.autoAttackSkill.cooldown;
+        isAttacking = false;
+
     }
 }
