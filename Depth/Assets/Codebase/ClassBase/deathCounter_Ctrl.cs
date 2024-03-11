@@ -24,6 +24,7 @@ public class deathCounter_Ctrl : MonoBehaviour
     }
     public void SpawnCounter(GameObject target, int num, Color32 color)
     {
+        print($"{target} {color}");
         Counter();
         DamageCounter.SetActive(true);
         DamageCounter.transform.GetChild(0).GetChild(0).GetComponent<TextMeshPro>().SetText(num.ToString());

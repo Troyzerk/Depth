@@ -22,16 +22,14 @@ public class button_TypeCast : MonoBehaviour
     {
         if (interactable) 
         { 
-            skill.Cast();
             interactable = false;
             ClickButton();
-
         }
     }
     public void ClickButton()
     {
-        print(skill.cooldown);
         StartCoroutine(DisableButtonForSeconds(skill.cooldown));
+
     }
     private IEnumerator DisableButtonForSeconds(float seconds)
     {

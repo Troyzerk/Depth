@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Networking.UnityWebRequest;
 
 /*
  *      This baseGameScript needs to be renamed to make it easier to defrinciate between the battle scene
@@ -30,11 +32,11 @@ public class BattleSceneCtrl : MonoBehaviour
     private Vector3 scaleChange;
 
     private GameObject clone;
-    
+
+    public bool onTile = false;
     public GameObject _selectedObject;
     Vector3 _offSet;
     Vector3 skillOffSet;
-    private Collider2D targetObject;
 
     public GameObject enemyTarget;
     public GameObject friendlyTarget;
@@ -69,6 +71,7 @@ public class BattleSceneCtrl : MonoBehaviour
         ValidateMainPlayer(PlayerData.instance.playerCharacter);
 
         GlobalGameSettings.SetGameSpeed(1);
+        grid.GetComponent<GridGenerater>().GererateGrid();
 
         ValidateNPCParty(enemyMinionList);
         folderFound = GameObject.FindGameObjectWithTag("AI");
@@ -78,20 +81,30 @@ public class BattleSceneCtrl : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (!iSee)
-        { 
+        {
+            
             if (Input.GetMouseButtonDown(0))
             {
-                Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);
-
-                if (targetObject != null && targetObject.gameObject.CompareTag("Minion") && skillPress == false)
+                Collider2D[] colliders = Physics2D.OverlapPointAll(mousePosition);
+                for (int i = 0; i < colliders.Length; i++)
                 {
+                    print(colliders[i]);
+                    if (colliders[i].gameObject.CompareTag("Minion"))
+                    {
+                        if (colliders[i] != null && skillPress == false)
+                        {
 
-                    _selectedObject = targetObject.transform.gameObject;
-                    _offSet = _selectedObject.transform.position - mousePosition;
+                            _selectedObject = colliders[i].transform.gameObject;
+                            _offSet = _selectedObject.transform.position - mousePosition;
+                        }
+                    }
                 }
+
+                
             }
             if (_selectedObject != null)
             {
+                onTile = false;
                 _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
                 _selectedObject.transform.position = mousePosition + _offSet;
             }
@@ -99,8 +112,10 @@ public class BattleSceneCtrl : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && _selectedObject != null)
             {
                 _selectedObject.transform.position = tileHover.transform.position;
-                _selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
+                
+                //_selectedObject.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
                 _selectedObject = null;
+                onTile = true;
             }
         }
         if (skillPress)
@@ -112,15 +127,8 @@ public class BattleSceneCtrl : MonoBehaviour
             }
             if (Input.GetMouseButtonUp(1) && _skillSelect != null)
             {
-                print(_skillSelect);
-                _skillSelect.transform.position = mousePosition +skillOffSet;
-                _skillSelect.transform.GetChild(0).gameObject.SetActive(false);
-                _skillSelect.transform.GetChild(1).gameObject.SetActive(true);
-                _skillSelect.gameObject.GetComponent<Collider2D>().enabled = true;
-                //_skillSelect.gameObject.GetComponent<SkillPerfab>().IsActive();
+                _skillSelect.gameObject.GetComponent<SkillPerfab>().Activated();
                 skillPress = false;
-                
-
             }  
         }
     }
@@ -169,7 +177,6 @@ public class BattleSceneCtrl : MonoBehaviour
     public void SkillCast(string skill)
     {
         GameObject skillFind = GameObject.Find ("Skills");
-        //print(skillFind.transform.GetChild(1).name);
         for (int i = 0; i < skillFind.transform.childCount; i++)
         {
             if (skillFind.transform.GetChild(i).name == $"SpellCastHolder_{skill}")
@@ -181,12 +188,13 @@ public class BattleSceneCtrl : MonoBehaviour
         }
         if (skillPrefab == null)
         {
-            print($"SpellCastHolder_{skill}: If this is named differenly rename the prefab or check name in Scriptable object");
+            UnityEngine.Debug.LogWarning($"SpellCastHolder_{skill}: If this is named differenly rename the prefab or check name in Scriptable object");
             
         }
         skillPrefab.gameObject.SetActive(true);
         _skillSelect = skillPrefab.transform.gameObject;
         skillPress = true;
+
 
     }
     public void SurrenderScene()

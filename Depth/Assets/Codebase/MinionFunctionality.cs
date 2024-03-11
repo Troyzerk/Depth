@@ -5,7 +5,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public static class MinionFunctionality
 {
-    
     public static void AttackIt(GameObject target, GameObject self,float cooldown,int damage)
     {
         self.transform.GetChild(3).GetComponent<Animator>().SetTrigger("Attack");

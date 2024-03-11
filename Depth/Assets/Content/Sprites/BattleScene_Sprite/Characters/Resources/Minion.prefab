@@ -110,6 +110,7 @@ MonoBehaviour:
   _weaponAnimScript: {fileID: 0}
   target: {fileID: 0}
   distanceEnemy: 0
+  isAttacking: 0
 --- !u!50 &7670484531837499895
 Rigidbody2D:
   serializedVersion: 4
@@ -149,11 +150,11 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 1
+    m_Bits: 1
+  m_LayerOverridePriority: 10
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
