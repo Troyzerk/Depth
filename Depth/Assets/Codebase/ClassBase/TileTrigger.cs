@@ -12,7 +12,7 @@ public class TileTrigger : MonoBehaviour
         _baseGameScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<BattleSceneCtrl>();
         gameObject.GetComponent<Collider2D>().enabled = true;
     }
-    
+
 
     private void Update()
     {
