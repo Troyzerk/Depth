@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -15,9 +16,9 @@ public class SkillPerfab : MonoBehaviour
     public bool isActive = false;
     public bool isPlaced = false;
 
-    List<GameObject> charsInPool = new();
+    public List<GameObject> charsInPool = new();
 
-    GameObject enemyTarget;
+    GameObject target;
     [SerializeField] GameObject collisionObject;
     
 
@@ -36,13 +37,20 @@ public class SkillPerfab : MonoBehaviour
         
         if(isPlaced)
         {
-            if (!charsInPool.Contains(col.gameObject))
+            target = col.gameObject;
+            if (!charsInPool.Contains(target))
             {
-                charsInPool.Add(col.gameObject);
+                if (target.CompareTag("Minion")|| target.CompareTag("Enemy"))
+                {
+                    print(col.gameObject);
+                    charsInPool.Add(target);
+                }
+                else
+                {
+                    charsInPool.Add(target.transform.parent.gameObject);
+                }
             }
-            enemyTarget = col.gameObject;
             isDamage = true;
-            skill.target = col.gameObject;
             StartCoroutine(OverTime());
         }
     }
@@ -51,6 +59,7 @@ public class SkillPerfab : MonoBehaviour
         if (isPlaced)
         {
             isDamage = false;
+            charsInPool.Clear();
         }
         
     }
@@ -64,6 +73,7 @@ public class SkillPerfab : MonoBehaviour
     }
     public IEnumerator OverTime()
     {
+        
         yield return new WaitForSeconds(skill.tickDamage);
         for(int i = 0; i< charsInPool.Count; i++)
         {

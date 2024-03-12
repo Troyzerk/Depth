@@ -13,11 +13,19 @@ public static class DamageDoneSkill
         {
             Character charRef = target.GetComponent<MinionBrain>().minionRef;
             int damage = charRef.autoAttackSkill.damage;
-            
-            Debug.Log(target);
-
             int health = charRef.currentHealth;
-            health -= damage;
+            
+            if (skill.skillIntent == SkillIntent.Damage)
+            {
+                
+                health -= damage;
+            }
+            if (skill.skillIntent == SkillIntent.Heal)
+            {
+
+                health += damage;
+            }
+
             charRef.currentHealth = health;
             target.transform.GetChild(1).GetComponent<deathCounter_Ctrl>().SpawnCounter(target, damage, skill.color);
             target.GetComponent<MinionBrain>().IsDead(target);

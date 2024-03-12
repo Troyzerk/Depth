@@ -88,7 +88,6 @@ public class BattleSceneCtrl : MonoBehaviour
                 Collider2D[] colliders = Physics2D.OverlapPointAll(mousePosition);
                 for (int i = 0; i < colliders.Length; i++)
                 {
-                    print(colliders[i]);
                     if (colliders[i].gameObject.CompareTag("Minion"))
                     {
                         if (colliders[i] != null && skillPress == false)
