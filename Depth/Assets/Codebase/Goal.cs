@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Video;
 
+
+/*
+ * 
+ * Master class for Goals
+ * only do singular things inside of this class.
+ * 
+ * 
+ */
 public enum GoalType
 {
     DefeatParty,
@@ -23,6 +31,10 @@ public class Goal
     public void Awake()
     {
         Init();
+        if (discriptor == null)
+        {
+            Debug.LogError("Discriptor could not be assigned on quest : " + this);
+        }
     }
     public virtual void ProgressGoal()
     {
@@ -34,31 +46,20 @@ public class Goal
     }
     public virtual void Init()
     {
-        Generate(type);
+        GenerateGoalDiscriptor(type);
     }
-    public void Generate(GoalType goalType)
+    public GoalDiscriptor GenerateGoalDiscriptor(GoalType goalType)
     {
         GoalDiscriptor[] goalDiscriptors = Resources.LoadAll("Quests/GoalDescriptors", typeof(GoalDiscriptor)).Cast<GoalDiscriptor>().ToArray();
-        List<GoalDiscriptor> newGoalDiscriptors = new();
         foreach (var goalDiscriptor in goalDiscriptors)
         {
             if(goalDiscriptor.type == goalType)
             {
-                newGoalDiscriptors.Add(goalDiscriptor);
+                return goalDiscriptor;
             }
         }
-        
-
-        if (newGoalDiscriptors.Count <= 0)
-        {
-            Debug.LogWarning("No goals of type : [" + goalType + "] exist. Please add some.");
-        }
-        else
-        {
-            discriptor = newGoalDiscriptors[Random.Range(0, newGoalDiscriptors.Count)];
-        }
-
-        
+        Debug.LogError("NO GOALS OF TYPE : " + goalType);
+        return null;
     }
 
 }

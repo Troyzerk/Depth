@@ -10,20 +10,25 @@ public class Quest
     public List<Goal> goals = new();
     public int currentGoalIndex;
 
-
     public string questName;
     public string description;
-
 
     public int questProgressCurrentStep, experienceReward, goldReward, characterReward;
 
     public bool isCompleted;
+    public bool isGoalsCompleted;
     public bool isPopulated;
-
-
-    public virtual void CheckGoals()
+    
+    public virtual void Awake()
     {
-        
+        Init();
+    }
+
+    public virtual void Init()
+    {
+        questProgressCurrentStep = 0;
+        currentGoalIndex = 0;
+        isCompleted = false;
     }
 
     public virtual void GiveReward()
@@ -35,12 +40,37 @@ public class Quest
     }
     public virtual void ProgressQuest()
     {
+        Debug.Log("Progressing quest");
         currentGoalIndex++;
+        if (currentGoalIndex >= goals.Count)
+        {
+            Debug.Log("Progressing quest but quest is finished");
+            isGoalsCompleted = true;
+            currentGoalIndex = goals.Count -1;
+            QuestFinished(); 
+        }
     }
 
     public Goal CheckCurrentGoal()
     {
-        return goals[currentGoalIndex];
+        if ( currentGoalIndex >= goals.Count)
+        {
+            isCompleted = true;
+            return goals[goals.Count -1];
+        }
+        else
+        {
+
+            return goals[currentGoalIndex];
+        }
+    }
+    public void QuestFinished()
+    {
+        if (isGoalsCompleted)
+        {
+            isCompleted = true;
+            currentGoalIndex = goals.Count - 1;
+        }
     }
     public void PopulateQuestWithRandomGoals(int goalAmount)
     {
@@ -50,45 +80,36 @@ public class Quest
         }
         else
         {
-            goals.Clear();
             for (int i = 0; i < goalAmount; i++)
             {
-                int randomClass = Random.Range(0, 2);
+                int randomClass = Random.Range(0, 1);
                 switch (randomClass)
                 {
-                    case 0:
+                    case 0:                     
                         goals.Add(new DefeatGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 0");
                         break;
                     case 1:
                         goals.Add(new CollectLandmarkGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 1");
-                        break;
-                    case 2:
-                        goals.Add(new DefeatGoal());
-                        Debug.Log(goals.Count + " : SWITCH Output case 2");
                         break;
                 }
-                Debug.Log(goals.Count + " : After switch output");
+                
             }
+
+            //Debug.Log("Number of goals in " + questName + " : " + goals.Count + " ");
             if (goals.Count <= 0)
             {
                 Debug.LogError("Goals.Count : " + goals.Count + " : population of list failed.");
                 Debug.LogError(goalAmount);
             }
 
-
             foreach (Goal goal in goals)
             {
-                goal.Generate(goal.type);
-                if (!goal.discriptor)
+                if(goal.discriptor == null)
                 {
-                    Debug.LogError("Goal discriptor is null.");
+                    goal.discriptor = goal.GenerateGoalDiscriptor(goal.type);
                 }
             }
+            currentGoalIndex = 0;
         }
-        
     }
 }
-
-

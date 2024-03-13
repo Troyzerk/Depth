@@ -13,7 +13,6 @@ public class DefeatGoal : Goal
     {
         type = GoalType.DefeatParty;
         base.Init();
-        //subscribe progressgoal function to an event in the battleResolutionManager
     }
     public override void ProgressGoal()
     {

@@ -13,6 +13,7 @@ public class CollectLandmarkGoal : Goal
     public int amountToCollect;
     public override void Init()
     {
+
         type = GoalType.CollectLandmark;
         base.Init();
     }

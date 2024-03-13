@@ -32,8 +32,8 @@ public class Character : ScriptableObject
     public DamageType damageType;
     public int foodConsumption;
     
-    public Skill autoAttackSkill;
-    public List <Skill> skills = new();
+    public AutoAttackSkill autoAttackSkill;
+    public List <AutoAttackSkill> skills = new();
 
     public CharacterStatus status = CharacterStatus.Healthy;
     

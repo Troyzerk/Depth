@@ -48,7 +48,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0cb5fe059e1077544ba3266303b1e8c7, type: 3}
   startingDamageType: 0000000005000000
   startingAutoAttackSkill:
-  - {fileID: 11400000, guid: 8c1678688cd2451479fd5788718189cf, type: 2}
+  - {fileID: 11400000, guid: 427671aff600fe541bfead5a68e9e855, type: 2}
+  - {fileID: 11400000, guid: 1ac4f17ebf988b24aaf17c9d2ebed85e, type: 2}
   maxStartingHealth: 120
   minStartingHealth: 100
   maxStartingAge: 1
