@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEditor;
 
 /*
  *  This script should be attached to the QuestLogEntry Prefab and subscribe to the UI Events that get called
@@ -14,6 +15,15 @@ using TMPro;
 public class QuestLogEntry : MonoBehaviour
 {
     public int questLogEntryIndex;
+    bool firstLoad = true;
+
+    [SerializeField]
+    public Quest questRef;
+
+    [SerializeField] 
+    public int questCount;
+    public int questCurrentStep;
+    public List<GoalType> goalTypes = new();
 
     [SerializeField]
     GameObject questTitle,goalTitle,questGoalMaxStep,questGoalDescription,questGoalProgress,completeButton;
@@ -21,52 +31,96 @@ public class QuestLogEntry : MonoBehaviour
     public void Awake()
     {
         // subscribes the UpdateUI function to the OnQuestUpdate event handler
-        QuestManager.instance.OnQuestUpdateUI += UpdateUI;
+        
+        QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
+        foreach (Quest quest in PlayerData.instance.quests)
+        {
+            quest.currentGoalIndex = 0;
+        }
         completeButton.SetActive(false);
+
     }
 
-    private void UpdateUI(object sender, EventArgs e)
+    private void UpdateQuestUI(object sender, EventArgs e)
     {
-        // Grabbing Goal Data
-        int currentGoalIndex = PlayerData.instance.quests[questLogEntryIndex].currentGoalIndex;
-        List<Goal> goals = PlayerData.instance.quests[questLogEntryIndex].goals;
+        goalTypes.Clear();
+        questCount = questRef.goals.Count;
+        questCurrentStep = questRef.currentGoalIndex;
 
-        if(PlayerData.instance.quests[questLogEntryIndex].goals.Count < currentGoalIndex)
+        Debug.LogWarning(questCurrentStep);
+
+        foreach (Goal goal in questRef.goals)
         {
-            questGoalProgress.GetComponent<TMP_Text>().text = goals.Count.ToString();
+            goalTypes.Add(goal.type);
+        }
+
+
+        if (questLogEntryIndex > PlayerData.instance.quests.Count - 1)
+        {
+            Debug.Log("QuestLogEntryIndex is more then the count of quests in the list.");
+            // this means that the quest no longer exists in the array and should of been destroyed. 
         }
         else
         {
-            // Updating Text
-            questTitle.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].questName;
-            Debug.LogWarning(goals[currentGoalIndex].discriptor.goalName);
-            goalTitle.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalName;
-            questGoalDescription.GetComponent<TMP_Text>().text = goals[currentGoalIndex].discriptor.goalDescription;
+            if (PlayerData.instance.quests[questLogEntryIndex] == null)
+            {
+                Debug.LogWarning($"Cant access index [{questLogEntryIndex}] of quest : {questRef.questName}");
+            }
+            else
+            {
+                //Update the quest log instance to the current goal data.
+                Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
+                Quest quest = PlayerData.instance.quests[questLogEntryIndex];
 
-            // QuestProgress setting
-            questGoalMaxStep.GetComponent<TMP_Text>().text = goals.Count.ToString();
-            questGoalProgress.GetComponent<TMP_Text>().text = currentGoalIndex.ToString();
+                if (quest != null)
+                {
+                    questTitle.GetComponent<TMP_Text>().text = quest.questName;
+                    goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
+                    questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+                    questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
+                    questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+                }
+                else
+                {
+                    Debug.LogWarning("Goal is returning as null.");
+                }
+                
+
+                if (quest.isCompleted)
+                {
+                    questGoalProgress.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].goals.Count.ToString();
+                    completeButton.SetActive(true);
+                }
+                else
+                {
+                    completeButton.SetActive(false);
+                }
+            }
         }
-
-
-        
-
-        if (PlayerData.instance.quests[questLogEntryIndex].isCompleted && !completeButton.activeInHierarchy)
-        {
-            questGoalProgress.GetComponent<TMP_Text>().text = goals.Count.ToString();
-            completeButton.SetActive(true);
-        }
-
     }
-
 
     public void CompleteButtonPressed()
     {
+
         if (PlayerData.instance.quests[questLogEntryIndex].isCompleted)
         {
+            
+            
             PlayerData.instance.quests[questLogEntryIndex].GiveReward();
-            PlayerData.instance.quests.RemoveAt(questLogEntryIndex);
+            PlayerData.instance.quests.Remove(questRef);
+            QuestManager.instance.questLogEntryUIs.Remove(gameObject);
+
+            HUDManager.UpdatePartyHud();
             Destroy(gameObject);
         }
+        else
+        {
+            Debug.LogError("Complete button active but the quest is not completed.");
+            questRef.isCompleted = true;
+            CompleteButtonPressed();
+        }
+
+        
+
     }
 }

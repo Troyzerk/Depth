@@ -75,7 +75,6 @@ public static class BattleBehaviour
                     targetMinion = GameObject.Find(attacker.name);
                 }
             }
-
         }
         return targetMinion;
     }
