@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class TileBehaviour : MonoBehaviour
 {
+    public bool activityCheck = false;
+    public GameObject spaceInvader;
 
-    public GameObject hoverOverOutline;
-    public GameObject hoverOutOutlinePrefab;
+    public BattleSceneCtrl _baseGameScript;
+
+    void Start()
+    {
+        _baseGameScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<BattleSceneCtrl>();
+        SetAnim(false);
+    }
+
+    private void Update()
+    {
+        if(_baseGameScript.onTile)
+        {
+            SetAnim(false);
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Detection")
         {
             if (this.transform.GetChild(0).gameObject != null)
             {
-                Destroy(this.transform.GetChild(0).gameObject);
+                SetAnim(false);
             }
         }
     }
@@ -21,8 +38,19 @@ public class TileBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Detection")
         {
-            Vector3 worldPosition = this.transform.position;
-            hoverOutOutlinePrefab = Instantiate(hoverOverOutline, worldPosition, Quaternion.identity, this.transform);
+            SetAnim(true);
         }
+    }
+
+   private void SetAnim(bool set)
+    {
+        transform.GetChild(0).gameObject.SetActive(set);
+        transform.GetChild(1).gameObject.SetActive(set);
+        if (transform.GetChild(1).gameObject.activeInHierarchy) 
+        {
+            transform.GetChild(1).GetComponent<Animator>().SetBool("Play", set);
+        }
+        
+        spaceInvader = null;
     }
 }

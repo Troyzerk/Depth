@@ -23,6 +23,8 @@ TagManager:
   - Detection
   - Landmark
   - Frontend
+  - Tile
+  - Holder
   layers:
   - Default
   - TransparentFX
