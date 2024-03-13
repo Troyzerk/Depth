@@ -30,6 +30,10 @@ public class QuestLogEntry : MonoBehaviour
     public void Awake()
     {
         // subscribes the UpdateUI function to the OnQuestUpdate event handler
+        foreach (Quest quest in PlayerData.instance.quests)
+        {
+            quest.currentGoalIndex = 0;
+        }
         QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
         completeButton.SetActive(false);
 
@@ -74,6 +78,8 @@ public class QuestLogEntry : MonoBehaviour
                 completeButton.SetActive(false);
             }
         }
+
+        
     }
 
     public void CompleteButtonPressed()
