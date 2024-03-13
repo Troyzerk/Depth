@@ -43,6 +43,12 @@ public class QuestManager : MonoBehaviour
         
         questLog = GameObject.FindGameObjectWithTag("QuestLog");
         InitQuests();
+
+        foreach(Quest quest in PlayerData.instance.quests)
+        {
+            quest.Init();
+        }
+        UpdateAllQuestData();
     }
 
     
@@ -71,13 +77,12 @@ public class QuestManager : MonoBehaviour
             
         }
         Debug.LogWarning(PlayerData.instance.quests[1].currentGoalIndex);
-        UpdateAllQuestData();
+        //UpdateAllQuestData();
     }
 
     public void UpdateAllQuestData()
     {
         
-        ReassignQuestIndex();
         OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
 
     }
@@ -130,14 +135,6 @@ public class QuestManager : MonoBehaviour
         print("Resolving quests finished");
     }
     
-
-    public void ReassignQuestIndex()
-    {
-        for (int i = 0;i < PlayerData.instance.quests.Count; i++)
-        {
-            PlayerData.instance.quests[i].currentGoalIndex = i;
-        }
-    }
 
 
     //------------------------------------------------------------------------------------------------------------------------------------------- Reading Activity ----------------------------------------------------------------------------------------------------------------------------------------------------------------

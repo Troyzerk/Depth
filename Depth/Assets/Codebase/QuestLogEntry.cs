@@ -15,6 +15,7 @@ using UnityEditor;
 public class QuestLogEntry : MonoBehaviour
 {
     public int questLogEntryIndex;
+    bool firstLoad = true;
 
     [SerializeField]
     public Quest questRef;
@@ -30,11 +31,12 @@ public class QuestLogEntry : MonoBehaviour
     public void Awake()
     {
         // subscribes the UpdateUI function to the OnQuestUpdate event handler
+        
+        QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
         foreach (Quest quest in PlayerData.instance.quests)
         {
             quest.currentGoalIndex = 0;
         }
-        QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
         completeButton.SetActive(false);
 
     }
@@ -44,6 +46,8 @@ public class QuestLogEntry : MonoBehaviour
         goalTypes.Clear();
         questCount = questRef.goals.Count;
         questCurrentStep = questRef.currentGoalIndex;
+
+        Debug.LogWarning(questCurrentStep);
 
         foreach (Goal goal in questRef.goals)
         {
@@ -58,28 +62,41 @@ public class QuestLogEntry : MonoBehaviour
         }
         else
         {
-            //Update the quest log instance to the current goal data.
-            Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
-            Quest quest = PlayerData.instance.quests[questLogEntryIndex];
-
-            questTitle.GetComponent<TMP_Text>().text = quest.questName;
-            goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
-            questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
-            questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
-            questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
-
-            if (quest.isCompleted)
+            if (PlayerData.instance.quests[questLogEntryIndex] == null)
             {
-                questGoalProgress.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].goals.Count.ToString();
-                completeButton.SetActive(true);
+                Debug.LogWarning($"Cant access index [{questLogEntryIndex}] of quest : {questRef.questName}");
             }
             else
             {
-                completeButton.SetActive(false);
+                //Update the quest log instance to the current goal data.
+                Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
+                Quest quest = PlayerData.instance.quests[questLogEntryIndex];
+
+                if (quest != null)
+                {
+                    questTitle.GetComponent<TMP_Text>().text = quest.questName;
+                    goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
+                    questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+                    questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
+                    questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+                }
+                else
+                {
+                    Debug.LogWarning("Goal is returning as null.");
+                }
+                
+
+                if (quest.isCompleted)
+                {
+                    questGoalProgress.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].goals.Count.ToString();
+                    completeButton.SetActive(true);
+                }
+                else
+                {
+                    completeButton.SetActive(false);
+                }
             }
         }
-
-        
     }
 
     public void CompleteButtonPressed()
@@ -87,13 +104,23 @@ public class QuestLogEntry : MonoBehaviour
 
         if (PlayerData.instance.quests[questLogEntryIndex].isCompleted)
         {
+            
+            
             PlayerData.instance.quests[questLogEntryIndex].GiveReward();
-            PlayerData.instance.quests.RemoveAt(questLogEntryIndex);
+            PlayerData.instance.quests.Remove(questRef);
+            QuestManager.instance.questLogEntryUIs.Remove(gameObject);
+
+            HUDManager.UpdatePartyHud();
             Destroy(gameObject);
         }
         else
         {
             Debug.LogError("Complete button active but the quest is not completed.");
+            questRef.isCompleted = true;
+            CompleteButtonPressed();
         }
+
+        
+
     }
 }

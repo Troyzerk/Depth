@@ -47,7 +47,7 @@ public class Quest
             Debug.Log("Progressing quest but quest is finished");
             isGoalsCompleted = true;
             currentGoalIndex = goals.Count -1;
-            QuestFinished();
+            QuestFinished(); 
         }
     }
 
@@ -69,6 +69,7 @@ public class Quest
         if (isGoalsCompleted)
         {
             isCompleted = true;
+            currentGoalIndex = goals.Count - 1;
         }
     }
     public void PopulateQuestWithRandomGoals(int goalAmount)
