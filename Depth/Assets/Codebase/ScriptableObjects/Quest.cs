@@ -10,20 +10,25 @@ public class Quest
     public List<Goal> goals = new();
     public int currentGoalIndex;
 
-
     public string questName;
     public string description;
-
 
     public int questProgressCurrentStep, experienceReward, goldReward, characterReward;
 
     public bool isCompleted;
+    public bool isGoalsCompleted;
     public bool isPopulated;
-
-
-    public virtual void CheckGoals()
+    
+    public virtual void Awake()
     {
-        
+        Init();
+    }
+
+    public virtual void Init()
+    {
+        questProgressCurrentStep = 0;
+        currentGoalIndex = 0;
+        isCompleted = false;
     }
 
     public virtual void GiveReward()
@@ -35,12 +40,36 @@ public class Quest
     }
     public virtual void ProgressQuest()
     {
+        Debug.Log("Progressing quest");
         currentGoalIndex++;
+        if (currentGoalIndex >= goals.Count)
+        {
+            Debug.Log("Progressing quest but quest is finished");
+            isGoalsCompleted = true;
+            currentGoalIndex = goals.Count -1;
+            QuestFinished();
+        }
     }
 
     public Goal CheckCurrentGoal()
     {
-        return goals[currentGoalIndex];
+        if ( currentGoalIndex >= goals.Count)
+        {
+            isCompleted = true;
+            return goals[goals.Count -1];
+        }
+        else
+        {
+
+            return goals[currentGoalIndex];
+        }
+    }
+    public void QuestFinished()
+    {
+        if (isGoalsCompleted)
+        {
+            isCompleted = true;
+        }
     }
     public void PopulateQuestWithRandomGoals(int goalAmount)
     {
@@ -57,44 +86,29 @@ public class Quest
                 {
                     case 0:                     
                         goals.Add(new DefeatGoal());
-                        Debug.Log("DefeatGoal assigned to " + questName);
                         break;
                     case 1:
                         goals.Add(new CollectLandmarkGoal());
-                        Debug.Log("CollectLandmarkGoal assigned to " + questName);
                         break;
                 }
                 
             }
 
-            Debug.Log("Number of goals in " + questName + " : " + goals.Count + " ");
+            //Debug.Log("Number of goals in " + questName + " : " + goals.Count + " ");
             if (goals.Count <= 0)
             {
                 Debug.LogError("Goals.Count : " + goals.Count + " : population of list failed.");
                 Debug.LogError(goalAmount);
             }
 
-
             foreach (Goal goal in goals)
             {
                 if(goal.discriptor == null)
                 {
-                    goal.GenerateGoalDiscriptor(goal.type);
+                    goal.discriptor = goal.GenerateGoalDiscriptor(goal.type);
                 }
             }
+            currentGoalIndex = 0;
         }
-        
     }
 }
-
-
-/*
- * 
- * goal.Generate(goal.type);
-                if (!goal.discriptor)
-                {
-                    Debug.LogError("Goal discriptor is null.");
-                }
- * 
- */
-

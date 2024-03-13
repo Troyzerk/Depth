@@ -15,6 +15,7 @@ using static UnityEngine.Rendering.CoreUtils;
 public class SceneInitializer : MonoBehaviour
 {
     GameObject persistentManagerGameObject;
+    public bool debugFrontend = false;
     public void Awake()
     {
         Initialize();
@@ -81,8 +82,10 @@ public class SceneInitializer : MonoBehaviour
             GameObject.FindGameObjectWithTag("DialogueSystem");
             Debug.LogWarning("Could NOT create new DialogueSystem because one already exists in the scene. Please remove as this gets created on load.");
         }
-
-        print("[FRONTEND] LOADING RESOURCES FINISHED!");
+        if (debugFrontend)
+        {
+            print("[FRONTEND] LOADING RESOURCES FINISHED!");
+        }
 
         // Loading Faction Data //
         PersistentManager.factions = Resources.LoadAll("Factions", typeof(Faction)).Cast<Faction>().ToArray();

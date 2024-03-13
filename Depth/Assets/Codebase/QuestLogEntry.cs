@@ -17,55 +17,77 @@ public class QuestLogEntry : MonoBehaviour
     public int questLogEntryIndex;
 
     [SerializeField]
+    public Quest questRef;
+
+    [SerializeField] 
+    public int questCount;
+    public int questCurrentStep;
+    public List<GoalType> goalTypes = new();
+
+    [SerializeField]
     GameObject questTitle,goalTitle,questGoalMaxStep,questGoalDescription,questGoalProgress,completeButton;
 
     public void Awake()
     {
         // subscribes the UpdateUI function to the OnQuestUpdate event handler
-        print(PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal());
         QuestManager.instance.OnQuestUpdateUI += UpdateQuestUI;
         completeButton.SetActive(false);
+
     }
 
     private void UpdateQuestUI(object sender, EventArgs e)
     {
-        //Update the quest log instance to the current goal data.
-        
-        Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
-        Quest quest = PlayerData.instance.quests[questLogEntryIndex];
-        print(PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal());
-        if (goal.discriptor == null)
+        goalTypes.Clear();
+        questCount = questRef.goals.Count;
+        questCurrentStep = questRef.currentGoalIndex;
+
+        foreach (Goal goal in questRef.goals)
         {
-            Debug.LogError("Discriptor has gotten Lost");
+            goalTypes.Add(goal.type);
         }
 
-        questTitle.GetComponent<TMP_Text>().text = quest.questName;
-        goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
-        questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
-        questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
-        questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
 
-        if (quest.isCompleted)
+        if (questLogEntryIndex > PlayerData.instance.quests.Count - 1)
         {
-            questGoalProgress.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
-            completeButton.SetActive(true);
+            Debug.Log("QuestLogEntryIndex is more then the count of quests in the list.");
+            // this means that the quest no longer exists in the array and should of been destroyed. 
         }
         else
         {
-            completeButton.SetActive(true);
+            //Update the quest log instance to the current goal data.
+            Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
+            Quest quest = PlayerData.instance.quests[questLogEntryIndex];
+
+            questTitle.GetComponent<TMP_Text>().text = quest.questName;
+            goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
+            questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+            questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
+            questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+
+            if (quest.isCompleted)
+            {
+                questGoalProgress.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].goals.Count.ToString();
+                completeButton.SetActive(true);
+            }
+            else
+            {
+                completeButton.SetActive(false);
+            }
         }
-
-
     }
-
 
     public void CompleteButtonPressed()
     {
+
         if (PlayerData.instance.quests[questLogEntryIndex].isCompleted)
         {
             PlayerData.instance.quests[questLogEntryIndex].GiveReward();
             PlayerData.instance.quests.RemoveAt(questLogEntryIndex);
             Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogError("Complete button active but the quest is not completed.");
         }
     }
 }

@@ -51,7 +51,6 @@ public class Goal
     public GoalDiscriptor GenerateGoalDiscriptor(GoalType goalType)
     {
         GoalDiscriptor[] goalDiscriptors = Resources.LoadAll("Quests/GoalDescriptors", typeof(GoalDiscriptor)).Cast<GoalDiscriptor>().ToArray();
-
         foreach (var goalDiscriptor in goalDiscriptors)
         {
             if(goalDiscriptor.type == goalType)

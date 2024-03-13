@@ -17,7 +17,7 @@ using static UnityEngine.Rendering.CoreUtils;
 
 public class QuestManager : MonoBehaviour
 {
-    public static QuestManager instance { get;set; }
+    public static QuestManager instance { get;set;}
     public GameObject questLog;
 
     public event EventHandler OnBattleResolved;
@@ -25,9 +25,9 @@ public class QuestManager : MonoBehaviour
 
     public event EventHandler OnQuestUpdateUI;
 
-    private List<string> questNames = new List<string>();
+    private List<string> questNames = new();
     
-    public List<GameObject> questLogEntryUIs = new List<GameObject>();
+    public List<GameObject> questLogEntryUIs = new();
 
 
 
@@ -49,30 +49,37 @@ public class QuestManager : MonoBehaviour
 
     public void InitQuests()
     {
+        print("Init Quests");
         if (PlayerData.instance.quests == null)
         {
             PlayerData.instance.quests = new List<Quest>();
-            PlayerData.instance.quests = GenerateQuests(2);
+            PlayerData.instance.quests = GenerateQuests(3);
+
+            
+
             print(PlayerData.instance.quests[0].goals[0].discriptor);
             foreach (Quest quest in PlayerData.instance.quests)
             {
-                AddNewQuestLogUI();
+                AddNewQuestLogUI(quest);
             }
-
+            
             print(PlayerData.instance.quests[0].goals[0].discriptor);
             for (int i = 0; i < PlayerData.instance.quests.Count; i++)
             {
                 questLogEntryUIs[i].GetComponent<QuestLogEntry>().questLogEntryIndex = i;
             }
-
+            
         }
-        print("before");
+        Debug.LogWarning(PlayerData.instance.quests[1].currentGoalIndex);
         UpdateAllQuestData();
     }
 
     public void UpdateAllQuestData()
     {
-       OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
+        
+        ReassignQuestIndex();
+        OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
+
     }
     
     public void CompletedCurrrentGoal(Quest quest)
@@ -103,10 +110,11 @@ public class QuestManager : MonoBehaviour
         }
         return quests;
     }
-    private void AddNewQuestLogUI()
+    private void AddNewQuestLogUI(Quest quest)
     {
         GameObject newQuestEntry = Instantiate(Resources.Load("QuestEntry") as GameObject, questLog.transform);
         questLogEntryUIs.Add(newQuestEntry);
+        newQuestEntry.GetComponent<QuestLogEntry>().questRef = quest;
     }
 
     public void DefeatedEnemyParty(AIParty enemyParty)
@@ -121,13 +129,27 @@ public class QuestManager : MonoBehaviour
         UpdateAllQuestData();
         print("Resolving quests finished");
     }
+    
+
+    public void ReassignQuestIndex()
+    {
+        for (int i = 0;i < PlayerData.instance.quests.Count; i++)
+        {
+            PlayerData.instance.quests[i].currentGoalIndex = i;
+        }
+    }
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------- Reading Activity ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------- Landmarks
     public void PickedUpLandmark(Landmark landmark)
     {
-        foreach(Quest quest in PlayerData.instance.quests)
+        foreach (Quest quest in PlayerData.instance.quests)
         {
             if (quest.CheckCurrentGoal() is CollectLandmarkGoal && landmark.rewardType == LandmarkRewardType.Gold)
             {
                 CompletedCurrrentGoal(quest);
+                Debug.Log($"{quest.questName} progressed by picking up gold landmark");
             }
             else if (landmark.rewardType == LandmarkRewardType.Experience)
             {
@@ -140,10 +162,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-
-
-
-
+    //-------------------------------------- 
 
 
 }
