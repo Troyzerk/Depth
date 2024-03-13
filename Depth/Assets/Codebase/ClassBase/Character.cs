@@ -30,6 +30,7 @@ public class Character : ScriptableObject
     public int damage;
     public int defence;
     public DamageType damageType;
+    public int foodConsumption;
     
     public Skill autoAttackSkill;
     public List <Skill> skills = new();

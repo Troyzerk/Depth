@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIBehaviour : MonoBehaviour
 {
     public GameObject bannerText;
 
-    //REWORK THIS AS THIS IS THE OLD AIGROUP CLASS.
-    //we now use AIParty:Party Class in the Party.cs script
     public AIParty aiParty;
     public AIGroupManager manager;
 
@@ -25,6 +24,14 @@ public class AIBehaviour : MonoBehaviour
     //hunting ground vars
     public Vector2 huntingGroundCenter;
     public float huntingGroundSize;
+
+    //NavMesh Variables
+    NavMeshAgent agent;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +71,8 @@ public class AIBehaviour : MonoBehaviour
         {
             FindTarget();
         }
+
+        SetAgentPosition();
     }
 
     private void Chase()
@@ -80,8 +89,7 @@ public class AIBehaviour : MonoBehaviour
     {
         if (moving == true && (Vector2)transform.position != moveLocation)
         {
-            float step = aiParty.partySpeed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, moveLocation, step);
+            //Need to check what this is for, might be obsolete now
         }
         else if (moving == true && (Vector2)transform.position == moveLocation)
         {
@@ -119,17 +127,16 @@ public class AIBehaviour : MonoBehaviour
                 if (distanceToTarget < distanceToClosestTarget && GlobalNPCPartyTracker.globalNPCPartyObjects[i].name != this.name)
                 {
                     target = newTarget;
+                    Debug.Log(target.name);
+
                     distanceToClosestTarget = Vector2.Distance(this.transform.position, GlobalNPCPartyTracker.globalNPCPartyObjects[i].transform.position);
                     if (distanceToClosestTarget <= Vector2.Distance(playerPartyObject.transform.position, this.transform.position))
-                    // && this.aiParty.totalDamage >= 0.4f * (PersistentManager.instance.playerParty.totalDamage)
                     {
                         target = playerPartyObject;
-                        //Debug.Log(target);
                     }
                     else if (this.aiParty.totalDamage >= 1.2f * (target.gameObject.GetComponent<AIBehaviour>().aiParty.totalDamage))
                     {
                         target.GetComponent<AIBehaviour>().Nigeru(this.gameObject);
-                        //Debug.Log("Hunting " + target);
                     }
                 }
             }
@@ -147,22 +154,10 @@ public class AIBehaviour : MonoBehaviour
         Debug.Log(this.gameObject + " is hunted by " + hunter);
 
         moveLocation = new Vector2((this.transform.position.x - hunter.transform.position.x) * -1, (this.transform.position.y - hunter.transform.position.y) * -1);
-        /*
-        if (Vector2.Distance(transform.position, hunter.transform.position) <= huntingGroundSize)
-        {
-            moveLocation = new Vector2(hunter.transform.position.x * -1, hunter.transform.position.y * -1);
-        }
-        else
-        {
-            UpdateMoveLocation();
-        }
-        */
     }
 
     private void CheckTail()
     {
-        Debug.Log("CheckingTail");
-        
         if (hunter.gameObject.GetComponent<AIBehaviour>().target == this.gameObject)
         {
             moveLocation = new Vector2((this.transform.position.x - hunter.transform.position.x) * -1, (this.transform.position.y - hunter.transform.position.y) * -1);
@@ -171,7 +166,6 @@ public class AIBehaviour : MonoBehaviour
         {
             hunter = null;
             this.beingChased = false;
-            Debug.Log("No longer hunted");
             FindTarget();
         }
     }
@@ -222,4 +216,8 @@ public class AIBehaviour : MonoBehaviour
         }
     }
 
+    void SetAgentPosition()
+    {
+        agent.SetDestination(new Vector3(moveLocation.x, moveLocation.y, transform.position.z));
+    }
 }

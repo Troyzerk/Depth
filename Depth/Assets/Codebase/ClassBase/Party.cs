@@ -4,7 +4,7 @@ using UnityEngine;
 
 /*
  * Primary party class 
- * all party groups should dirive from this class
+ * all party groups should derive from this class
  * If we need more vars for combat, trading etc...
  * We should extend this class to cater to them.
  * 
