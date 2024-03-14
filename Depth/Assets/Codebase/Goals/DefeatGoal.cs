@@ -12,10 +12,11 @@ public class DefeatGoal : Goal
     public override void Init()
     {
         type = GoalType.DefeatParty;
+        amount = Random.Range(1,3);
         base.Init();
     }
     public override void ProgressGoal()
     {
-
+        base.ProgressGoal();
     }
 }

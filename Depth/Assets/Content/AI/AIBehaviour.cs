@@ -144,7 +144,7 @@ public class AIBehaviour : MonoBehaviour
         hunter = newHunter;
         this.beingChased = true;
         this.isChasing = false;
-        Debug.Log(this.gameObject + " is hunted by " + hunter);
+        //Debug.Log(this.gameObject + " is hunted by " + hunter);
 
         moveLocation = new Vector2((this.transform.position.x - hunter.transform.position.x) * -1, (this.transform.position.y - hunter.transform.position.y) * -1);
         /*
