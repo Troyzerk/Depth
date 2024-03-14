@@ -195,6 +195,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TownWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 1323476899785768365, guid: 077c39c6a7c9d4140abb012f064fdd9f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1849497005349605485, guid: 077c39c6a7c9d4140abb012f064fdd9f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -323,6 +328,11 @@ PrefabInstance:
     - target: {fileID: 5301711431665471697, guid: 077c39c6a7c9d4140abb012f064fdd9f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115942278229127642, guid: 077c39c6a7c9d4140abb012f064fdd9f,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8651742688559708990, guid: 077c39c6a7c9d4140abb012f064fdd9f,
