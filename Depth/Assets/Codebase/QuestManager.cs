@@ -28,6 +28,8 @@ public class QuestManager : MonoBehaviour
     private List<string> questNames = new();
     
     public List<GameObject> questLogEntryUIs = new();
+    public bool questsInitialised = false;
+    public bool questManagerDebugs = true;
 
 
 
@@ -55,44 +57,37 @@ public class QuestManager : MonoBehaviour
 
     public void InitQuests()
     {
-        print("Init Quests");
-        if (PlayerData.instance.quests == null)
+        if(questsInitialised == false)
         {
-            PlayerData.instance.quests = new List<Quest>();
-            PlayerData.instance.quests = GenerateQuests(3);
+            questsInitialised=true;
 
-            
+            if(questManagerDebugs) print("Init Quests");
 
-            print(PlayerData.instance.quests[0].goals[0].discriptor);
-            foreach (Quest quest in PlayerData.instance.quests)
+            if (PlayerData.instance.quests == null)
             {
-                AddNewQuestLogUI(quest);
+                PlayerData.instance.quests = new List<Quest>();
+                PlayerData.instance.quests = GenerateQuests(3);
+
+                foreach (Quest quest in PlayerData.instance.quests)
+                {
+                    AddNewQuestLogUI(quest);
+                }
+
+                for (int i = 0; i < PlayerData.instance.quests.Count; i++)
+                {
+                    questLogEntryUIs[i].GetComponent<QuestLogEntry>().questLogEntryIndex = i;
+                }
+
             }
-            
-            print(PlayerData.instance.quests[0].goals[0].discriptor);
-            for (int i = 0; i < PlayerData.instance.quests.Count; i++)
-            {
-                questLogEntryUIs[i].GetComponent<QuestLogEntry>().questLogEntryIndex = i;
-            }
-            
+            UpdateAllQuestData();
+            HUDManager.instance.UpdateHUD();
         }
-        Debug.LogWarning(PlayerData.instance.quests[1].currentGoalIndex);
-        //UpdateAllQuestData();
     }
 
     public void UpdateAllQuestData()
     {
         
         OnQuestUpdateUI?.Invoke(this, EventArgs.Empty);
-
-    }
-    
-    public void CompletedCurrrentGoal(Quest quest)
-    {
-        quest.CheckCurrentGoal().isCompleted = true;
-        quest.ProgressQuest();
-        Debug.Log(quest.questName + " : Completed! -> Updating UI");
-        UpdateAllQuestData();
     }
 
     Quest GenerateQuest(int numOfGoals)
@@ -120,46 +115,58 @@ public class QuestManager : MonoBehaviour
         GameObject newQuestEntry = Instantiate(Resources.Load("QuestEntry") as GameObject, questLog.transform);
         questLogEntryUIs.Add(newQuestEntry);
         newQuestEntry.GetComponent<QuestLogEntry>().questRef = quest;
-    }
-
-    public void DefeatedEnemyParty(AIParty enemyParty)
-    {
-        foreach(Quest quest in PlayerData.instance.quests)
-        {
-            if(quest.CheckCurrentGoal() is DefeatGoal)
-            {
-                CompletedCurrrentGoal(quest);
-            }
-        }
-        UpdateAllQuestData();
-        print("Resolving quests finished");
+        newQuestEntry.GetComponent<QuestLogEntry>().currentGoalRef = quest.goals[quest.currentGoalIndex];
     }
     
 
 
     //------------------------------------------------------------------------------------------------------------------------------------------- Reading Activity ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public void UpdateAllInfo(Quest quest)
+    {
+        quest.goals[quest.currentGoalIndex].ProgressGoal();
+        quest.CheckGoalProgress();
+        UpdateAllQuestData();
+    }
+    
     //-------------------------------------- Landmarks
     public void PickedUpLandmark(Landmark landmark)
     {
         foreach (Quest quest in PlayerData.instance.quests)
         {
-            if (quest.CheckCurrentGoal() is CollectLandmarkGoal && landmark.rewardType == LandmarkRewardType.Gold)
-            {
-                CompletedCurrrentGoal(quest);
-                Debug.Log($"{quest.questName} progressed by picking up gold landmark");
+            if (quest.CheckCurrentGoal() is CollectLandmarkGoal)
+            {                
+                UpdateAllInfo(quest);
+                Debug.Log($"{quest.questName} progressed by picking up landmark");
             }
-            else if (landmark.rewardType == LandmarkRewardType.Experience)
-            {
+        }
+    }
 
+    //-------------------------------------- Defeat
+
+    public void DefeatedEnemyParty(AIParty enemyParty)
+    {
+        foreach(var quest in PlayerData.instance.quests)
+        {
+            if (quest.CheckCurrentGoal() is DefeatGoal)
+            {
+                UpdateAllInfo(quest);
+                Debug.Log($"{quest.questName} progressed by defeating enemy party");
             }
-            else if (landmark.rewardType == LandmarkRewardType.NewRecruit)
-            {
+        }
+    }
 
+    public void DefeatedEnemyCharacter(Character character)
+    {
+        foreach(var quest in PlayerData.instance.quests)
+        {
+            if(quest.CheckCurrentGoal() is DefeatEnemy)
+            {
+                UpdateAllInfo(quest);
+                Debug.Log($"{quest.questName} progressed by defeating an Enemy character");
             }
         }
     }
 
     //-------------------------------------- 
-
 
 }

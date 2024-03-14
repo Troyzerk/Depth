@@ -12,6 +12,8 @@ public class BattleResolutionManager : MonoBehaviour
     int expReward;
     int repReward;
 
+    
+
     //UI
 
     TMP_Text expRewardText, goldRewardText, repRewardText;

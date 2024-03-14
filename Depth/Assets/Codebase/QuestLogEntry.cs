@@ -19,14 +19,17 @@ public class QuestLogEntry : MonoBehaviour
 
     [SerializeField]
     public Quest questRef;
+    public Goal currentGoalRef;
 
     [SerializeField] 
     public int questCount;
     public int questCurrentStep;
+    public int goalAmount;
+    public int goalCurrentAmount;
     public List<GoalType> goalTypes = new();
 
     [SerializeField]
-    GameObject questTitle,goalTitle,questGoalMaxStep,questGoalDescription,questGoalProgress,completeButton;
+    GameObject questTitle,goalTitle,questGoalMaxStep,questGoalDescription,questGoalProgress,completeButton,goalProgress;
 
     public void Awake()
     {
@@ -41,72 +44,92 @@ public class QuestLogEntry : MonoBehaviour
 
     }
 
+
     private void UpdateQuestUI(object sender, EventArgs e)
     {
-        goalTypes.Clear();
-        questCount = questRef.goals.Count;
-        questCurrentStep = questRef.currentGoalIndex;
-
-        Debug.LogWarning(questCurrentStep);
-
-        foreach (Goal goal in questRef.goals)
+        if (SceneManagerScript.instance.isInWorldMap)
         {
-            goalTypes.Add(goal.type);
-        }
+            goalTypes.Clear();
+            questCount = questRef.goals.Count;
+            questCurrentStep = questRef.currentGoalIndex;
+            goalAmount = currentGoalRef.amount;
+            goalCurrentAmount = currentGoalRef.currentAmount;
+
+            Goal goal = questRef.CheckCurrentGoal();
+            Quest quest = questRef;
 
 
-        if (questLogEntryIndex > PlayerData.instance.quests.Count - 1)
-        {
-            Debug.Log("QuestLogEntryIndex is more then the count of quests in the list.");
-            // this means that the quest no longer exists in the array and should of been destroyed. 
-        }
-        else
-        {
-            if (PlayerData.instance.quests[questLogEntryIndex] == null)
+            if (goal.discriptor.type != goal.type)
             {
-                Debug.LogWarning($"Cant access index [{questLogEntryIndex}] of quest : {questRef.questName}");
+                Debug.LogError($"DISCRIPTOR MIS-MATCH ----------> Goal type = {goal.type} ----------> Goal Class = {goal} ----------> Goal Discriptor = {goal.discriptor}");
+                goal.GenerateGoalDiscriptor(goal.type);
+            }
+
+
+            foreach (Goal newgoal in questRef.goals)
+            {
+                goalTypes.Add(newgoal.type);
+            }
+
+
+            if (questLogEntryIndex > PlayerData.instance.quests.Count - 1)
+            {
+                Debug.Log("QuestLogEntryIndex is more then the count of quests in the list.");
+                // this means that the quest no longer exists in the array and should have been destroyed. 
             }
             else
             {
-                //Update the quest log instance to the current goal data.
-                Goal goal = PlayerData.instance.quests[questLogEntryIndex].CheckCurrentGoal();
-                Quest quest = PlayerData.instance.quests[questLogEntryIndex];
-
-                if (quest != null)
+                if (PlayerData.instance.quests[questLogEntryIndex] == null)
                 {
-                    questTitle.GetComponent<TMP_Text>().text = quest.questName;
-                    goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
-                    questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
-                    questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
-                    questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+                    Debug.LogWarning($"Cant access index [{questLogEntryIndex}] of quest : {questRef.questName}");
                 }
                 else
                 {
-                    Debug.LogWarning("Goal is returning as null.");
-                }
-                
+                    if (quest != null && questTitle != null)
+                    {
 
-                if (quest.isCompleted)
-                {
-                    questGoalProgress.GetComponent<TMP_Text>().text = PlayerData.instance.quests[questLogEntryIndex].goals.Count.ToString();
-                    completeButton.SetActive(true);
-                }
-                else
-                {
-                    completeButton.SetActive(false);
+                        questTitle.GetComponent<TMP_Text>().text = quest.questName;
+                        goalTitle.GetComponent<TMP_Text>().text = goal.discriptor.goalName;
+                        questGoalMaxStep.GetComponent<TMP_Text>().text = quest.goals.Count.ToString();
+                        questGoalDescription.GetComponent<TMP_Text>().text = goal.discriptor.goalDescription;
+                        questGoalProgress.GetComponent<TMP_Text>().text = quest.currentGoalIndex.ToString();
+                        goalProgress.GetComponent<TMP_Text>().text = goal.currentAmount + " / " + goal.amount;
+
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Goal is returning as null.");
+                    }
+
+
+                    if (quest.isCompleted && quest!=null)
+                    {
+                        questGoalProgress.GetComponent<TMP_Text>().text = questRef.goals.Count.ToString();
+                        completeButton.SetActive(true);
+                    }
+                    else
+                    {
+                        completeButton.SetActive(false);
+                    }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("ISWORLDMAP is FALSE");
         }
     }
 
     public void CompleteButtonPressed()
     {
 
-        if (PlayerData.instance.quests[questLogEntryIndex].isCompleted)
+        
+        
+        if (questRef.isCompleted)
         {
             
             
-            PlayerData.instance.quests[questLogEntryIndex].GiveReward();
+            questRef.GiveReward();
             PlayerData.instance.quests.Remove(questRef);
             QuestManager.instance.questLogEntryUIs.Remove(gameObject);
 
