@@ -40,14 +40,20 @@ public class Quest
     }
     public virtual void ProgressQuest()
     {
-        Debug.Log("Progressing quest");
         currentGoalIndex++;
         if (currentGoalIndex >= goals.Count)
         {
-            Debug.Log("Progressing quest but quest is finished");
             isGoalsCompleted = true;
-            currentGoalIndex = goals.Count -1;
-            QuestFinished(); 
+            currentGoalIndex = goals.Count - 1;
+            QuestFinished();
+        }
+    }
+
+    public void CheckGoalProgress()
+    {
+        if (goals[currentGoalIndex].isCompleted)
+        {
+            ProgressQuest();
         }
     }
 
@@ -82,13 +88,26 @@ public class Quest
         {
             for (int i = 0; i < goalAmount; i++)
             {
-                int randomClass = Random.Range(0, 1);
+                int randomClass = Random.Range(0, 2);
+                //Debug.Log(randomClass);
                 switch (randomClass)
                 {
                     case 0:                     
                         goals.Add(new DefeatGoal());
+                        if(QuestManager.instance.questManagerDebugs) Debug.Log("adding new defeat goal");
                         break;
                     case 1:
+                        goals.Add(new CollectLandmarkGoal());
+                        if (QuestManager.instance.questManagerDebugs) Debug.Log("adding new collect landmark goal");
+                        break;
+                    case 2:
+                        goals.Add(new CollectLandmarkGoal());
+                        if (QuestManager.instance.questManagerDebugs) Debug.Log("adding new collect landmark goal");
+                        break;
+                    case 3:
+                        goals.Add(new CollectLandmarkGoal());
+                        break;
+                    case 4:
                         goals.Add(new CollectLandmarkGoal());
                         break;
                 }
@@ -106,7 +125,8 @@ public class Quest
             {
                 if(goal.discriptor == null)
                 {
-                    goal.discriptor = goal.GenerateGoalDiscriptor(goal.type);
+                    goal.GenerateGoalDiscriptor(goal.type);
+                    goal.Init();
                 }
             }
             currentGoalIndex = 0;

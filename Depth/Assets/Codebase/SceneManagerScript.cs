@@ -8,6 +8,7 @@ public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance { get; private set; }
     public Scene scene;
+    public bool isInWorldMap;
 
     private void Awake()
     {
@@ -20,23 +21,28 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
         }
         scene = SceneManager.GetActiveScene();
+        isInWorldMap = true;
     }
 
     public static void LoadBattleScene()
     {
         SceneManager.LoadScene("Battle_Scene");
         SwitchActiveStates(false);
+        instance.isInWorldMap = false;
     }
 
     public static void LoadBattleResolution()
     {
         SceneManager.LoadSceneAsync("BattleResolution");
+        instance.isInWorldMap = false;
     }
 
     public static void LoadWorldMap()
     {
         SceneManager.LoadScene("LevelTest");
         SwitchActiveStates(true);
+        instance.isInWorldMap = true;
+        QuestManager.instance.UpdateAllQuestData();
         PlayerData.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
     }
 
