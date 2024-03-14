@@ -10,9 +10,11 @@ public class TownWindow : MonoBehaviour
 {
     public static TownWindow instance;
     public GameObject townWindow;
+    public GameObject currentTown;
 
     //Instanciating UI Elements
     Button exitButton, churchButton;
+    public Button foodButton, donateButton;
     TMP_Text townName, townDescription, townAge, townDefence, townOwningRace, townRaceType, townOwningFamily;
     Sprite townPortrait;
 
@@ -29,7 +31,6 @@ public class TownWindow : MonoBehaviour
         {
             instance = this;
         }
-
 
         // define links to UI Button elements
         exitButton = townWindow.transform.Find("Exit").GetComponent<Button>();
@@ -50,6 +51,8 @@ public class TownWindow : MonoBehaviour
 
         churchButton.onClick.AddListener(delegate { ChurchInteraction(GlobalPlayerData.selectedTown); });
         exitButton.onClick.AddListener(delegate { CloseTownWindow();});
+        foodButton.onClick.AddListener(delegate { BuyFood(); });
+        donateButton.onClick.AddListener(delegate { Donate(); });
         townWindow.SetActive(false);
 
         
@@ -61,6 +64,7 @@ public class TownWindow : MonoBehaviour
         ClickMovement.movementLock = true;
         GlobalGameSettings.SetGameSpeed(0);
         townWindow.SetActive(true);
+        CheckIfDen(GlobalPlayerData.selectedTown);
         Debug.Log(GlobalPlayerData.selectedTown);
     }
 
@@ -97,5 +101,36 @@ public class TownWindow : MonoBehaviour
         }
     }
 
+    public void CheckIfDen(Town town)
+    {
+        GameObject currentTown = GameObject.Find(GlobalPlayerData.selectedTown.name);
 
+        if (currentTown.GetComponent<TownInfo>().isHordeDen == false)
+        {
+            this.donateButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.donateButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void BuyFood()
+    {
+        if (GlobalPlayerData.playerParty.gold >= 5)
+        {
+            GlobalPlayerData.playerParty.PartyFood += 50;
+            GlobalPlayerData.playerParty.gold -= 5;
+        }
+    }
+
+    public void Donate()
+    {
+        
+        if (GlobalPlayerData.playerParty.gold >= 5)
+        {
+            GlobalPlayerData.playerParty.reputation += 5;
+            GlobalPlayerData.playerParty.gold -= 5;
+        }
+    }
 }
