@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerPartyManager : MonoBehaviour
 {
+    //hello
+    
     public static PlayerPartyManager instance;  
     
     public PlayerParty playerParty;
