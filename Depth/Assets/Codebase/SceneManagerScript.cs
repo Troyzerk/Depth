@@ -8,6 +8,7 @@ public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance { get; private set; }
     public Scene scene;
+    public bool isInWorldMap;
 
     private void Awake()
     {
@@ -20,35 +21,29 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
         }
         scene = SceneManager.GetActiveScene();
-        
+        isInWorldMap = true;
     }
 
     public static void LoadBattleScene()
     {
         SceneManager.LoadScene("Battle_Scene");
         SwitchActiveStates(false);
+        instance.isInWorldMap = false;
     }
 
     public static void LoadBattleResolution()
     {
         SceneManager.LoadSceneAsync("BattleResolution");
+        instance.isInWorldMap = false;
     }
 
     public static void LoadWorldMap()
     {
         SceneManager.LoadScene("LevelTest");
         SwitchActiveStates(true);
+        instance.isInWorldMap = true;
+        QuestManager.instance.UpdateAllQuestData();
         PlayerData.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
-        levelUpAnim();
-    }
-
-    public static void levelUpAnim()
-    {
-        print("Leveled");
-        //Troy have stuff tagged as player that are  not player. Can't find hero
-        GameObject levelUpAnim = Resources.Load("levelHighLight") as GameObject;
-        Vector3 player = (GameObject.FindGameObjectWithTag("Player").transform.position);
-        GameObject clone = Instantiate(levelUpAnim, player, Quaternion.identity, GameObject.FindGameObjectWithTag("Player").transform);
     }
 
     public static void RecordStoredData()
@@ -79,7 +74,7 @@ public class SceneManagerScript : MonoBehaviour
             {
                 PersistentManager.instance.storedNPCPartys.Add(npcGroup);
             }
-            
+
         }
         if (PersistentManager.instance.AIGroups == null && PersistentManager.instance.towns == null)
         {
@@ -87,8 +82,8 @@ public class SceneManagerScript : MonoBehaviour
             PersistentManager.instance.towns = GameObject.Find("Towns");
             PersistentManager.instance.landmarks = GameObject.Find("Landmarks");
         }
-        
-        PlayerData.instance.partyTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
+
+        PlayerData.instance.partyTransform = GameObject.FindGameObjectWithTag("Player").transform.position;
         PersistentManager.instance.PrintRecordedData();
     }
 
