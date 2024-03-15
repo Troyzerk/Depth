@@ -11,7 +11,14 @@ public class ClickMovement : MonoBehaviour
     public Vector2 lastClickedPos;
     public GameObject clickCol;
     public bool moving;
+    public bool camping;
+    //This is for toggling healing 
+    public bool healing = true;
     public static bool movementLock = false;
+
+    public Sprite GoblinSprite;
+    //Change it from "ArcherGoblin" if you don't want a jump scare ;)
+    public Sprite ArcherGoblin;
 
     //NavMesh Variables
     private Vector3 target;
@@ -25,7 +32,6 @@ public class ClickMovement : MonoBehaviour
     private void Start()
     {
         clickCol = GameObject.Find("ClickCol");
-        
     }
 
     public void Reload()
@@ -58,17 +64,31 @@ public class ClickMovement : MonoBehaviour
             clickCol.gameObject.GetComponent<clickColChecker>().check = false;
         }
 
-        /*if (moving && (Vector2)transform.position != lastClickedPos)
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            float step = playerPartyManager.playerParty.partySpeed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
-        } else
+            StartCamping();
+        }
+
+        if (camping && moving)
+        {
+            StopCamping();
+        }
+        
+        if (moving && (Vector2)transform.position == lastClickedPos)
         {
             moving = false;                                                                                                                                                                                                                                                                                      
-        }*/
+        }
 
         SetTargetPosition();
         SetAgentPosition();
+    }
+
+    private void FixedUpdate()
+    {
+        if (camping && healing)
+        {
+            StartCoroutine(PartyHeal());
+        }
     }
 
     private void SetTargetPosition()
@@ -82,5 +102,34 @@ public class ClickMovement : MonoBehaviour
     private void SetAgentPosition()
     {
         agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
+    }
+
+    private void StartCamping()
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = ArcherGoblin;
+        camping = true;
+        GlobalGameSettings.SetGameSpeed(4);
+        Debug.Log("Timescale is" + Time.timeScale);
+    }
+
+    public IEnumerator PartyHeal()
+    {
+        foreach (var character in PlayerData.instance.playerParty.characters)
+        {
+            if (character.currentHealth < character.health)
+            {
+                character.currentHealth += 1;
+                Debug.Log(character.name + character.currentHealth);
+            }
+        }
+        yield return new WaitForSeconds(12f);
+    }
+
+    private void StopCamping()
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = GoblinSprite;
+        camping = false;
+        GlobalGameSettings.SetGameSpeed(1);
+        Debug.Log("Timescale is" + Time.timeScale);
     }
 }

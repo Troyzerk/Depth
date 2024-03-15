@@ -63,6 +63,7 @@ public static class PartyGenerator
             //Debug.Log(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
             party.characters.Add(CharacterGenerator.CreateNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid));
         }
+        
         return party;
     }
 
