@@ -15,12 +15,15 @@ MonoBehaviour:
   skillName: Fire
   damageType: 0
   skillType: 0
+  skillIntent: 0
   damage: 10
   damageVariety: 0
   range: 0
   cooldown: 3
-  buttonSprite: {fileID: 21300000, guid: 226a7d64d1beffc479e7c7e348a953f9, type: 3}
+  buttonSprite: {fileID: 21300000, guid: 827e2e465b7cddf4c8774cab423e08d5, type: 3}
   color:
     serializedVersion: 2
     rgba: 4278190335
   tickDamage: 1
+  targets: []
+  target: {fileID: 0}

@@ -74,7 +74,7 @@ public class SceneManagerScript : MonoBehaviour
             {
                 PersistentManager.instance.storedNPCPartys.Add(npcGroup);
             }
-            
+
         }
         if (PersistentManager.instance.AIGroups == null && PersistentManager.instance.towns == null)
         {
@@ -82,8 +82,8 @@ public class SceneManagerScript : MonoBehaviour
             PersistentManager.instance.towns = GameObject.Find("Towns");
             PersistentManager.instance.landmarks = GameObject.Find("Landmarks");
         }
-        
-        PlayerData.instance.partyTransform =  GameObject.FindGameObjectWithTag("Player").transform.position;
+
+        PlayerData.instance.partyTransform = GameObject.FindGameObjectWithTag("Player").transform.position;
         PersistentManager.instance.PrintRecordedData();
     }
 

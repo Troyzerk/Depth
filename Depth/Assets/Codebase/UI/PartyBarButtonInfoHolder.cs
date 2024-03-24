@@ -23,15 +23,15 @@ public class PartyBarButtonInfoHolder : MonoBehaviour
         characterMenu.OpenCharacterCard(character);
     }
 
-    public void CreateGoblinoidButton()
-    {
-        CharacterGenerator.BuyNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid, player.GetComponent<PlayerPartyManager>().playerParty,10 );
+    //public void CreateGoblinoidButton()
+    //{
+        //CharacterGenerator.BuyNewCharacter(RaceID.Goblin, SubRaceID.Goblinoid, player.GetComponent<PlayerPartyManager>().playerParty,10 );
 
-    }
+    //}
 
-    public void CreateOgreButton()
-    {
-        CharacterGenerator.BuyNewCharacter(RaceID.Goblin, SubRaceID.Ogre, player.GetComponent<PlayerPartyManager>().playerParty, 50);
-    }
+    //public void CreateOgreButton()
+    //{
+        //CharacterGenerator.BuyNewCharacter(RaceID.Goblin, SubRaceID.Ogre, player.GetComponent<PlayerPartyManager>().playerParty, 50);
+    //}
 }
 
