@@ -15,12 +15,15 @@ MonoBehaviour:
   skillName: Heal
   damageType: 0
   skillType: 0
+  skillIntent: 0
   damage: 5
   damageVariety: 0
   range: 0
   cooldown: 3
-  buttonSprite: {fileID: 21300000, guid: 54dca5e361c697540a194b98f7e07806, type: 3}
+  buttonSprite: {fileID: 21300000, guid: 77cb45442d544e0469dc3d2dcc4e19a7, type: 3}
   color:
     serializedVersion: 2
     rgba: 4280221440
   tickDamage: 1
+  targets: []
+  target: {fileID: 0}

@@ -88,7 +88,18 @@ public class BattleResolutionManager : MonoBehaviour
         }
         RemoveNPCEnemyGameObject();
 
+        Character mainPlayer  = PlayerData.instance.playerCharacter;
         
+        mainPlayer.speed++;
+        mainPlayer.mana++;
+        mainPlayer.damage++;
+        mainPlayer.defence++;
+        mainPlayer.health++;
+        mainPlayer.currentExperience =+ expReward;
+
+
+
+
     }
 
     private void RemoveNPCEnemyGameObject()
