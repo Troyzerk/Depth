@@ -106,6 +106,7 @@ public class FrontendManager : SceneInitializer
     {
         InitGameObjects();
         base.PostLoadResources();
+        PlayerData.instance.playerParty.SetFoodConsumption();
         HUDManager.instance.UpdateHUD();
         if (debugFrontend)
         {

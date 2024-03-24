@@ -21,6 +21,9 @@ public class GameState : MonoBehaviour
     public float startingGameSpeed = 1f;
     public List<Faction> globalFactions;
     public Image heroImage;
+    public bool isBellyFull;
+    public float feedIntervalSeconds = 60f;
+
     private void Awake()
     {
         GroupNames.InitGroupNames();
@@ -47,7 +50,22 @@ public class GameState : MonoBehaviour
         }
     }
 
-    
+    private void FixedUpdate()
+    {
+        if (isBellyFull == false)
+        {
+            isBellyFull = true;
+            StartCoroutine(PartyEating());
+        }
+    }
+
+    public IEnumerator PartyEating()
+    {
+        PlayerData.instance.playerParty.ConsumeFood(); 
+        yield return new WaitForSeconds(feedIntervalSeconds);
+        isBellyFull = false;
+    }
+
     /*
      *  BEWARE!!!
      *  From here down its all auto resolve stuff. 
