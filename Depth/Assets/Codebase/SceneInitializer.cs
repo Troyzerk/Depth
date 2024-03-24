@@ -15,6 +15,7 @@ using static UnityEngine.Rendering.CoreUtils;
 public class SceneInitializer : MonoBehaviour
 {
     GameObject persistentManagerGameObject;
+    public int worldSeed;
     public bool debugFrontend = false;
     public void Awake()
     {
@@ -23,7 +24,17 @@ public class SceneInitializer : MonoBehaviour
 
     public virtual void Initialize()
     {
-
+        if(MainMenuManager.seed == 0)
+        {
+            worldSeed = UnityEngine.Random.Range(0, 99999999);
+        }
+        else
+        {
+            worldSeed =  MainMenuManager.seed;
+        }
+        
+        UnityEngine.Random.InitState(worldSeed);
+        Debug.Log($"World Seed : {worldSeed}");
     }
 
     public virtual GameObject LoadResources()
