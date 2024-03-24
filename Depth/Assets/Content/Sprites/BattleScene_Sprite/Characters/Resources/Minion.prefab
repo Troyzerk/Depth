@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6327751317402935859}
   - component: {fileID: 7670484531837499895}
   - component: {fileID: 3596958837574886618}
+  - component: {fileID: 7660210009021758054}
   m_Layer: 6
   m_Name: Minion
   m_TagString: Minion
@@ -183,6 +184,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.19, y: 0.25}
   m_EdgeRadius: 0
+--- !u!95 &7660210009021758054
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3932094683208150721}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4deaf3620a424a14da8ac3ebe25345db, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8185096770698745697
 GameObject:
   m_ObjectHideFlags: 0
