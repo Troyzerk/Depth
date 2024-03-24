@@ -44,10 +44,13 @@ public class WorldGeneratorManager : MonoBehaviour
 
     public void CreateWorld()
     {
+        
+
         dataFromTiles = new Dictionary<TileBase, TileData>();
         tileDatas = new List<TileData>();
         blockingTileDatas = new List<TileData>();
         nonblockingTileDatas = new List<TileData>();
+        
 
         RandomiseValues();
         InitializeWorldGrids();
