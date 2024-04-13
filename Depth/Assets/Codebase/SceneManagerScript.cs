@@ -46,6 +46,14 @@ public class SceneManagerScript : MonoBehaviour
         PlayerData.instance.playerPartyObject.GetComponent<ClickMovement>().Reload();
     }
 
+    public static void LoadDungeonMap()
+    {
+        SceneManager.LoadScene("DungeonLevel");
+        SwitchActiveStates(false);
+        instance.isInWorldMap = true;
+        QuestManager.instance.UpdateAllQuestData();
+    }
+
     public static void RecordStoredData()
     {
         GameObject[] towns = GameObject.FindGameObjectsWithTag("Town");

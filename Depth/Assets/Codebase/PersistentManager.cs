@@ -13,6 +13,7 @@ public class PersistentManager : MonoBehaviour
     public Character playerCharacter;
 
     public TextAsset skillTable;
+    public List<LevelData> dungeon = new();
 
 
     public AIParty enemyParty;

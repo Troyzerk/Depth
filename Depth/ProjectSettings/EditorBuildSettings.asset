@@ -15,9 +15,9 @@ EditorBuildSettings:
     path: Assets/Content/Scene/Battle_Scene.unity
     guid: bee2ea974595c5e4297863d585edaf63
   - enabled: 1
-    path: Assets/ExtraStuff/OutdoorsScene.unity
-    guid: 8124e5870f4fd4c779e7a5f994e84ad1
-  - enabled: 1
     path: Assets/Content/Scene/BattleResolution.unity
     guid: 7097b046943f183469ce21408428a207
+  - enabled: 1
+    path: Assets/Content/Scene/DungeonLevel.unity
+    guid: 0676c59106af2d64ea3a0f80fbba1eed
   m_configObjects: {}

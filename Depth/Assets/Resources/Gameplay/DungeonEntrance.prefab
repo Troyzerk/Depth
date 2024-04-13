@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8534945892844974166}
   - component: {fileID: 8615746648123534466}
   m_Layer: 0
-  m_Name: TownName
+  m_Name: DungeonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,11 +182,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4531797516657178891}
   - component: {fileID: 539496398443477467}
-  - component: {fileID: 3216931421087358016}
   - component: {fileID: -7917200605633236331}
   m_Layer: 0
-  m_Name: HordeDen
-  m_TagString: Town
+  m_Name: DungeonEntrance
+  m_TagString: DungeonEntrance
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,8 +198,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7258292787078971528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.011, y: 0.669, z: -0.021271393}
-  m_LocalScale: {x: 2.1049, y: 2.1049, z: 2.1049}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6844412371524832720}
@@ -248,8 +247,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0.6570833, b: 0.9150943, a: 1}
+  m_Sprite: {fileID: -1338143651, guid: 0c7ff3ffffed1bb4c9cc3d4b4faab6ea, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -259,22 +258,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3216931421087358016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258292787078971528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: add44286763458e4aa2d9201abbf9f6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  town: {fileID: 0}
-  townStats: {fileID: 11400000, guid: e41f7fd8f20473a458de3984a88055e8, type: 2}
-  townText: {fileID: 3482538634816210551}
-  isHordeDen: 1
 --- !u!61 &-7917200605633236331
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -309,14 +292,14 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 0.41, y: 0.5}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

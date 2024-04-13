@@ -25,6 +25,7 @@ TagManager:
   - Frontend
   - Tile
   - Holder
+  - DungeonEntrance
   layers:
   - Default
   - TransparentFX

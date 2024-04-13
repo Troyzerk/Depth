@@ -274,6 +274,7 @@ MonoBehaviour:
   town: {fileID: 0}
   townStats: {fileID: 11400000, guid: e41f7fd8f20473a458de3984a88055e8, type: 2}
   townText: {fileID: 3482538634816210551}
+  isHordeDen: 0
 --- !u!61 &-7917200605633236331
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -303,7 +304,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

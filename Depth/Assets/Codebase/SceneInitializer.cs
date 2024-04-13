@@ -7,7 +7,8 @@ using System.Net.NetworkInformation;
 using static UnityEngine.Rendering.CoreUtils;
 
 /*
- * Master class for initializing scenes
+ * Master class for initializing    !!! ALL !!!!     scenes
+ * This should only ever be called when the scene has been loaded.
  * 
  * 
  */
@@ -107,6 +108,13 @@ public class SceneInitializer : MonoBehaviour
 
     }
 
+
+
+    // THIS IS AN ISSUE
+    // We shouldnt be executing the creation of the world in here. This should only be used for scene initialisation.
+    // in other words, things that are only required by every level.
+    // Example : dungeon tilemap is not required for the world map / not all maps will have game objects
+
     public virtual void PostLoadResources()
     {
         CreateWorld();
@@ -133,12 +141,10 @@ public class SceneInitializer : MonoBehaviour
         QuestManager.instance.Init();
 
         GameObject.Find("MainCamera").GetComponent<CameraController>().Init();
-        GameObject.Find("ClickCol").GetComponent<clickColChecker>().Init();
     }
     public virtual void CreateWorld()
     {
         GameObject obj = CreateAndSetObject("PrimaryPrefabs/WorldGenerator", "WorldGenerator", false);
-        obj.GetComponent<WorldGeneratorManager>().CreateWorld();
-
+        obj.GetComponent<BaseWorldGenerator>().CreateWorld();
     }
 }

@@ -13,7 +13,6 @@ public class PlayerCollisionController : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        clickPos = GameObject.Find("ClickCol").GetComponent<clickColChecker>();
         hudManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDManager>();
         playerPartyManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerPartyManager>();
     }
@@ -21,7 +20,7 @@ public class PlayerCollisionController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.gameObject.CompareTag("Town") && clickPos.check == true)
+        if (other.gameObject.CompareTag("Town"))
         {
             if(GlobalPlayerData.selectedTown != other.gameObject.GetComponent<TownInfo>().town)
             {
@@ -37,6 +36,13 @@ public class PlayerCollisionController : MonoBehaviour
                 other.GetComponent<TownInfo>().town.Interact();
             }
 
+        }
+
+        if (other.gameObject.CompareTag("DungeonEntrance"))
+        {
+            Debug.Log("Entering Dungeon");
+            SceneManagerScript.RecordStoredData();
+            SceneManagerScript.LoadDungeonMap();
         }
 
         if (other.gameObject.CompareTag("Landmark"))
@@ -79,5 +85,15 @@ public class PlayerCollisionController : MonoBehaviour
 
     }
   
-
+    public void GatherDungeonData(GameObject other)
+    {
+        if (other.GetComponent<DungeonEntrance>().levelData == null)
+        {
+            // dungeon has not been init
+        }
+        else
+        { 
+            // dungeon data found
+        }
+    }
 }
