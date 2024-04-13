@@ -26,9 +26,14 @@ public class WASDMovement : MonoBehaviour
         }
         else
         {
-            transform.position += movementDirection * PlayerData.instance.playerParty.partySpeed * Time.deltaTime;
-        }
-
-        
+            if(PlayerData.instance != null)
+            {
+                transform.position += movementDirection * PlayerData.instance.playerParty.partySpeed * Time.deltaTime;
+            }
+            else
+            {
+                transform.position += movementDirection * 1 * Time.deltaTime;
+            }
+        }        
     }
 }
