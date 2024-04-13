@@ -94,6 +94,5 @@ public class SceneManagerScript : MonoBehaviour
         PersistentManager.instance.landmarks.SetActive(isActive);
         HUDManager.instance.gameObject.SetActive(isActive);
         PlayerData.instance.playerPartyObject.SetActive(isActive);
-        WorldGeneratorManager.tileGridL1.SetActive(isActive);
     }
 }
